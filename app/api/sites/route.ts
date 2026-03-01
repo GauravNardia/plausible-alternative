@@ -1,16 +1,18 @@
 
 import { db } from "@/database/drizzle"
 import { sites } from "@/database/schema"
+import { generatePublicApiKey } from "@/lib/api-key"
 import { eq } from "drizzle-orm"
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
   const body = await req.json()
+  const apiKey = generatePublicApiKey()
 
   const newSite = await db.insert(sites).values({
     userId: body.userId,
     domain: body.domain,
-    publicApiKey: body.apiKey,
+    publicApiKey: apiKey,
   }).returning()
 
   return NextResponse.json(newSite[0])
