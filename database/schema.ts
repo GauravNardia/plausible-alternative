@@ -7,6 +7,7 @@ import {
   uuid,
   bigserial,
   date,
+  boolean
 } from "drizzle-orm/pg-core"
 
 /* ================= USERS ================= */
@@ -16,6 +17,7 @@ export const users = pgTable("users", {
   name: text("name"),
   email: text("email").notNull().unique(),
   password: text("password"),
+  onboarded: boolean("onboarded").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 })
 
@@ -24,6 +26,7 @@ export const users = pgTable("users", {
 export const sites = pgTable("sites", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
   userId: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
   domain: text("domain").notNull().unique(),
   publicApiKey: text("public_api_key").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow(),
@@ -108,3 +111,35 @@ export const dailyVisitors = pgTable("daily_visitors",{
     }),
   })
 )
+
+/* ================= PRICING TIER ================= */
+
+export const pricingTiers = pgTable("pricing_tiers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(), // 10k, 100k, 1M
+  monthlyEventLimit: integer("monthly_event_limit").notNull(),
+  priceMonthly: integer("price_monthly").notNull(), // cents
+  createdAt: timestamp("created_at").defaultNow()
+})
+
+
+export const subscriptions = pgTable("subscriptions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").notNull().references(() => users.id),
+  pricingTierId: uuid("pricing_tier_id").notNull().references(() => pricingTiers.id),
+  status: text("status").notNull(), // active, trialing, canceled
+  currentPeriodStart: timestamp("current_period_start"),
+  currentPeriodEnd: timestamp("current_period_end"),
+  dodoCustomerId: text("dodo_customer_id"),
+  dodoSubscriptionId: text("dodo_subscription_id"),
+  createdAt: timestamp("created_at").defaultNow()
+})
+
+
+export const monthlyUsage = pgTable("monthly_usage", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  siteId: uuid("site_id").notNull().references(() => sites.id),
+  month: text("month").notNull(),
+  eventsCount: integer("events_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+})

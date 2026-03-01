@@ -50,6 +50,20 @@
       "when": 1772353398761,
       "tag": "0006_military_kang",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1772372869758,
+      "tag": "0007_typical_starfox",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1772376301774,
+      "tag": "0008_windy_vivisector",
+      "breakpoints": true
     }
   ]
 }
