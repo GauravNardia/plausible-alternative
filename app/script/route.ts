@@ -1,14 +1,15 @@
 export async function GET(req: Request) {
   const origin = new URL(req.url).origin;
+  
 
   const script = `
   (function(){
     const script = document.currentScript;
-    const domain = script.getAttribute("data-domain");
+    const apiKey = script.getAttribute("data-api-key");
 
     function track(){
       const payload = {
-        domain,
+        apiKey,
         path: location.pathname,
         referrer: document.referrer,
         ua: navigator.userAgent
@@ -27,7 +28,7 @@ export async function GET(req: Request) {
   return new Response(script, {
     headers: {
       "Content-Type": "application/javascript",
-      "Cache-Control": "no-store",
+      "Cache-Control": "public, max-age=3600",
     },
   });
 }

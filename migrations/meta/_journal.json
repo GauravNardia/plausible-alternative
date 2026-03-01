@@ -15,6 +15,41 @@
       "when": 1772345144269,
       "tag": "0001_faulty_hellcat",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772350599419,
+      "tag": "0002_bumpy_ghost_rider",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1772353292829,
+      "tag": "0003_milky_prima",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1772353347517,
+      "tag": "0004_slim_mauler",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1772353368685,
+      "tag": "0005_motionless_enchantress",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1772353398761,
+      "tag": "0006_military_kang",
+      "breakpoints": true
     }
   ]
 }

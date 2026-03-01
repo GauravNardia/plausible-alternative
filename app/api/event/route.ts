@@ -4,17 +4,29 @@ import { generateVisitorHash } from "@/lib/hash"
 import { parseUA } from "@/lib/ua"
 import { db } from "@/database/drizzle"
 import { events, sites } from "@/database/schema"
+import { isBot } from "@/lib/boat"
+import { eventSchema } from "@/lib/validations"
+import { rateLimit } from "@/lib/rate-limit"
+import { getCountry } from "@/lib/geo"
 
 export async function POST(req: Request) {
-  const body = await req.json()
+  const body = eventSchema.parse(await req.json())
 
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0] ?? "0.0.0.0"
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "0.0.0.0"
+  const country = getCountry(req)
+
+//   if(rateLimit(ip)) {
+//     return new NextResponse(null, { status: 429 })
+// }
+
+if (isBot(body.ua)) {
+   return new NextResponse(null, { status: 204 })
+}
 
   const site = await db
     .select({ id: sites.id })
     .from(sites)
-    .where(eq(sites.domain, body.domain))
+    .where(eq(sites.publicApiKey, body.apiKey))
     .limit(1)
 
   if (!site.length) {
@@ -27,16 +39,18 @@ export async function POST(req: Request) {
   const { browser, os, device } = parseUA(body.ua)
 
   await db.transaction(async (tx) => {
-        const existing = await tx.execute(sql`
-      SELECT 1 FROM events
-      WHERE site_id = ${siteId}
-      AND visitor_hash = ${visitorHash}
-      AND created_at::date = CURRENT_DATE
-      LIMIT 1
-    `)
 
-    const isNew = existing.rows.length === 0
-    
+    // 1. Insert into daily_visitors
+  const insertVisitor = await tx.execute(sql`
+    INSERT INTO daily_visitors (site_id, date, visitor_hash)
+    VALUES (${siteId}, CURRENT_DATE, ${visitorHash})
+    ON CONFLICT DO NOTHING
+    RETURNING 1
+  `)
+
+  const isNew = insertVisitor.rowCount !== null && insertVisitor.rowCount > 0
+
+    // 2. Insert raw event
     await tx.insert(events).values({
       siteId,
       path: body.path,
@@ -45,8 +59,10 @@ export async function POST(req: Request) {
       os,
       device,
       visitorHash,
+      country,
     })
 
+    //  3. update daily_stats
     await tx.execute(sql`
       INSERT INTO daily_stats (site_id, date, pageviews, unique_visitors)
       VALUES (${siteId}, CURRENT_DATE, 1, ${isNew ? 1 : 0})
@@ -56,6 +72,7 @@ export async function POST(req: Request) {
         unique_visitors = daily_stats.unique_visitors + ${isNew ? 1 : 0}
     `)
 
+    // 4. update page_stats
     await tx.execute(sql`
       INSERT INTO page_stats (site_id, date, path, pageviews)
       VALUES (${siteId}, CURRENT_DATE, ${body.path}, 1)

@@ -10,6 +10,7 @@ export async function POST(req: Request) {
   const newSite = await db.insert(sites).values({
     userId: body.userId,
     domain: body.domain,
+    publicApiKey: body.apiKey,
   }).returning()
 
   return NextResponse.json(newSite[0])

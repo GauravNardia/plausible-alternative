@@ -23,13 +23,9 @@ export const users = pgTable("users", {
 
 export const sites = pgTable("sites", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
-
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-
+  userId: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   domain: text("domain").notNull().unique(),
-
+  publicApiKey: text("public_api_key").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow(),
 })
 
@@ -96,5 +92,19 @@ export const pageStats = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.siteId, table.date, table.path] }),
+  })
+)
+
+/* ================= DAILY VISITORS ================= */
+
+export const dailyVisitors = pgTable("daily_visitors",{
+    siteId: uuid("site_id").notNull().references(() => sites.id, { onDelete: "cascade" }),
+    date: date("date").notNull(),
+    visitorHash: text("visitor_hash").notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.siteId, table.date, table.visitorHash],
+    }),
   })
 )
