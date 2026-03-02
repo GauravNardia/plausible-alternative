@@ -27,7 +27,7 @@ const DashboardLayout = ({
               <h1 className="text-xl font-bold">Puffin Analytics</h1>
             </div>
             <div>
-                button
+                Add New Website
             </div>
         </div>
       <div

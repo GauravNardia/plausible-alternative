@@ -1,12 +1,16 @@
+import { auth } from '@/auth'
 import { DashboardChart } from '@/components/charts/DashboarChart'
 import DeviceClient from '@/components/charts/Device'
 import GeoClient from '@/components/charts/GeoClient'
 import SourcesTable from '@/components/charts/SourcesTable'
 import TopPagesTable from '@/components/charts/TopPage'
+import { db } from '@/database/drizzle'
+import { sites } from '@/database/schema'
+import { eq } from 'drizzle-orm'
 
 async function getSources(siteId: string) {
   const res = await fetch(
-    `http://localhost:3000/api/sites/sources?siteId=${siteId}`,
+    `${process.env.APP_URL!}/api/sites/sources?siteId=${siteId}`,
     { cache: "no-store" }
   )
   const json = await res.json()
@@ -15,7 +19,7 @@ async function getSources(siteId: string) {
 
 async function getPages(siteId: string) {
   const res = await fetch(
-    `http://localhost:3000/api/sites/pages?siteId=${siteId}`,
+    `${process.env.APP_URL!}/api/sites/pages?siteId=${siteId}`,
     { cache: "no-store" }
   )
   const json = await res.json()
@@ -24,7 +28,7 @@ async function getPages(siteId: string) {
 
 async function getData(siteId: string) {
   const res = await fetch(
-    `http://localhost:3000/api/sites/devices?siteId=${siteId}`,
+    `${process.env.APP_URL!}/api/sites/devices?siteId=${siteId}`,
     { cache: "no-store" }
   )
 
@@ -33,7 +37,7 @@ async function getData(siteId: string) {
 
 async function getGeo(siteId: string) {
   const res = await fetch(
-    `http://localhost:3000/api/sites/geo?siteId=${siteId}`,
+    `${process.env.APP_URL!}/api/sites/geo?siteId=${siteId}`,
     { cache: "no-store" }
   )
 
@@ -42,7 +46,7 @@ async function getGeo(siteId: string) {
 
 async function getMetrics(siteId: string) {
   const res = await fetch(
-    `http://localhost:3000/api/sites/metrics?siteId=${siteId}`,
+    `${process.env.APP_URL!}/api/sites/metrics?siteId=${siteId}`,
     { cache: "no-store" }
   )
   const json = await res.json()
@@ -50,8 +54,22 @@ async function getMetrics(siteId: string) {
 }
 
 const page = async() => {
-   const siteId = "fa1786a8-41b5-47e7-b65f-df2ca7e702c0" 
-const data = await getData(siteId)
+  const session = await auth();
+  if(!session?.user?.id) return 
+
+    // 2️⃣ Get site from DB
+  const site = await db
+    .select()
+    .from(sites)
+    .where(eq(sites.userId, session.user.id))
+    .limit(1)
+
+  if (!site.length) {
+    return <div>No site found</div>
+  }
+
+  const siteId = site[0].id
+  const data = await getData(siteId)
 
   const [sources, pages, devices, metrics, geo] = await Promise.all([
     getSources(siteId),
@@ -64,7 +82,7 @@ const data = await getData(siteId)
   return (
     <section className='w-full flex flex-col gap-8 max-w-6xl mx-auto px-4 py-8'>
       <DashboardChart siteId={siteId} metrics={metrics} />
-      <div className="grid grid-cols-2 gap-6  items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <SourcesTable sources={sources} />
         <TopPagesTable pages={pages} />
         <DeviceClient data={devices} />

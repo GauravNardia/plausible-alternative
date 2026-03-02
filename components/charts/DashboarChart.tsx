@@ -82,7 +82,7 @@ export const DashboardChart = ({ siteId, metrics }: { siteId: string, metrics: a
     value={metrics.viewsPerVisit}
   />
 </div>
-      <div className="w-full h-[420px]">
+      <div className="w-full h-[300px] md:h-[420px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>

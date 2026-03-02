@@ -47,7 +47,10 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
   return (
     <div className="relative mt-6 w-full">
 
-      <ComposableMap projectionConfig={{ scale: 150 }}>
+      <ComposableMap 
+      projectionConfig={{ scale: 150 }}
+      
+      >
         <Geographies geography={world}>
           {({ geographies }: any) =>
             geographies.map((geo: any) => {
