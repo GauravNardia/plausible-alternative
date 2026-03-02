@@ -64,7 +64,7 @@ const data = await getData(siteId)
   return (
     <section className='w-full flex flex-col gap-8 max-w-6xl mx-auto px-4 py-8'>
       <DashboardChart siteId={siteId} metrics={metrics} />
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6  items-start">
         <SourcesTable sources={sources} />
         <TopPagesTable pages={pages} />
         <DeviceClient data={devices} />

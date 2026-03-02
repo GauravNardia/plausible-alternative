@@ -34,7 +34,7 @@ function List({
     <div className="mt-6">
 
       {/* Header */}
-      <div className="flex justify-between text-sm text-gray-500 pb-4 border-b border-gray-200">
+      <div className="flex justify-between text-base text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold ">
         <span>{label}</span>
         <span>Visitors</span>
       </div>
@@ -46,7 +46,7 @@ function List({
           return (
             <div
               key={item.name}
-              className="relative flex items-center justify-between px-4 py-4 rounded-xl overflow-hidden"
+              className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden"
             >
               {/* Background proportional bar */}
               <div
@@ -54,11 +54,13 @@ function List({
                 style={{ width: `${percent}%` }}
               />
 
-              <div className="relative z-10 text-gray-800 font-medium">
-                {item.name || "Unknown"}
+           <div className="relative flex items-center gap-2 z-10">
+                                <span className="text-[12px] text-gray-800">
+                  {item.name || "Unknown"}
+                </span>
               </div>
 
-              <div className="relative z-10 text-gray-700 font-medium">
+              <div className="relative z-10 text-[12px] font-medium text-gray-700">
                 {item.visitors}
               </div>
             </div>
@@ -71,35 +73,35 @@ function List({
 
 export default function GeoClient({ data }: Props) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-neutral-100 rounded-lg p-3">
 
       <Tabs defaultValue="countries" className="w-full">
 
-        <TabsList className="bg-white border-b border-gray-200 w-full justify-start gap-8 rounded-none p-0">
+<TabsList className="bg-neutral-100 text-[12px] w-full justify-between rounded-none px-2">
           <TabsTrigger
             value="map"
-            className="px-0 pb-3 text-gray-500 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none"
+    className="text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:bg-none data-[state=active]:shadow-none shadow-0 data-[state=active]:border-black rounded-none"
           >
             MAP
           </TabsTrigger>
 
           <TabsTrigger
             value="countries"
-            className="px-0 pb-3 text-gray-500 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none"
+    className="text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:bg-none data-[state=active]:shadow-none shadow-0 data-[state=active]:border-black rounded-none"
           >
             COUNTRIES
           </TabsTrigger>
 
           <TabsTrigger
             value="regions"
-            className="px-0 pb-3 text-gray-500 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none"
+    className="text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:bg-none data-[state=active]:shadow-none shadow-0 data-[state=active]:border-black rounded-none"
           >
             REGIONS
           </TabsTrigger>
 
           <TabsTrigger
             value="cities"
-            className="px-0 pb-3 text-gray-500 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-black rounded-none"
+    className="text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:bg-none data-[state=active]:shadow-none shadow-0 data-[state=active]:border-black rounded-none"
           >
             CITIES
           </TabsTrigger>

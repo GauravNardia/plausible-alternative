@@ -66,7 +66,7 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
             //     visitors === 0
             //       ? "#f3f4f6"
             //       : `rgba(0,0,0,${0.2 + intensity * 0.6})`
-            const fillColor = "#f3f4f6"
+            const fillColor = "#dcf79a"
 
               return (
                 <Geography
@@ -76,7 +76,7 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
                   stroke="#e5e7eb"
                   style={{
                     default: { outline: "none" },
-                    hover: { fill: "#111", outline: "none" },
+                    hover: { fill: "#addb37", outline: "none" },
                     pressed: { outline: "none" }
                   }}
                   onMouseEnter={(e: any) => {
@@ -105,7 +105,7 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
       {/* Tooltip */}
       {tooltip && (
         <div
-          className="fixed z-50 bg-black text-white text-sm px-3 py-2 rounded-md shadow-lg pointer-events-none"
+          className="fixed z-50 bg-[#2a360d] text-white text-sm px-3 py-2 rounded-md shadow-lg pointer-events-none"
           style={{
             top: tooltip.y + 12,
             left: tooltip.x + 12
