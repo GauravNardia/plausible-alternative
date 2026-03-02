@@ -23,7 +23,7 @@ export default function InstallBox({ script, siteId }: InstallBoxProps) {
 
     if (data.hasEvents) {
       clearInterval(interval)
-      router.push(`/dashboard/${siteId}`)
+      router.push(`/dashboard`)
     }
   }, 3000)
 
