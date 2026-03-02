@@ -11,12 +11,22 @@ export async function GET(req: Request) {
   let lastPath = location.pathname;
 
   function track(){
-    console.log("📊 Tracking:", location.pathname);
+  console.log("📊 Tracking:", location.pathname);
+
+  const params = new URLSearchParams(location.search);
+
+  let finalReferrer = document.referrer;
+
+  const refParam = params.get("ref");
+  if (refParam) {
+    finalReferrer = refParam;
+  }
+
 
     const payload = {
       apiKey,
       path: location.pathname,
-      referrer: document.referrer,
+      referrer: finalReferrer,
       ua: navigator.userAgent
     };
 

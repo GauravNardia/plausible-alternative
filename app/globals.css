@@ -124,3 +124,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+svg:focus {
+  outline: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+.recharts-surface {
+  outline: none !important;
+}
+
+.recharts-wrapper {
+  outline: none !important;
+}

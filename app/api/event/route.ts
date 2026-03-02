@@ -7,17 +7,15 @@ import { events, sites } from "@/database/schema"
 import { isBot } from "@/lib/boat"
 import { eventSchema } from "@/lib/validations"
 import { rateLimit } from "@/lib/rate-limit"
-import { getCountry } from "@/lib/geo"
+import { getGeo } from "@/lib/geo"
 
 export async function POST(req: Request) {
   const body = eventSchema.parse(await req.json())
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "0.0.0.0"
-  const country = getCountry(req)
+  const { country, region, city } = getGeo(req)
 
-//   if(rateLimit(ip)) {
-//     return new NextResponse(null, { status: 429 })
-// }
+
 
 if (isBot(body.ua)) {
    return new NextResponse(null, { status: 204 })
@@ -60,6 +58,8 @@ if (isBot(body.ua)) {
       device,
       visitorHash,
       country,
+      region,
+      city
     })
 
     //  3. update daily_stats

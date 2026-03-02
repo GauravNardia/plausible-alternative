@@ -64,6 +64,13 @@
       "when": 1772376301774,
       "tag": "0008_windy_vivisector",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1772444670012,
+      "tag": "0009_giant_morlocks",
+      "breakpoints": true
     }
   ]
 }

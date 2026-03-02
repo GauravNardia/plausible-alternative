@@ -46,7 +46,9 @@ export const events = pgTable("events", {
   referrer: text("referrer"),
 
   country: text("country"),
-
+  region: text("region"),
+  city: text("city"),
+  
   device: text("device"),
 
   browser: text("browser"),
