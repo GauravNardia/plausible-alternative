@@ -3,11 +3,11 @@ import { SignupForm } from '@/components/forms/Signup'
 import { redirect } from 'next/navigation'
 
 const Signup = async() => {
-//     const session = await auth()
+    const session = await auth()
 
-//   if (session) {
-//     redirect("/home")
-//   }
+  if (session) {
+    redirect("/dashboard")
+  }
 
   return (
     <main

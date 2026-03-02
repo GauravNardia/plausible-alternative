@@ -113,3 +113,25 @@ export const onboardinguser = async (
   }
   }
 }
+
+export const isUserOnboarded = async(userId: string) => {
+  try {
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1)
+
+    if (!user.length) {
+      return { success: false, error: "User not found" }
+    }
+
+    return { success: true, onboarded: user[0].onboarded }
+  } catch (error) {
+    console.error("ONBOARDING CHECK ERROR:", error)
+    return {
+      success: false,
+      error: "Something went wrong",
+    }
+  }
+}
