@@ -60,8 +60,14 @@ const AddDomainForm = () => {
       <Dialog>
   <DialogTrigger asChild>
     <Button
-      className="w-full h-[35px] mt-2 bg-[#addb37] hover:bg-[#a7d13c] text-black font-medium rounded-[10px] cursor-pointer"
+      className="flex w-full h-[35px] mt-2 blue border-primary text-white font-semibold rounded-xl px-6 cursor-pointer"
     >
+      <Image
+        src="/assets/icons/add.svg"
+        alt="logo"
+        width={25}
+        height={25}
+      />
       Add New Website
     </Button>
   </DialogTrigger>
@@ -132,7 +138,7 @@ const AddDomainForm = () => {
         <DialogFooter>
           <Button
             type="submit"
-            className="h-[35px] mt-5 bg-[#addb37] hover:bg-[#a7d13c] text-black font-medium rounded-[10px] cursor-pointer"
+            className="px-6 mt-5 blue border-primary text-white font-medium rounded-xl cursor-pointer"
           >
             Create Site
           </Button>
