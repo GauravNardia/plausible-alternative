@@ -4,57 +4,12 @@ import DeviceClient from '@/components/charts/Device'
 import GeoClient from '@/components/charts/GeoClient'
 import SourcesTable from '@/components/charts/SourcesTable'
 import TopPagesTable from '@/components/charts/TopPage'
-import { WebsiteDropdown } from '@/components/charts/WebsiteDropdown'
 import WorldMap from '@/components/charts/WorldMap'
 import { db } from '@/database/drizzle'
 import { sites } from '@/database/schema'
+import { getData, getMetrics, getPages, getSources, getGeo } from '@/lib/actions/site.actions'
 import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
-
-async function getSources(siteId: string) {
-  const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/sources?siteId=${siteId}`,
-    { cache: "no-store" }
-  )
-  const json = await res.json()
-  return json.data || []
-}
-
-async function getPages(siteId: string) {
-  const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/pages?siteId=${siteId}`,
-    { cache: "no-store" }
-  )
-  const json = await res.json()
-  return json.data || []
-}
-
-async function getData(siteId: string) {
-  const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/devices?siteId=${siteId}`,
-    { cache: "no-store" }
-  )
-
-  return res.json()
-}
-
-async function getGeo(siteId: string) {
-  const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/geo?siteId=${siteId}`,
-    { cache: "no-store" }
-  )
-
-  return res.json()
-}
-
-async function getMetrics(siteId: string) {
-  const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/metrics?siteId=${siteId}`,
-    { cache: "no-store" }
-  )
-  const json = await res.json()
-  return json.data
-}
 
 const page = async() => {
   const session = await auth();
@@ -74,9 +29,6 @@ const page = async() => {
   }
 
   const siteId = site[0].id
-  const currentSite = site[0]
-const siteIds = currentSite.id
-  const data = await getData(siteId)
 
   const [sources, pages, devices, metrics, geo] = await Promise.all([
     getSources(siteId),

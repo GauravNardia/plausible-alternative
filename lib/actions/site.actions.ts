@@ -34,3 +34,49 @@ export const getApiKey = async (userId: string) => {
     }
   }
 }
+
+export const getGeo = async (siteId: string) => {
+  const res = await fetch(
+    `${process.env.APP_URL!}/api/sites/geo?siteId=${siteId}`,
+    { cache: "no-store" }
+  )
+
+  return res.json()
+}
+
+export const getMetrics = async (siteId: string) => {
+  const res = await fetch(
+    `${process.env.APP_URL!}/api/sites/metrics?siteId=${siteId}`,
+    { cache: "no-store" }
+  )
+  const json = await res.json()
+  return json.data
+}
+
+export const getSources = async (siteId: string) => {
+  const res = await fetch(
+    `${process.env.APP_URL!}/api/sites/sources?siteId=${siteId}`,
+    { cache: "no-store" }
+  )
+  const json = await res.json()
+  return json.data || []
+}
+
+export const getPages = async (siteId: string) => {
+  const res = await fetch(
+    `${process.env.APP_URL!}/api/sites/pages?siteId=${siteId}`,
+    { cache: "no-store" }
+  )
+  const json = await res.json()
+  return json.data || []
+}
+
+export const getData = async (siteId: string) => {
+  const res = await fetch(
+    `${process.env.APP_URL!}/api/sites/devices?siteId=${siteId}`,
+    { cache: "no-store" }
+  )
+
+  return res.json()
+}
+

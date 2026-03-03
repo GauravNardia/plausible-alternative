@@ -191,3 +191,8 @@ svg:focus {
 #nprogress .spinner {
   display: none !important;
 }
+
+::selection {
+  background: #5851ed;
+  color: #ffffff;
+}
