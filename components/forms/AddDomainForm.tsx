@@ -60,13 +60,13 @@ const AddDomainForm = () => {
       <Dialog>
   <DialogTrigger asChild>
     <Button
-      className="flex w-full h-[35px] mt-2 blue border-primary text-white font-semibold rounded-xl px-6 cursor-pointer"
+      className="flex w-full mt-2 blue border-primary text-white font-semibold rounded-xl  cursor-pointer shadow-md"
     >
       <Image
         src="/assets/icons/add.svg"
         alt="logo"
-        width={25}
-        height={25}
+        width={20}
+        height={20}
       />
       Add New Website
     </Button>

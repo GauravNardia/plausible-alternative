@@ -6,7 +6,7 @@ export function Metric({
   value: string | number
 }) {
   return (
-    <div>
+    <div className="border-y border-r p-5 bg-neutral-100 ">
       <div className="text-xs uppercase text-gray-500 tracking-wide">
         {title}
       </div>

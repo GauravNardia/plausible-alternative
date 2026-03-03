@@ -7,6 +7,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import WorldMap from "./WorldMap"
+import Image from "next/image"
 
 type Item = {
   name: string
@@ -73,19 +74,12 @@ function List({
 
 export default function GeoClient({ data }: Props) {
   return (
-    <div className="bg-neutral-100 rounded-lg p-3">
+    <div className="bg-neutral-100 p-4 h-[260px] flex flex-col">
 
       <Tabs defaultValue="countries" className="w-full">
 
 <TabsList className="bg-neutral-100 text-[12px] w-full justify-between rounded-none px-2">
   <div className="flex">
-              <TabsTrigger
-            value="map"
-    className="text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:bg-none data-[state=active]:shadow-none shadow-0 data-[state=active]:border-black rounded-none"
-          >
-            MAP
-          </TabsTrigger>
-
           <TabsTrigger
             value="countries"
     className="text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:bg-none data-[state=active]:shadow-none shadow-0 data-[state=active]:border-black rounded-none"
@@ -106,8 +100,16 @@ export default function GeoClient({ data }: Props) {
           >
             CITIES
           </TabsTrigger>
-
   </div>
+
+     <div>
+        <Image
+          src="/assets/icons/full.svg"
+          alt="Expand"
+          width={20}
+          height={20}
+        />
+     </div>
 
         </TabsList>
 
@@ -121,12 +123,6 @@ export default function GeoClient({ data }: Props) {
 
         <TabsContent value="cities">
           <List items={data.cities} label="City" />
-        </TabsContent>
-
-        <TabsContent value="map">
-          <div className="mt-6 text-gray-500 text-sm">
-            <WorldMap countries={data.countries} />
-          </div>
         </TabsContent>
 
       </Tabs>

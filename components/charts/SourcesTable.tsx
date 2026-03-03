@@ -22,9 +22,8 @@ function formatSource(name?: string) {
 
 export default function SourcesTable({ sources }: { sources: Source[] }) {
   return (
-    <div className="bg-neutral-100 rounded-lg p-3">
-     <div className="flex border-b justify-between items-center">
-       <h2 className="text-sm font-semibold">Top Sources</h2>
+    <div className="bg-neutral-100 p-4 h-[260px] flex flex-col">
+<div className="flex items-center justify-between pb-3 border-b border-gray-200">       <h2 className="text-sm font-semibold">Top Sources</h2>
        <div className="text-md font-semibold mb-4">
               <Image
                 src="/assets/icons/full.svg"

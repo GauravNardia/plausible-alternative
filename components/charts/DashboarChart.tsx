@@ -13,6 +13,7 @@ import {
 import { CustomTooltip } from "./Tooltip"
 import { Metric } from "./Metrics"
 import { formatNumber } from "@/lib/utils"
+import { SocialProof } from "../marketing/SocialProof"
 
 interface ChartData {
   hour: string
@@ -22,6 +23,14 @@ interface ChartData {
 export const DashboardChart = ({ siteId, metrics }: { siteId: string, metrics: any }) => {
   const [data, setData] = useState<ChartData[]>([])
   const [loading, setLoading] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
+
+useEffect(() => {
+  const check = () => setIsMobile(window.innerWidth < 640)
+  check()
+  window.addEventListener("resize", check)
+  return () => window.removeEventListener("resize", check)
+}, [])
 
   useEffect(() => {
     async function fetchData() {
@@ -63,8 +72,8 @@ export const DashboardChart = ({ siteId, metrics }: { siteId: string, metrics: a
   }
 
   return (
-    <div className="w-full bg-neutral-100 rounded-3xl p-8">
-      <div className="grid grid-cols-4 mb-8">
+    <div className="w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-4">
   <Metric
     title="Unique Visitors"
     value={formatNumber(metrics.uniqueVisitors)}
@@ -81,21 +90,21 @@ export const DashboardChart = ({ siteId, metrics }: { siteId: string, metrics: a
     title="Views per Visit"
     value={metrics.viewsPerVisit}
   />
-</div>
-      <div className="w-full h-[300px] md:h-[420px]">
+      </div>
+      <div className="dot-bg h-[80px] border-b" />
+      <div className="w-full h-[300px] md:h-[450px] border-b py-5 bg-neutral-100">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
               <linearGradient id="lightGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="20%" stopColor="#5851ed" stopOpacity={0.5} />
+                <stop offset="20%" stopColor="#5851ed" stopOpacity={0.4} />
                 <stop offset="100%" stopColor="#5851ed" stopOpacity={0} />
               </linearGradient>
             </defs>
 
             <CartesianGrid stroke="#E2E2E2" vertical={false} />
 
-            <XAxis dataKey="hour" stroke="#94a3b8" tickLine={false} axisLine={false} />
-            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+              <XAxis dataKey="hour" stroke="#94a3b8" interval={isMobile ? 3 : 2} tick={{ fontSize: isMobile ? 10 : 12 }} tickLine={false} axisLine={false}/>            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
 
             <Tooltip cursor={false} content={<CustomTooltip />} />
 

@@ -91,8 +91,8 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
   }
 
   return (
-    <div className="w-full h-[420px]">
-      <ReactECharts
+<div className="w-full bg-neutral-100 border-b h-[420px]">     
+  <ReactECharts
         option={option}
         style={{ height: "100%", width: "100%" }}
       />

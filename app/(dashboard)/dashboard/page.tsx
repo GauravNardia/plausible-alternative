@@ -5,6 +5,7 @@ import GeoClient from '@/components/charts/GeoClient'
 import SourcesTable from '@/components/charts/SourcesTable'
 import TopPagesTable from '@/components/charts/TopPage'
 import { WebsiteDropdown } from '@/components/charts/WebsiteDropdown'
+import WorldMap from '@/components/charts/WorldMap'
 import { db } from '@/database/drizzle'
 import { sites } from '@/database/schema'
 import { eq } from 'drizzle-orm'
@@ -85,23 +86,38 @@ const siteIds = currentSite.id
     getGeo(siteId)
   ])
 
-  return (
-    <section className='w-full flex flex-col gap-8 max-w-6xl mx-auto px-4 py-8'>
-      <div className='w-40'>
-        <WebsiteDropdown 
-        sites={site}
-        currentSiteId={site[0].id}
-      />
-      </div>
-      <DashboardChart siteId={siteId} metrics={metrics} />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+return (
+  <section className="w-full flex flex-col justify-center max-w-6xl mx-auto mb-20">
+    <div className="dot-bg h-[60px] sm:h-[80px]" />
+
+    <DashboardChart siteId={siteId} metrics={metrics} />
+
+    <div className="w-full flex flex-col">
+      <div className="dot-bg h-[60px] sm:h-[80px] border-b" />
+
+      {/* Sources + Pages */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0">
         <SourcesTable sources={sources} />
         <TopPagesTable pages={pages} />
+      </div>
+
+      <div className="dot-bg h-[60px] sm:h-[80px] border-t" />
+
+      {/* Devices + Geo */}
+      <div className="grid grid-cols-1 md:grid-cols-2 items-start border-y gap-4 md:gap-0">
         <DeviceClient data={devices} />
         <GeoClient data={geo} />
       </div>
-    </section>
-  )
+
+      <div className="dot-bg h-[60px] sm:h-[80px] border-y" />
+
+      {/* World Map */}
+      <div className="w-full overflow-hidden">
+        <WorldMap countries={geo.countries} />
+      </div>
+    </div>
+  </section>
+)
 }
 
 export default page

@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner";
-import Image from "next/image";
-import AddDomainForm from "@/components/forms/AddDomainForm";
 
 
 export const metadata: Metadata = {
