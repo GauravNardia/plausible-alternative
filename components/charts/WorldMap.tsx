@@ -1,135 +1,101 @@
-// "use client"
+"use client"
 
-// import { useState, useMemo } from "react"
-// import {
-//   ComposableMap,
-//   Geographies,
-//   Geography
-// } from "react-simple-maps"
+import React, { useEffect, useMemo } from "react"
+import ReactECharts from "echarts-for-react"
+import * as echarts from "echarts/core"
+import { MapChart } from "echarts/charts"
+import { TooltipComponent } from "echarts/components"
+import { CanvasRenderer } from "echarts/renderers"
 
-// import world from "world-atlas/countries-110m.json"
+import * as topojson from "topojson-client"
+import world from "world-atlas/countries-110m.json"
 
-// import countriesLib from "i18n-iso-countries"
-// import en from "i18n-iso-countries/langs/en.json"
+import countriesLib from "i18n-iso-countries"
+import en from "i18n-iso-countries/langs/en.json"
 
-// countriesLib.registerLocale(en)
+countriesLib.registerLocale(en)
 
-// type Item = {
-//   name: string // ISO_A2 (IN, US, DE)
-//   visitors: number | string
-// }
+echarts.use([
+  MapChart,
+  TooltipComponent,
+  CanvasRenderer
+])
 
-// export default function WorldMap({ countries }: { countries: Item[] }) {
-//   const [tooltip, setTooltip] = useState<{
-//     x: number
-//     y: number
-//     name: string
-//     value: number
-//   } | null>(null)
-
-//   // Normalize backend data
-//   const countryMap = useMemo(() => {
-//     const map: Record<string, number> = {}
-
-//     countries.forEach((c) => {
-//       if (!c.name) return
-//       map[c.name.toUpperCase()] = Number(c.visitors) || 0
-//     })
-
-//     return map
-//   }, [countries])
-
-//   const max = useMemo(() => {
-//     const values = Object.values(countryMap)
-//     return values.length ? Math.max(...values) : 1
-//   }, [countryMap])
-
-//   return (
-//     <div className="relative mt-6 w-full">
-
-//       <ComposableMap 
-//       projectionConfig={{ scale: 150 }}
-      
-//       >
-//         <Geographies geography={world}>
-//           {({ geographies }: any) =>
-//             geographies.map((geo: any) => {
-//               const numericId = geo.id
-
-//               // 🔥 Convert numeric ISO → ISO_A2
-//               const iso2 = countriesLib.numericToAlpha2(numericId)
-
-//               const visitors = iso2
-//                 ? countryMap[iso2] || 0
-//                 : 0
-
-//               const intensity = visitors / max
-
-//             //   const fillColor =
-//             //     visitors === 0
-//             //       ? "#f3f4f6"
-//             //       : `rgba(0,0,0,${0.2 + intensity * 0.6})`
-//             const fillColor = "#dcf79a"
-
-//               return (
-//                 <Geography
-//                   key={geo.rsmKey}
-//                   geography={geo}
-//                   fill={fillColor}
-//                   stroke="#e5e7eb"
-//                   style={{
-//                     default: { outline: "none" },
-//                     hover: { fill: "#addb37", outline: "none" },
-//                     pressed: { outline: "none" }
-//                   }}
-//                   onMouseEnter={(e: any) => {
-//                     setTooltip({
-//                       x: e.clientX,
-//                       y: e.clientY,
-//                       name: geo.properties.name,
-//                       value: visitors
-//                     })
-//                   }}
-//                   onMouseMove={(e: any) => {
-//                     setTooltip((prev) =>
-//                       prev
-//                         ? { ...prev, x: e.clientX, y: e.clientY }
-//                         : null
-//                     )
-//                   }}
-//                   onMouseLeave={() => setTooltip(null)}
-//                 />
-//               )
-//             })
-//           }
-//         </Geographies>
-//       </ComposableMap>
-
-//       {/* Tooltip */}
-//       {tooltip && (
-//         <div
-//           className="fixed z-50 bg-[#2a360d] text-white text-sm px-3 py-2 rounded-md shadow-lg pointer-events-none"
-//           style={{
-//             top: tooltip.y + 12,
-//             left: tooltip.x + 12
-//           }}
-//         >
-//           <div className="font-medium">{tooltip.name}</div>
-//           <div className="text-xs opacity-80">
-//             {tooltip.value} visitors
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   )
-// }
-
-import React from 'react'
-
-const WorldMap = () => {
-  return (
-    <div>WorldMap</div>
-  )
+type Item = {
+  name: string // ISO2 (IN, US)
+  visitors: number
 }
 
-export default WorldMap
+export default function WorldMap({ countries }: { countries: Item[] }) {
+
+  useEffect(() => {
+    const geo = topojson.feature(
+      world as any,
+      (world as any).objects.countries
+    )
+    echarts.registerMap("world", geo as any)
+  }, [])
+
+  // 🔥 Convert ISO2 → Full country name
+  const formattedData = useMemo(() => {
+    return countries.map((c) => {
+      const fullName = countriesLib.getName(
+        c.name,
+        "en"
+      )
+
+      return {
+        name: fullName || c.name,
+        value: c.visitors
+      }
+    })
+  }, [countries])
+
+  const max = Math.max(...formattedData.map(c => c.value), 1)
+
+  const option = {
+    tooltip: {
+      trigger: "item",
+      backgroundColor: "#ffffff",
+      borderColor: "#E5E7EB",
+      textStyle: { color: "#000000" },
+      formatter: (params: any) => {
+        const value = params.value || 0
+        return `<strong>${params.name}</strong><br/>${value} visitors`
+      }
+    },
+
+    series: [
+      {
+        type: "map",
+        map: "world",
+        roam: false,
+
+        itemStyle: {
+          areaColor: "#ffffff",
+          borderColor: "#888888"
+        },
+
+        emphasis: {
+          itemStyle: {
+            areaColor: "#5851ed"
+          },
+          label: {
+            show: false
+          }
+        },
+
+        data: formattedData
+      }
+    ]
+  }
+
+  return (
+    <div className="w-full h-[420px]">
+      <ReactECharts
+        option={option}
+        style={{ height: "100%", width: "100%" }}
+      />
+    </div>
+  )
+}

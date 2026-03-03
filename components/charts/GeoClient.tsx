@@ -125,7 +125,7 @@ export default function GeoClient({ data }: Props) {
 
         <TabsContent value="map">
           <div className="mt-6 text-gray-500 text-sm">
-            {/* <WorldMap countries={data.countries} /> */}
+            <WorldMap countries={data.countries} />
           </div>
         </TabsContent>
 
