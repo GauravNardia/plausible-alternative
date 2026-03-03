@@ -4,6 +4,7 @@ import DeviceClient from '@/components/charts/Device'
 import GeoClient from '@/components/charts/GeoClient'
 import SourcesTable from '@/components/charts/SourcesTable'
 import TopPagesTable from '@/components/charts/TopPage'
+import { WebsiteDropdown } from '@/components/charts/WebsiteDropdown'
 import { db } from '@/database/drizzle'
 import { sites } from '@/database/schema'
 import { eq } from 'drizzle-orm'
@@ -69,6 +70,8 @@ const page = async() => {
   }
 
   const siteId = site[0].id
+  const currentSite = site[0]
+const siteIds = currentSite.id
   const data = await getData(siteId)
 
   const [sources, pages, devices, metrics, geo] = await Promise.all([
@@ -81,6 +84,12 @@ const page = async() => {
 
   return (
     <section className='w-full flex flex-col gap-8 max-w-6xl mx-auto px-4 py-8'>
+      <div className='w-40'>
+        <WebsiteDropdown 
+        sites={site}
+        currentSiteId={site[0].id}
+      />
+      </div>
       <DashboardChart siteId={siteId} metrics={metrics} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <SourcesTable sources={sources} />

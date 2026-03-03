@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bpmf+Zihi+Kai+Std&family=Shadows+Into+Light&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -140,4 +141,42 @@ svg:focus {
 
 .recharts-wrapper {
   outline: none !important;
+}
+
+.font-bpmf {
+  font-family: 'Bpmf Zihi Kai Std', cursive;
+}
+
+.font-shadow {
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.blue {
+  background: #5851ed;
+}
+
+.blue-text {
+  color: #5851ed;
+}
+.primary-border {
+  border: 1px solid #2e27b3;
+}
+
+.secondary-border {
+  border: 1px solid var(--color-gray-200)
+}
+
+.white {
+  background: #ffffff;
+}
+
+.dot-bg {
+  background-color: #ffffff;
+
+  background-image: radial-gradient(
+    rgba(81, 86, 95, 0.6) 1px,  /* gray-500 */
+    transparent 1px
+  );
+
+  background-size: 24px 24px;
 }

@@ -6,7 +6,7 @@ const Signin = async() => {
     const session = await auth()
   
     if (session) {
-      redirect("/dashoard")
+      redirect("/dashboard")
     }
   
   return (

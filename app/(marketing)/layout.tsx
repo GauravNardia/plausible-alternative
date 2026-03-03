@@ -1,4 +1,7 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
+import Image from "next/image";
+import AddDomainForm from "@/components/forms/AddDomainForm";
 
 
 export const metadata: Metadata = {
@@ -51,22 +54,20 @@ export const metadata: Metadata = {
   },
 };
 
-
-const AuthLayout = ({
+const MarketingLayout = ({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) => {
-
+}>) => {
   return (
-    <div className="text-neutral-200 h-screen flex flex-col justify-center items-center ">
-      <div>
-        <main>
-            {children}
-        </main>
+    <section className="w-full max-w-6xl border mx-auto flex flex-col justify-center">
+      <div
+        className={` antialiased`}
+      >
+        {children}
       </div>
-    </div>
+    </section>
   );
 }
 
-export default AuthLayout;
+export default MarketingLayout;

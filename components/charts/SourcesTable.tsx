@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 interface Source {
   name: string
   visitors: number
@@ -20,14 +22,29 @@ function formatSource(name?: string) {
 
 export default function SourcesTable({ sources }: { sources: Source[] }) {
   return (
-    <div className="bg-neutral-100 rounded-3xl p-6">
-      <h2 className="text-lg font-semibold mb-4">Top Sources</h2>
+    <div className="bg-neutral-100 rounded-lg p-3">
+     <div className="flex border-b justify-between items-center">
+       <h2 className="text-sm font-semibold">Top Sources</h2>
+       <div className="text-md font-semibold mb-4">
+              <Image
+                src="/assets/icons/full.svg"
+                alt="Expand"
+                width={20}
+                height={20}
+              />
+         
+       </div>
+     </div>
+      <div className="flex justify-between items-center py-2">
+       <h2 className="text-xs font-semibold text-neutral-500">Sources</h2>
+        <h2 className="text-xs font-semibold text-neutral-500">Visitors</h2>
+     </div>
 
       <div className="flex flex-col gap-3">
         {sources.map((source, index) => (
           <div
             key={index}
-            className="flex justify-between text-sm text-neutral-700"
+            className="flex justify-between text-[12px] text-neutral-700"
           >
             <span>{formatSource(source.name)}</span>
             <span className="font-medium">{source.visitors}</span>
