@@ -6,7 +6,7 @@ export default function PricingPage() {
       <div className="max-w-6xl mx-auto">
 
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-3xl font-semibold font-bpmf">
+          <h1 className="text-4xl md:text-4xl font-semibold font-bpmf">
             Transparent traffic-based pricing
           </h1>
           <p className="text-neutral-600 mt-4">

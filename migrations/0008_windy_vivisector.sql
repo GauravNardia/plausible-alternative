@@ -1,1 +1,0 @@
-ALTER TABLE "sites" ADD COLUMN "name" text NOT NULL;

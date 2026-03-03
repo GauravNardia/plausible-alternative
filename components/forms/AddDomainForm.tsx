@@ -29,9 +29,13 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { onboardinguser } from "@/lib/actions/auth.action"
 import { toast } from "sonner"
+import { useState } from "react"
+import UpgradeModal from "../modals/UpgradeModal"
 
 const AddDomainForm = () => {
         const router = useRouter()
+        const [showUpgrade, setShowUpgrade] = useState(false)
+const [dialogOpen, setDialogOpen] = useState(false)
 
       const form = useForm<z.infer<typeof onboardingSchema>>({
         resolver: zodResolver(onboardingSchema),
@@ -41,24 +45,31 @@ const AddDomainForm = () => {
         },
       })
 
-      async function onSubmit(data: z.infer<typeof onboardingSchema>) {
-    try {
-      const result = await onboardinguser(data.domain, data.site)
+async function onSubmit(data: z.infer<typeof onboardingSchema>) {
+  try {
+    const result = await onboardinguser(data.domain, data.site)
 
-      if(result.success) {
-        toast.success("Website added successfully!")
-       router.push(`/onboarding/install/${result.siteId}`)
-      } else {
-        toast.error(result.error)
-      }
-    } catch (error) {
-      toast.error("Something went wrong")
+    // If backend returns limit error
+    if (!result.success && result.status === 402) {
+      setDialogOpen(false)
+      setShowUpgrade(true)
+      return
     }
-      }
+
+    if (result.success) {
+      toast.success("Website added successfully!")
+      router.push(`/onboarding/install/${result.siteId}`)
+    } else {
+      toast.error(result.error)
+    }
+  } catch (error) {
+    toast.error("Something went wrong")
+  }
+}
 
   return (
-      <Dialog>
-  <DialogTrigger asChild>
+    <>
+<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>  <DialogTrigger asChild>
     <Button
       className="flex w-full mt-2 blue border-primary text-white font-semibold rounded-xl  cursor-pointer shadow-md"
     >
@@ -146,7 +157,16 @@ const AddDomainForm = () => {
       </form>
     </Form>
   </DialogContent>
-</Dialog>  )
+</Dialog>  
+    <UpgradeModal
+  isOpen={showUpgrade}
+  onClose={() => setShowUpgrade(false)}
+  title="You've reached your site limit"
+  description="Your current plan allows limited sites. Upgrade to add more and continue tracking."
+/>
+    </>
+
+)
 }
 
 export default AddDomainForm

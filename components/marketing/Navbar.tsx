@@ -34,12 +34,8 @@ export const Navbar = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 text-sm text-neutral-600">
-          <Link href="#">Product</Link>
-          <Link href="#">Features</Link>
-          <Link href="#">Pricing</Link>
-          <Link href="#">Docs</Link>
-          <Link href="#">Blog</Link>
+        <nav className="hidden md:flex items-center gap-8 text-sm text-neutral-600 uppercase font-semibold">
+          <Link href="/pricing">Pricing</Link>
         </nav>
 
         {/* Right Side */}
@@ -72,11 +68,7 @@ export const Navbar = () => {
       {open && (
         <div className="md:hidden px-4 pb-6 border-t">
           <nav className="flex flex-col gap-4 text-sm text-neutral-600 pt-4">
-            <Link href="#">Product</Link>
-            <Link href="#">Features</Link>
-            <Link href="#">Pricing</Link>
-            <Link href="#">Docs</Link>
-            <Link href="#">Blog</Link>
+            <Link href="/pricing">Pricing</Link>
           </nav>
         </div>
       )}

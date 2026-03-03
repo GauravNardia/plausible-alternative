@@ -118,12 +118,12 @@ export const dailyVisitors = pgTable("daily_visitors",{
 
 export const pricingTiers = pgTable("pricing_tiers", {
   id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(), // 10k, 100k, 1M
+  name: text("name").notNull(),
   monthlyEventLimit: integer("monthly_event_limit").notNull(),
-  priceMonthly: integer("price_monthly").notNull(), // cents
+  maxSites: integer("max_sites").notNull(), // ADD THIS
+  priceMonthly: integer("price_monthly").notNull(),
   createdAt: timestamp("created_at").defaultNow()
 })
-
 
 export const subscriptions = pgTable("subscriptions", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -138,10 +138,22 @@ export const subscriptions = pgTable("subscriptions", {
 })
 
 
-export const monthlyUsage = pgTable("monthly_usage", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  siteId: uuid("site_id").notNull().references(() => sites.id),
-  month: text("month").notNull(),
-  eventsCount: integer("events_count").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
-})
+export const monthlyUsage = pgTable(
+  "monthly_usage",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+
+    month: text("month").notNull(),
+
+    eventsCount: integer("events_count").default(0),
+
+    createdAt: timestamp("created_at").defaultNow(),
+  },
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.userId, table.month],
+    }),
+  })
+)

@@ -1,9 +1,9 @@
 "use server"
 
 import { db } from "@/database/drizzle"
-import { sites, users } from "@/database/schema"
+import { pricingTiers, sites, subscriptions, users } from "@/database/schema"
 import bcrypt from "bcryptjs"
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { auth, signIn, signOut } from "@/auth"
 import  AuthError  from "next-auth"
 import { generatePublicApiKey } from "../api-key"
@@ -78,39 +78,88 @@ export const onboardinguser = async (
 ) => {
   try {
     const session = await auth()
-    const apiKey = generatePublicApiKey()
 
     if (!session?.user?.id) {
       return { success: false, error: "Unauthorized" }
     }
 
-    // ✅ Narrow the type properly
     const userId = session.user.id
 
-     const inserted = await db.insert(sites).values({
-      domain,
-      name: site,
-      userId, // now strictly string
-      publicApiKey: apiKey,
-    })
-    .returning({ id: sites.id })
+    /* ================= CHECK SUBSCRIPTION ================= */
+
+    const subscription = await db
+      .select()
+      .from(subscriptions)
+      .where(
+        and(
+          eq(subscriptions.userId, userId),
+          eq(subscriptions.status, "active")
+        )
+      )
+      .then(res => res[0])
+
+    if (!subscription) {
+      return { success: false, error: "No active subscription", status: 403 }
+    }
+
+    /* ================= GET PRICING TIER ================= */
+
+    const tier = await db
+      .select()
+      .from(pricingTiers)
+      .where(eq(pricingTiers.id, subscription.pricingTierId))
+      .then(res => res[0])
+
+    if (!tier) {
+      return { success: false, error: "Pricing tier not found", status: 404 }
+    }
+
+    /* ================= CHECK SITE LIMIT ================= */
+
+    const existingSites = await db
+      .select()
+      .from(sites)
+      .where(eq(sites.userId, userId))
+
+    if (existingSites.length >= tier.maxSites) {
+      return {
+        success: false,
+        error: "Site limit reached",
+        status: 402,
+      }
+    }
+
+    /* ================= CREATE SITE ================= */
+
+    const apiKey = generatePublicApiKey()
+
+    const inserted = await db
+      .insert(sites)
+      .values({
+        domain,
+        name: site,
+        userId,
+        publicApiKey: apiKey,
+      })
+      .returning({ id: sites.id })
 
     await db
       .update(users)
       .set({ onboarded: true })
       .where(eq(users.id, userId))
 
-    return { 
+    return {
       siteId: inserted[0].id,
-      success: true 
+      success: true,
     }
 
   } catch (error) {
-  console.error("ONBOARDING ERROR:", error)
-  return {
-    success: false,
-    error: "Something went wrong",
-  }
+    console.error("ONBOARDING ERROR:", error)
+
+    return {
+      success: false,
+      error: "Something went wrong",
+    }
   }
 }
 

@@ -1,1 +1,0 @@
-ALTER TABLE "sites" ALTER COLUMN "public_api_key" SET DEFAULT 'testing';
