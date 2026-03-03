@@ -8,6 +8,7 @@ import { WebsiteDropdown } from '@/components/charts/WebsiteDropdown'
 import { db } from '@/database/drizzle'
 import { sites } from '@/database/schema'
 import { eq } from 'drizzle-orm'
+import { redirect } from 'next/navigation'
 
 async function getSources(siteId: string) {
   const res = await fetch(
@@ -56,7 +57,9 @@ async function getMetrics(siteId: string) {
 
 const page = async() => {
   const session = await auth();
-  if(!session?.user?.id) return 
+  if(!session?.user?.id) {
+    redirect('/sign-in')
+  } 
 
     // 2️⃣ Get site from DB
   const site = await db

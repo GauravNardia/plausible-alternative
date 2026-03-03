@@ -46,7 +46,7 @@ export const SigninForm = () => {
         redirect: false,
       })
 
-      router.push("/home")
+      router.push("/sites")
     } catch (error) {
       toast.error("Something went wrong")
     } finally {
@@ -115,9 +115,9 @@ return (
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full h-[35px] mt-2 bg-[#addb37] hover:bg-[#a7d13c] text-black font-medium rounded-[10px] cursor-pointer"
+          className="w-full px-6 mt-2 blue primary-border text-white font-semibold rounded-xl cursor-pointer"
         >
-          {isLoading ? "Loading..." : "Signin"}
+          {isLoading ? "Loading..." : "SIGN IN"}
         </Button>
 
       </form>

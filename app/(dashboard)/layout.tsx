@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-const DashboardLayout = ({
+const DashboardLayout = async({
   children,
 }: Readonly<{
   children: React.ReactNode;

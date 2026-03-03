@@ -47,13 +47,13 @@ export const Navbar = () => {
 
           {/* Buttons always visible (like screenshot) */}
           <Link href="/sign-in">
-            <Button className="white text-black text-sm px-3 md:px-4 rounded-xl secondary-border cursor-pointer shadow-md">
+            <Button className="white text-black text-sm px-3 md:px-6 rounded-xl secondary-border cursor-pointer shadow-md">
               LOG IN
             </Button>
           </Link>
 
           <Link href="/sign-up">
-            <Button className="blue text-white text-sm px-4 md:px-4 rounded-xl primary-border cursor-pointer shadow-md">
+            <Button className="blue text-white text-sm px-4 md:px-6 rounded-xl primary-border cursor-pointer shadow-md">
               SIGN UP
             </Button>
           </Link>
