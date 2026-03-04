@@ -1,7 +1,6 @@
 "use client"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -9,8 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
-import { Label } from "@/components/ui/label"
+import { FieldGroup } from "@/components/ui/field"
 import { Input } from "../ui/input"
 import { onboardingSchema } from "@/lib/validations"
 import { useForm } from "react-hook-form"
@@ -83,8 +81,8 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
     </Button>
   </DialogTrigger>
 
-  <DialogContent className="sm:max-w-sm text-center bg-neutral-100">
-    <DialogHeader className="text-center">
+  <DialogContent className="sm:max-w-sm text-center bg-neutral-100 p-1 rounded-2xl">
+    <DialogHeader className="text-center bg-[#ffffff] rounded-xl py-8 px-3">
       <div className="w-12 h-12 mx-auto bg-[#addb37] rounded-full flex items-center justify-center text-black font-bold">
         <Image
           src="/assets/images/logo2.png"
@@ -105,7 +103,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
     </DialogHeader>
 
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="px-3">
         <FieldGroup className="mt-4">
 
           <FormField
@@ -146,7 +144,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
 
         </FieldGroup>
 
-        <DialogFooter>
+        <DialogFooter className="px-3 py-4">
           <Button
             type="submit"
             className="px-6 mt-5 blue border-primary text-white font-medium rounded-xl cursor-pointer"
@@ -158,7 +156,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
     </Form>
   </DialogContent>
 </Dialog>  
-    <UpgradeModal
+  <UpgradeModal
   isOpen={showUpgrade}
   onClose={() => setShowUpgrade(false)}
   title="You've reached your site limit"
