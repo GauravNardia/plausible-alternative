@@ -7,8 +7,9 @@ interface Page {
 
 export default function TopPagesTable({ pages }: { pages: Page[] }) {
   return (
-    <div className="bg-neutral-100 p-3 border-l h-[260px]">
-<div className="flex items-center justify-between pb-3 border-b border-gray-200">       <h2 className="text-sm font-semibold">Top Pages</h2>
+    <div className="bg-neutral-100 p-3 border-l h-[280px]">
+<div className="flex items-center justify-between pb-3 border-b border-gray-200">       
+  <h2 className="text-sm font-semibold">Top Pages</h2>
        <div className="text-md font-semibold mb-4">
               <Image
                 src="/assets/icons/full.svg"

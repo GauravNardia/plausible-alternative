@@ -74,7 +74,7 @@ function List({
 
 export default function GeoClient({ data }: Props) {
   return (
-    <div className="bg-neutral-100 p-4 h-[260px] flex flex-col">
+    <div className="bg-neutral-100 p-4 h-[280px] flex flex-col">
 
       <Tabs defaultValue="countries" className="w-full">
 

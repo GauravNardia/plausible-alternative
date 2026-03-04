@@ -90,7 +90,7 @@ function List({ items, label }: { items: Item[]; label: string }) {
 export default function DeviceClient({ data }: Props) {
     const [activeTab, setActiveTab] = useState("browsers")
   return (
-    <div className="bg-neutral-100 p-4 h-[260px] flex flex-col border-r">
+    <div className="bg-neutral-100 p-4 h-[280px] flex flex-col border-r">
       <Tabs
   value={activeTab}
   onValueChange={setActiveTab}
