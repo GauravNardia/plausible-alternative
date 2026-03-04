@@ -57,10 +57,10 @@ export const SigninForm = () => {
 return (
   <div className="font-inter sm:w-[400px] mx-auto flex items-center justify-center w-full">
 
-    <div className="w-full bg-neutral-100 rounded-xl px-8 py-8">
+    <div className="w-full bg-neutral-100 rounded-2xl p-1">
 
       {/* Logo */}
-      <div className="flex flex-col items-center text-center mb-6">
+      <div className="flex flex-col items-center text-center bg-[#ffffff] rounded-xl py-5">
         <Image
           src="/assets/images/logo2.png"
           alt="logo"
@@ -85,7 +85,7 @@ return (
       </div>
 
       {/* Form */}
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4 px-4">
 
         {/* Email */}
         <div>
