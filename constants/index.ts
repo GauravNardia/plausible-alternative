@@ -6,3 +6,9 @@ export const TIERS = [
   { label: "500K", views: "500K", starter: 39, growth: 79, scale: 149 },
   { label: "1M", views: "1M", starter: 59, growth: 119, scale: 199 },
 ]
+
+export const PLAN_PRODUCT_IDS: Record<string, string> = {
+  starter: "pdt_0NZk2m2ihnDFGSAkvCHMu",
+  growth:  "pdt_0NZk32m4w1T3vZG91zrzJ",
+  scale:   "pdt_0NZk38v6WsCPiOzLvlI4a",
+}

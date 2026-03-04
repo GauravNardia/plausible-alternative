@@ -7,10 +7,9 @@ import TopPagesTable from '@/components/charts/TopPage'
 import WorldMap from '@/components/charts/WorldMap'
 import LimitTooltip from '@/components/modals/LimitTooltip'
 import { db } from '@/database/drizzle'
-import { sites } from '@/database/schema'
+import { sites, subscriptions } from '@/database/schema'
 import { getData, getMetrics, getPages, getSources, getGeo } from '@/lib/actions/site.actions'
 import { eq } from 'drizzle-orm'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 const page = async() => {
@@ -18,6 +17,20 @@ const page = async() => {
   if(!session?.user?.id) {
     redirect('/sign-in')
   } 
+
+if (!session?.user?.id) {
+  redirect("/sign-in")
+}
+
+const subscription = await db
+  .select()
+  .from(subscriptions)
+  .where(eq(subscriptions.userId, session.user.id))
+  .limit(1)
+
+if (!subscription.length || subscription[0].status !== "active") {
+  redirect("/pricing")
+}
 
     // 2️⃣ Get site from DB
   const site = await db
@@ -126,7 +139,7 @@ return (
             🔴 Tracking paused
           </p>
           <p className="text-xs text-red-600 mt-1">
-            You’ve reached your monthly limit. Upgrade to resume tracking.
+            You've reached your monthly limit. Upgrade to resume tracking.
           </p>
         </div>
       )}
@@ -137,7 +150,7 @@ return (
             ⚠️ Almost there
           </p>
           <p className="text-xs text-orange-600 mt-1">
-            You’re about to hit your monthly limit.
+            You're about to hit your monthly limit.
           </p>
         </div>
       )}
@@ -148,7 +161,7 @@ return (
             Heads up
           </p>
           <p className="text-xs text-yellow-600 mt-1">
-            You’ve used most of your monthly events.
+            You've used most of your monthly events.
           </p>
         </div>
       )}
