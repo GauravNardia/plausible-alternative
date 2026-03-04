@@ -28,9 +28,9 @@ const subscription = await db
   .where(eq(subscriptions.userId, session.user.id))
   .limit(1)
 
-if (!subscription.length || subscription[0].status !== "active") {
-  redirect("/pricing")
-}
+// if (!subscription.length || subscription[0].status !== "active") {
+//   redirect("/pricing")
+// }
 
     // 2️⃣ Get site from DB
   const site = await db

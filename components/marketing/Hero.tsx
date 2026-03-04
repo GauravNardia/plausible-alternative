@@ -1,12 +1,13 @@
 "use client"
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
+import Image from "next/image"
 
 export const Hero = () => {
   const router = useRouter()
   return (
-    <section className="w-full mx-auto px-5 sm:px-6 py-24 flex justify-center">      
-    <div className="w-full text-left sm:px-5">
+    <section className="w-full mx-auto sm:pt-24 flex flex-col justify-center">      
+    <div className="w-full text-left px-5 sm:px-6 py-20">
       <h1 className="text-3xl md:text-5xl font-semibold leading-tight font-bpmf">
        <span className="block">
         Simple. Privacy-First Analytics.
@@ -29,10 +30,17 @@ export const Hero = () => {
           </Button>
         </div>
       </div>
-{/* 
-      <div className="bg-gray-100 rounded-md h-[400px] flex items-center justify-center text-gray-400">
-        Dashboard Preview
-      </div> */}
+
+      <div className="w-full sm:mt-16">
+        <Image
+          src="/assets/images/hero-img.jpg"
+          alt="dashboard preview"
+          width={1600}
+          height={900}
+          className="w-full h-auto"
+          priority
+        />
+      </div>
     </section>
   )
 }

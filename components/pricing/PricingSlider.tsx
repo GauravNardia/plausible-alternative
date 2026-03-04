@@ -60,7 +60,6 @@ function Plan({
 }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
 
   async function handleCheckout() {
     setLoading(true)
@@ -133,13 +132,19 @@ function Plan({
       <Button
         onClick={handleCheckout}
         disabled={loading}
-        className={`w-full py-6 font-semibold transition cursor-pointer rounded-none
+        className={`w-full py-6 flex justify-between text-left font-semibold transition cursor-pointer rounded-none
           ${highlight
             ? "bg-[#5851ed] hover:bg-[#4e47cd] text-white"
             : "bg-white hover:bg-neutral-100 text-black"
           }`}
       >
         {loading ? "LOADING..." : "GET STARTED"}
+        <Image
+        src={`${highlight ? "/assets/icons/arrow-white.svg": "/assets/icons/arrow-black.svg"}`}
+        alt="arrow"
+        width={25}
+        height={25}
+        />
       </Button>
 
       {error && (
@@ -148,7 +153,7 @@ function Plan({
         </p>
       )}
 
-      <ul className="h-[250px] border-y border-gray-200 space-y-3 text-md text-left text-black bg-neutral-100 px-5 py-10">
+      <ul className="h-[250px] border-y border-gray-200 space-y-3 text-md text-left text-black bg-neutral-50 px-5 py-10">
         {[sites, "Geo analytics", "Devices & Sources", "Custom events"].map((feature) => (
           <li key={feature} className="flex items-center gap-3">
             <Image
