@@ -1,6 +1,8 @@
 "use client"
-
 import { X } from "lucide-react"
+import { Button } from "../ui/button"
+import { useRouter } from "next/navigation"
+import { on } from "node:stream"
 
 type Props = {
   isOpen: boolean
@@ -16,11 +18,17 @@ export default function UpgradeModal({
   description,
 }: Props) {
   if (!isOpen) return null
+  const router = useRouter()
+
+  const handleUpgrade = () => {
+    onClose()
+    router.push("/pricing")
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 relative">
-
+      <div className="w-full max-w-md bg-neutral-100 rounded-2xl shadow-xl p-1 relative">
+        <div className="bg-[#ffffff] px-3 py-8 rounded-xl">
         {/* Close */}
         <button
           onClick={onClose}
@@ -39,21 +47,19 @@ export default function UpgradeModal({
             "You've reached the limit of your current plan. Upgrade to continue."}
         </p>
 
+        </div>
         {/* Actions */}
-        <div className="mt-6 flex gap-3">
+        <div className="my-3 mx-3 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 border border-gray-300 rounded-lg py-2 text-sm"
+            className="flex-1 border border-gray-300 rounded-xl py-2 text-sm cursor-pointer"
           >
             Cancel
           </button>
 
-          <a
-            href="/pricing"
-            className="flex-1 bg-black text-white rounded-lg py-2 text-sm text-center hover:opacity-90 transition"
-          >
+          <Button onClick={handleUpgrade} className="flex-1 blue blue-border text-white rounded-xl py-2 text-sm text-center hover:opacity-90 transition cursor-pointer">
             Upgrade Plan
-          </a>
+          </Button>
         </div>
       </div>
     </div>

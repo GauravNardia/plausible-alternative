@@ -5,10 +5,12 @@ import GeoClient from '@/components/charts/GeoClient'
 import SourcesTable from '@/components/charts/SourcesTable'
 import TopPagesTable from '@/components/charts/TopPage'
 import WorldMap from '@/components/charts/WorldMap'
+import LimitTooltip from '@/components/modals/LimitTooltip'
 import { db } from '@/database/drizzle'
 import { sites } from '@/database/schema'
 import { getData, getMetrics, getPages, getSources, getGeo } from '@/lib/actions/site.actions'
 import { eq } from 'drizzle-orm'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 const page = async() => {
@@ -45,26 +47,8 @@ const usage = await fetch(
 
 return (
   <section className="w-full flex flex-col justify-center max-w-6xl mx-auto mb-20">
+    <LimitTooltip usage={usage.percentage} />
     <div className="dot-bg h-[60px] sm:h-[80px]" />
-    {usage.percentage >= 50 && (
-  <div className="mb-6 mx-4 md:mx-0 bg-red-50 border border-red-200 rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-    <div>
-      <p className="text-sm font-semibold text-red-700">
-        🔴 Tracking paused
-      </p>
-      <p className="text-sm text-red-600 mt-1">
-        You've reached your monthly event limit. Upgrade your plan to resume analytics.
-      </p>
-    </div>
-
-    <a
-      href="/pricing"
-      className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition"
-    >
-      Upgrade Plan
-    </a>
-  </div>
-)}
 
     <DashboardChart siteId={siteId} metrics={metrics} />
 
