@@ -2,12 +2,13 @@
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
 import Image from "next/image"
+import { LandingAnalyticsDemo } from "./LandingAnalyticsDemo"
 
 export const Hero = () => {
   const router = useRouter()
   return (
     <section className="w-full mx-auto sm:pt-24 flex flex-col justify-center">      
-    <div className="w-full text-left px-5 sm:px-6 py-20">
+    <div className="w-full text-left px-5 sm:px-6 py-13">
       <h1 className="text-3xl md:text-5xl font-semibold leading-tight font-bpmf">
        <span className="block">
         Simple. Privacy-First Analytics.
@@ -32,14 +33,7 @@ export const Hero = () => {
       </div>
 
       <div className="w-full sm:mt-16">
-        <Image
-          src="/assets/images/hero-img.jpg"
-          alt="dashboard preview"
-          width={1600}
-          height={900}
-          className="w-full h-auto"
-          priority
-        />
+        <LandingAnalyticsDemo />
       </div>
     </section>
   )
