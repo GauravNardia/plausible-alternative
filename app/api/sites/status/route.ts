@@ -4,7 +4,6 @@ import { events } from "@/database/schema"
 import { eq } from "drizzle-orm"
 
 export async function GET(req: Request) {
-    console.log("GET SITE STATUS" )
   const { searchParams } = new URL(req.url)
   const siteId = searchParams.get("siteId")
 

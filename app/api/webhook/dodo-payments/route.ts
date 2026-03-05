@@ -49,8 +49,6 @@ export async function POST(req: NextRequest) {
     const payload = JSON.parse(body)
     const data = payload.data
 
-    console.log("DODO WEBHOOK:", payload.type)
-
     switch (payload.type) {
 
 case "payment.processing": {

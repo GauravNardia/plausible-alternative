@@ -11,8 +11,6 @@ export async function GET(req: Request) {
   let lastPath = location.pathname;
 
   function track(){
-  console.log("📊 Tracking:", location.pathname);
-
   const params = new URLSearchParams(location.search);
 
   let finalReferrer = document.referrer;

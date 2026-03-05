@@ -65,11 +65,13 @@ export async function GET(req: Request) {
 
   const used = usage?.eventsCount ?? 0
   const limit = tier.monthlyEventLimit
+  const maxsites = tier.maxSites;
   const planName = tier.name;
 
   return NextResponse.json({
     used,
     limit,
+    maxsites,
     percentage: Math.round((used / limit) * 100),
     planName
 

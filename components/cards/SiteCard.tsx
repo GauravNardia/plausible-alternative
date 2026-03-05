@@ -1,15 +1,17 @@
-import { MoreVertical } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link';
 
 interface Props {
     name: string;
     visitors: string;
     pageviews: string;
     countries: string;
+    href: string;
 }
 
-const SiteCard = ({ name, visitors, pageviews, countries }: Props) => {
+const SiteCard = ({ name, visitors, pageviews, countries, href }: Props) => {
   return (
+        <Link href={href} className="block">
           <div className="bg-neutral-100 border border-gray-200 rounded-2xl">
             {/* Top Section */}
             <div className="flex items-start justify-between bg-white rounded-2xl px-3 py-5">
@@ -63,7 +65,9 @@ const SiteCard = ({ name, visitors, pageviews, countries }: Props) => {
                 </p>
               </div>
             </div>
-          </div>  )
+          </div> 
+        </Link>  
+          )
 }
 
 export default SiteCard
