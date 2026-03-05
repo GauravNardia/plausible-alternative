@@ -1,10 +1,12 @@
 import { auth } from "@/auth"
 import SiteCard from "@/components/cards/SiteCard"
+import AddDomainForm from "@/components/forms/AddDomainForm"
 import { db } from "@/database/drizzle"
 import { sites } from "@/database/schema"
 import { getCountryCount } from "@/lib/actions/country.action"
 import { getMetrics } from "@/lib/actions/site.actions"
-import { eq } from "drizzle-orm"
+import { normalizeDomain } from "@/lib/utils"
+import { desc, eq } from "drizzle-orm"
 import { redirect } from "next/navigation"
 
 const Sites = async () => {
@@ -19,13 +21,14 @@ const Sites = async () => {
     .select()
     .from(sites)
     .where(eq(sites.userId, session.user.id))
+    .orderBy(desc(sites.createdAt))
 
   if (!userSites.length) {
     return <div className="p-10 text-center">No sites found</div>
   }
 
   return (
-    <section className="min-h-screen w-full bg-white">
+    <section className="min-h-screen w-full bg-[#ffffff]">
       <div className="py-10">
         {/* Header */}
         <div className="px-6 py-10 flex flex-col justify-center items-center text-center">
@@ -36,6 +39,10 @@ const Sites = async () => {
           <p className="mt-1 text-md text-gray-500 max-w-2xl">
             Monitor traffic, performance, and insights across every domain you track.
           </p>
+
+          <div className="mt-6">
+            <AddDomainForm/>
+          </div>
         </div>
 
         <div className="dot-bg h-[60px] sm:h-[80px] border-y" />
@@ -46,6 +53,8 @@ const Sites = async () => {
             userSites.map(async (site) => {
               const metrics = await getMetrics(site.id);
               const countrycount = await getCountryCount(site.id);
+              const sitedomain = normalizeDomain(site.domain)
+
 
 
               return (
@@ -55,6 +64,7 @@ const Sites = async () => {
                   visitors={metrics?.totalVisits ?? 0}
                   pageviews={metrics?.totalPageviews ?? 0}
                   countries={countrycount.totalCountries ?? 0}
+                  href={`/dashboard/${sitedomain}`}
                 />
               )
             })
