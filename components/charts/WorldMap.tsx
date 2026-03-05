@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import ReactECharts from "echarts-for-react"
 import * as echarts from "echarts/core"
 import { MapChart } from "echarts/charts"
@@ -50,8 +50,6 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
       }
     })
   }, [countries])
-
-  const max = Math.max(...formattedData.map(c => c.value), 1)
 
   const option = {
     tooltip: {

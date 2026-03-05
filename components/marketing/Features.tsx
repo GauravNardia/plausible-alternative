@@ -1,4 +1,5 @@
 import Image from "next/image"
+import WorldMap from "./LandingWorldMapDemo"
 
 export const FeaturesSection = () => {
   return (
@@ -52,19 +53,19 @@ export const FeaturesSection = () => {
       </div>
 
       {/* Feature Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-20">
-        <h3 className="text-3xl font-bpmf font-semibold leading-tight">
+      <div className="max-w-6xl mx-auto">
+        <h3 className="text-3xl font-bpmf font-semibold leading-tight px-6 pt-13">
           Simple Analytics. Powerful Insights.
         </h3>
 
-        <p className="mt-6 text-neutral-500 text-md leading-relaxed max-w-3xl">
+        <p className="mt-3 text-neutral-500 text-md leading-relaxed max-w-3xl px-6">
           Puffin gives you the metrics that matter without tracking personal data
           or slowing down your website.
         </p>
 
         {/* Showcase Box */}
-        <div className="mt-16 bg-gray-100 rounded-2xl h-[420px] flex items-center justify-center text-gray-400 text-sm">
-          Dashboard Preview Here
+        <div className="mt-16 h-[420px] flex items-center justify-center text-gray-400 text-sm">
+          <WorldMap />
         </div>
       </div>
     </section>

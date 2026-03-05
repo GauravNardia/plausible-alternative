@@ -1,44 +1,82 @@
+import Image from "next/image"
+import Link from "next/link"
+
 export const Footer = () => {
   return (
-    <footer className="border-t border-gray-200">
-      <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-12 text-sm text-gray-600">
-        <div>
-          <div className="font-semibold text-black mb-4">
-            🐧 Puffin Analytics
+    <footer className="border-t border-gray-200 bg-white">
+
+      <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-start">
+
+        {/* Left */}
+        <div className="flex flex-col gap-4">
+
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/assets/images/logo2.jpg"
+              alt="Puffin Analytics"
+              width={170}
+              height={170}
+              className="rounded-full"
+            />
+          </Link>
+
+          <p className="text-sm text-neutral-600 max-w-sm">
+            Privacy-first analytics for modern builders.
+          </p>
+
+        </div>
+
+        {/* Right */}
+        <div className="flex md:justify-end gap-16">
+
+          <div>
+            <p className="font-semibold text-black mb-4">Quick Links</p>
+
+            <ul className="space-y-2 text-sm text-neutral-600">
+              <li>
+                <Link href="/pricing" className="hover:text-black transition">
+                  Pricing
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/sign-in" className="hover:text-black transition">
+                  Sign in
+                </Link>
+              </li>
+            </ul>
+
           </div>
-          <p>Privacy-first analytics for modern builders.</p>
+
+          <div>
+            <p className="font-semibold text-black mb-4">Legal</p>
+
+            <ul className="space-y-2 text-sm text-neutral-600">
+              <li>
+                <Link href="/privacy" className="hover:text-black transition">
+                  Privacy Policy
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/terms" className="hover:text-black transition">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
+
+          </div>
+
         </div>
 
-        <div>
-          <p className="font-semibold text-black mb-4">Product</p>
-          <ul className="space-y-2">
-            <li>Features</li>
-            <li>Pricing</li>
-            <li>Docs</li>
-          </ul>
-        </div>
+      </div>
+      <div className="dot-bg h-[70px] border-t" />
 
-        <div>
-          <p className="font-semibold text-black mb-4">Company</p>
-          <ul className="space-y-2">
-            <li>Blog</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="font-semibold text-black mb-4">Legal</p>
-          <ul className="space-y-2">
-            <li>Privacy Policy</li>
-            <li>Terms</li>
-          </ul>
-        </div>
+      {/* Bottom */}
+      <div className="border-t font-bpmf font-semibold border-gray-200 py-6 text-center text-sm text-neutral-500">
+        © {new Date().getFullYear()} Puffin Analytics
       </div>
 
-      <div className="text-center text-sm text-gray-400 pb-6">
-        © 2026 Puffin Analytics
-      </div>
     </footer>
   )
 }

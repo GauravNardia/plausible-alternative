@@ -25,7 +25,7 @@ export const SetupSection = () => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 border-t border-gray-200">
 
         {/* Card 1 */}
-        <div className="p-10 border-b md:border-b-0 md:border-r border-gray-200">
+        <div className="p-10 md:border-b-0 md:border-r">
           <h3 className="text-md tracking-wider uppercase font-semibold font-bpmf">
             No Personal Data
           </h3>

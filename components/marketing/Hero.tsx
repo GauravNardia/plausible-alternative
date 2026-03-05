@@ -1,7 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
-import Image from "next/image"
 import { LandingAnalyticsDemo } from "./LandingAnalyticsDemo"
 
 export const Hero = () => {
@@ -26,8 +25,8 @@ export const Hero = () => {
           <Button onClick={() => router.push("/dashboard")} className="primary-border blue rounded-xl text-white px-6 cursor-pointer shadow-md font-semibold">
             START TRACKING
           </Button>
-          <Button onClick={() => router.push("/demo")} className="secondary-border white rounded-xl text-black px-6 cursor-pointer shadow-md font-semibold">
-            VIEW LIVE DEMO
+          <Button onClick={() => router.push("/pricing")} className="secondary-border white rounded-xl text-black px-6 cursor-pointer shadow-md font-semibold">
+            VIEW PRICING
           </Button>
         </div>
       </div>

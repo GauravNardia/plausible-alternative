@@ -5,7 +5,6 @@ import { Hero } from '@/components/marketing/Hero'
 import { Navbar } from '@/components/marketing/Navbar'
 import { SetupSection } from '@/components/marketing/SetupSection'
 import { SocialProof } from '@/components/marketing/SocialProof'
-import React from 'react'
 
 const MarketingPage = () => {
   return (
