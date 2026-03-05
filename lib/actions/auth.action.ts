@@ -7,6 +7,7 @@ import { and, eq } from "drizzle-orm"
 import { auth, signIn, signOut } from "@/auth"
 import  AuthError  from "next-auth"
 import { generatePublicApiKey } from "../api-key"
+import { normalizeDomain } from "../utils"
 
 
 export const registerUser = async(email: string, password: string, name: string) => {
@@ -78,6 +79,7 @@ export const onboardinguser = async (
 ) => {
   try {
     const session = await auth()
+    const normalizedomain = normalizeDomain(domain)
 
     if (!session?.user?.id) {
       return { success: false, error: "Unauthorized" }
@@ -136,7 +138,7 @@ export const onboardinguser = async (
     const inserted = await db
       .insert(sites)
       .values({
-        domain,
+        domain: normalizedomain,
         name: site,
         userId,
         publicApiKey: apiKey,

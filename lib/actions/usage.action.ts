@@ -16,6 +16,7 @@ export const checkMonthlyLimit = async (userId: string, limit: number) => {
         eq(monthlyUsage.month, month)
       )
     )
+    .limit(1)
 
   const usage = result[0]
 
@@ -32,12 +33,12 @@ export const incrementUsage = async (userId: string) => {
     .values({
       userId,
       month,
-      eventsCount: 1
+      eventsCount: 1,
     })
     .onConflictDoUpdate({
       target: [monthlyUsage.userId, monthlyUsage.month],
       set: {
-        eventsCount: sql`${monthlyUsage.eventsCount} + 1`
-      }
+        eventsCount: sql`${monthlyUsage.eventsCount} + 1`,
+      },
     })
 }

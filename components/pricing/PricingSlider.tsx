@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { PLAN_PRODUCT_IDS, TIERS } from "@/constants"
 
 export default function PricingSlider({ userEmail }: { userEmail: string }) {

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import ReactECharts from "echarts-for-react"
 import * as echarts from "echarts/core"
 import { MapChart } from "echarts/charts"
