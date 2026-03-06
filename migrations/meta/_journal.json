@@ -8,6 +8,13 @@
       "when": 1772557502573,
       "tag": "0000_flippant_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772819658896,
+      "tag": "0001_flimsy_william_stryker",
+      "breakpoints": true
     }
   ]
 }

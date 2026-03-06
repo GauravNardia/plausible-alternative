@@ -43,12 +43,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       url: checkout.checkout_url,
     })
-  } catch (error) {
-    console.error(error)
-
-    return NextResponse.json(
-      { error: "Checkout failed" },
-      { status: 500 }
-    )
-  }
+} catch (error: any) {
+  console.error(error)
+  return NextResponse.json(
+    { error: "Checkout failed", message: error?.message ?? String(error) },
+    { status: 500 }
+  )
+}
 }

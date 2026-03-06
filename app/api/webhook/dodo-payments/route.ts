@@ -1,18 +1,11 @@
-import { db } from "@/database/drizzle";
-import { pricingTiers, subscriptions, users } from "@/database/schema";
-import { eq } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
-import { Webhook } from "standardwebhooks";
+import { db } from "@/database/drizzle"
+import { pricingTiers, subscriptions } from "@/database/schema"
+import { PRODUCT_ID_TO_TIER } from "@/constants"
+import { eq, and } from "drizzle-orm"
+import { NextRequest, NextResponse } from "next/server"
+import { Webhook } from "standardwebhooks"
 
-
-const PRODUCT_TO_TIER: Record<string, string> = {
-  "pdt_0NZk2m2ihnDFGSAkvCHMu": "starter",
-  "pdt_0NZk32m4w1T3vZG91zrzJ":  "growth",
-  "pdt_0NZk38v6WsCPiOzLvlI4a":   "scale",
-}
-
-const webhookSecret = process.env.DODO_WEBHOOK_SECRET!;
-
+const webhookSecret = process.env.DODO_WEBHOOK_SECRET!
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,14 +14,10 @@ export async function POST(req: NextRequest) {
     const webhookTimestamp = req.headers.get("webhook-timestamp")
 
     if (!webhookId || !webhookSignature || !webhookTimestamp) {
-      return NextResponse.json(
-        { error: "Missing webhook headers" },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "Missing webhook headers" }, { status: 400 })
     }
 
     const body = await req.text()
-
     const webhook = new Webhook(webhookSecret)
 
     try {
@@ -39,11 +28,7 @@ export async function POST(req: NextRequest) {
       })
     } catch (err) {
       console.error("Webhook verification failed:", err)
-
-      return NextResponse.json(
-        { error: "Invalid webhook signature" },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "Invalid webhook signature" }, { status: 400 })
     }
 
     const payload = JSON.parse(body)
@@ -51,239 +36,102 @@ export async function POST(req: NextRequest) {
 
     switch (payload.type) {
 
-case "payment.processing": {
+      case "subscription.active": {
+        const productId = data.product_id ?? data.product_cart?.[0]?.product_id
+        const metadataUserId = data.metadata?.userId
 
-  const email = data.customer?.email
+        if (!metadataUserId) { console.log("Missing userId in metadata"); break }
+        if (!productId) { console.log("Missing productId"); break }
 
-  const user = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1)
+        // Get tier info from constants
+        const tierInfo = PRODUCT_ID_TO_TIER[productId]
+        if (!tierInfo) { console.log("Unknown product:", productId); break }
 
-  if (!user.length) break
+        // Find matching row in pricing_tiers by name + limit
+        const [tier] = await db.select().from(pricingTiers)
+          .where(and(
+            eq(pricingTiers.name, tierInfo.name),
+            eq(pricingTiers.monthlyEventLimit, tierInfo.monthlyEventLimit)
+          )).limit(1)
 
-  const tier = await db
-    .select()
-    .from(pricingTiers)
-    .where(eq(pricingTiers.name, "starter"))
-    .limit(1)
+        if (!tier) { console.log("Tier not found in DB:", tierInfo); break }
 
-  await db.insert(subscriptions).values({
-    userId: user[0].id,
-    pricingTierId: tier[0].id,
-    status: "active",
-    dodoSubscriptionId: data.subscription_id,
-    currentPeriodStart: new Date(data.created_at),
-    currentPeriodEnd: new Date(data.next_billing_date),  
-  })
-
-}
-break
-
-      /* =========================
-         PAYMENT SUCCEEDED
-      ========================== */
-
-case "payment.succeeded": {
-  console.log("Payment succeeded:", data)
-
-  const email = data.customer?.email
-  const productId = data.product_id
-  const subscriptionId = data.subscription_id
-  const customerId = data.customer?.customer_id
-
-  if (!email) {
-    console.log("Missing email")
-    break
-  }
-
-  const user = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1)
-
-  if (!user.length) {
-    console.log("User not found:", email)
-    break
-  }
-
-  const userId = user[0].id
-
-  const tierName = PRODUCT_TO_TIER[productId]
-
-  if (!tierName) {
-    console.log("Unknown product:", productId)
-    break
-  }
-
-  const tier = await db
-    .select()
-    .from(pricingTiers)
-    .where(eq(pricingTiers.name, tierName))
-    .limit(1)
-
-  if (!tier.length) {
-    console.log("Tier not found:", tierName)
-    break
-  }
-
-  const pricingTierId = tier[0].id
-
-  const existing = await db
-    .select()
-    .from(subscriptions)
-    .where(eq(subscriptions.dodoSubscriptionId, subscriptionId))
-    .limit(1)
-
-  if (existing.length) {
-    console.log("Subscription already exists")
-    break
-  }
-
-  await db.insert(subscriptions).values({
-    userId,
-    pricingTierId,
-    status: "active",
-    currentPeriodStart: new Date(data.created_at),
-    currentPeriodEnd: new Date(data.next_billing_date),
-    dodoCustomerId: customerId,
-    dodoSubscriptionId: subscriptionId,
-  })
-
-  console.log("Subscription saved")
-
-  break
-}
-
-case "subscription.active": {
-  const email = data.customer?.email
-  const productId = data.product_id ?? data.product_cart?.[0]?.product_id ?? null
-  const subscriptionId = data.subscription_id
-  const customerId = data.customer?.customer_id
-  const metadataUserId = data.metadata?.userId
-
-if (!metadataUserId) {
-  console.log("Missing userId in metadata")
-  break
-}
-
-  if (!email) {
-    console.log("Missing email")
-    break
-  }
-
-  const user = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1)
-
-  if (!user.length) {
-    console.log("User not found:", email)
-    break
-  }
-
-  const tierName = PRODUCT_TO_TIER[productId]
-
-  if (!tierName) {
-    console.log("Unknown product:", productId)
-    break
-  }
-
-  const tier = await db
-    .select()
-    .from(pricingTiers)
-    .where(eq(pricingTiers.name, tierName))
-    .limit(1)
-
-  if (!tier.length) {
-    console.log("Tier not found:", tierName)
-    break
-  }
-
-  const pricingTierId = tier[0].id
-
-  const existing = await db
-    .select()
-    .from(subscriptions)
-    .where(eq(subscriptions.dodoSubscriptionId, subscriptionId))
-    .limit(1)
-
-  if (existing.length) {
-    console.log("Subscription already exists")
-    break
-  }
-
-  await db.insert(subscriptions).values({
-    userId: metadataUserId,
-    pricingTierId,
-    status: data.status,
-    currentPeriodStart: new Date(data.created_at),
-    currentPeriodEnd: new Date(data.next_billing_date),
-    dodoCustomerId: customerId,
-    dodoSubscriptionId: subscriptionId,
-  })
-
-  break
-}
-
-      /* =========================
-         PAYMENT FAILED
-      ========================== */
-
-      case "payment.failed":
-        console.log("Payment failed:", data)
-        break
-
-      /* =========================
-         SUBSCRIPTION CANCELLED
-      ========================== */
-
-      case "subscription.cancelled": {
-        console.log("Subscription cancelled:", data)
-
-        await db
-          .update(subscriptions)
-          .set({ status: "cancelled" })
+        // Skip if already saved
+        const [existing] = await db.select().from(subscriptions)
           .where(eq(subscriptions.dodoSubscriptionId, data.subscription_id))
+          .limit(1)
+        if (existing) { console.log("Already exists, skipping"); break }
 
+        await db.insert(subscriptions).values({
+          userId: metadataUserId,
+          pricingTierId: tier.id,
+          status: "active",
+          dodoCustomerId: data.customer?.customer_id,
+          dodoSubscriptionId: data.subscription_id,
+          currentPeriodStart: new Date(data.created_at),
+          currentPeriodEnd: new Date(data.next_billing_date),
+        })
+
+        console.log("✅ Subscription saved:", tierInfo.name, tierInfo.monthlyEventLimit)
         break
       }
 
-      /* =========================
-         SUBSCRIPTION UPDATED
-      ========================== */
+      case "payment.succeeded": {
+        if (!data.subscription_id) break
+        await db.update(subscriptions)
+          .set({ status: "active", currentPeriodEnd: new Date(data.next_billing_date) })
+          .where(eq(subscriptions.dodoSubscriptionId, data.subscription_id))
+        console.log("✅ Subscription renewed")
+        break
+      }
+
+      case "payment.failed": {
+        await db.update(subscriptions)
+          .set({ status: "past_due" })
+          .where(eq(subscriptions.dodoSubscriptionId, data.subscription_id))
+        break
+      }
+
+      case "subscription.cancelled": {
+        await db.update(subscriptions)
+          .set({ status: "cancelled" })
+          .where(eq(subscriptions.dodoSubscriptionId, data.subscription_id))
+        break
+      }
 
       case "subscription.updated": {
-        console.log("Subscription updated:", data)
+        const productId = data.product_id ?? data.product_cart?.[0]?.product_id
+        const tierInfo = PRODUCT_ID_TO_TIER[productId]
 
-        await db
-          .update(subscriptions)
-          .set({
-            currentPeriodEnd: new Date(data.next_billing_date),
-          })
+        if (tierInfo) {
+          const [tier] = await db.select().from(pricingTiers)
+            .where(and(
+              eq(pricingTiers.name, tierInfo.name),
+              eq(pricingTiers.monthlyEventLimit, tierInfo.monthlyEventLimit)
+            )).limit(1)
+
+          if (tier) {
+            await db.update(subscriptions)
+              .set({ pricingTierId: tier.id, currentPeriodEnd: new Date(data.next_billing_date) })
+              .where(eq(subscriptions.dodoSubscriptionId, data.subscription_id))
+            break
+          }
+        }
+
+        await db.update(subscriptions)
+          .set({ currentPeriodEnd: new Date(data.next_billing_date) })
           .where(eq(subscriptions.dodoSubscriptionId, data.subscription_id))
-
         break
       }
 
       default:
-        console.log("Unhandled webhook event:", payload.type)
+        console.log("Unhandled event:", payload.type)
     }
 
-    return NextResponse.json(
-      { received: true, type: payload.type },
-      { status: 200 }
-    )
+    return NextResponse.json({ received: true, type: payload.type }, { status: 200 })
 
   } catch (error) {
     console.error("Webhook processing error:", error)
-
-    return NextResponse.json(
-      { error: "Webhook processing failed" },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 })
   }
 }
