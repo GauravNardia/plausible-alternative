@@ -78,7 +78,6 @@ case "payment.processing": {
     currentPeriodEnd: new Date(data.next_billing_date),  
   })
 
-  console.log("Inserted subscription")
 }
 break
 
@@ -153,7 +152,7 @@ case "payment.succeeded": {
     dodoSubscriptionId: subscriptionId,
   })
 
-  console.log("✅ Subscription saved")
+  console.log("Subscription saved")
 
   break
 }
@@ -226,8 +225,6 @@ if (!metadataUserId) {
     dodoCustomerId: customerId,
     dodoSubscriptionId: subscriptionId,
   })
-
-  console.log("✅ Subscription inserted")
 
   break
 }

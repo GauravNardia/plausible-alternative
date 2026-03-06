@@ -32,9 +32,6 @@ const page = async({ params }: Params) => {
   { cache: "no-store" }
 ).then(res => res.json())
 
-  console.log("gaurav site usage", usage)
-
-
   const [sources, pages, devices, metrics, geo] = await Promise.all([
     getSources(siteId),
     getPages(siteId),

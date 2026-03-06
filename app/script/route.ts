@@ -3,7 +3,7 @@ export async function GET(req: Request) {
 
   const script = `
 (function(){
-  console.log("🐧 Puffin script loaded");
+  console.log("script loaded");
 
   const script = document.currentScript;
   const apiKey = script.getAttribute("data-api-key");
@@ -36,7 +36,6 @@ export async function GET(req: Request) {
 
   function checkPathChange() {
     if (location.pathname !== lastPath) {
-      console.log("🔁 Route changed:", location.pathname);
       lastPath = location.pathname;
       track();
     }
