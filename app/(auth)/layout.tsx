@@ -22,7 +22,7 @@ const AuthLayout = ({
 
       {/* Center content properly */}
       <div className="flex items-center justify-center px-6 py-16">
-        <div className="w-full max-w-md">
+        <div className="w-full">
           {children}
         </div>
       </div>
