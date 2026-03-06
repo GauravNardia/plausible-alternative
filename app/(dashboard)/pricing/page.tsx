@@ -16,7 +16,7 @@ export default async function PricingPage() {
           <h1 className="text-4xl md:text-4xl font-semibold font-bpmf">
             Transparent traffic-based pricing
           </h1>
-          <p className="text-neutral-600 mt-4">
+          <p className="text-neutral-600 mt-4 px-3 sm:px-0">
             You only pay for the traffic you track.
             No feature restrictions.
           </p>
