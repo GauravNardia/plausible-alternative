@@ -175,6 +175,19 @@ svg:focus {
 .blue-text {
   color: #5851ed;
 }
+
+.warning-text {
+  color: #CA8A04;
+}
+
+.alert-text {
+  color: #EA580C;
+}
+
+.danger-text {
+  color: #DC2626;
+}
+
 .primary-border {
   border: 1px solid #2e27b3;
 }
