@@ -18,11 +18,21 @@ const Page = async ({ params }: Params) => {
   }
 
   const siteId = site[0].id
+  const userId = site[0].userId
+
+  // Count ALL sites for this user
+const allSites = await db     
+  .select()
+  .from(sites)
+  .where(eq(sites.userId, userId))
+
+const sitesUsed = allSites.length
 
   const usage = await fetch(
     `${process.env.APP_URL}/api/usage?siteId=${siteId}`,
     { cache: "no-store" }
   ).then((res) => res.json())
+
   return (
     <section className="min-h-screen bg-[#ffffff] text-black py-20">
       <div className="max-w-6xl mx-auto">
@@ -39,7 +49,7 @@ const Page = async ({ params }: Params) => {
         <div className="px-3 sm:px-0">
           <BillingCard
            usage={usage}
-           sitesUsed={usage.sitesUsed ?? 1}
+           sitesUsed={sitesUsed}
          />
         </div>
       </div>

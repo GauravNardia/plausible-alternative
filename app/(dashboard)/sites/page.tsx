@@ -61,6 +61,7 @@ const Sites = async () => {
                 <SiteCard
                   key={site.id}
                   name={site.name}
+                  siteId={site.id}
                   visitors={metrics?.totalVisits ?? 0}
                   pageviews={metrics?.totalPageviews ?? 0}
                   countries={countrycount.totalCountries ?? 0}

@@ -1,8 +1,10 @@
 "use server"
 
+import { auth } from "@/auth"
 import { db } from "@/database/drizzle"
 import { sites } from "@/database/schema"
 import { eq } from "drizzle-orm"
+import { revalidatePath } from "next/cache"
 
 export const getApiKey = async (userId: string) => {
   try {
@@ -80,3 +82,32 @@ export const getData = async (siteId: string) => {
   return res.json()
 }
 
+export const deleteSite = async(siteId: string): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const session = await auth()
+    if (!session?.user?.id) return { success: false, error: 'Unauthorized' }
+
+    const userId = session.user.id
+
+    // Verify the site belongs to this user
+    const site = await db
+      .select()
+      .from(sites)
+      .where(eq(sites.id, siteId))
+      .limit(1)
+
+    if (!site.length || site[0].userId !== userId) {
+      return { success: false, error: 'Site not found.' }
+    }
+
+    // Delete site — cascade will clean up events, dailyStats, pageStats, etc.
+    await db.delete(sites).where(eq(sites.id, siteId))
+
+    revalidatePath('/sites')
+    revalidatePath(`/billing/${userId}`)
+    return { success: true }
+  } catch (err) {
+    console.error('[deleteSite]', err)
+    return { success: false, error: 'Failed to delete site.' }
+  }
+}
