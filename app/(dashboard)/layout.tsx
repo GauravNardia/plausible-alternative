@@ -51,7 +51,7 @@ const DashboardLayout = async({
             </div>
         </div>
       <div
-        className={` antialiased w-full `}
+        className={` antialiased w-full`}
       >
         {children}
         <Toaster />

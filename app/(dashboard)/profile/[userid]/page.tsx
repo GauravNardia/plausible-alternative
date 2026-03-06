@@ -38,8 +38,10 @@ const Profile = async() => {
           </p>
         </div>
         <div className="dot-bg h-[60px] sm:h-[80px] border-y" />
+        <div className="px-3 sm:px-0">
          <ProfileCard email={email} userId={userId} />
          <DeleteAccountCard userId={userId} />
+        </div>  
       </div>
     </section>
   )
