@@ -40,6 +40,7 @@ const ProfileDropdown = ({ email, userId }: Props) => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => router.push(`/profile/${userId}`)}>Profile</DropdownMenuItem>
           <DropdownMenuItem onClick={() => router.push(`/billing/${userId}`)}>Billing</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push(`/sites`)}>Sites</DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuGroup>

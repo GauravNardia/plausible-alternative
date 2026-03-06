@@ -10,7 +10,7 @@ export const CTA = () => {
         Start Understanding Traffic.
       </h2>
 
-      <Link href="/dashboard">
+      <Link href="/sites">
        <Button className="mt-8 text-sm text-white px-8 py-3 rounded-xl blue primary-border cursor-pointer">
          Start Tracking Now
       </Button>

@@ -6,7 +6,7 @@ const Signup = async() => {
     const session = await auth()
 
   if (session) {
-    redirect("/dashboard")
+    redirect("/sites")
   }
 
   return (

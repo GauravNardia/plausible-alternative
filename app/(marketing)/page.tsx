@@ -5,8 +5,9 @@ import { Hero } from '@/components/marketing/Hero'
 import { Navbar } from '@/components/marketing/Navbar'
 import { SetupSection } from '@/components/marketing/SetupSection'
 import { SocialProof } from '@/components/marketing/SocialProof'
+import MarketingPricing from '@/components/marketing/Pricing'
 
-const MarketingPage = () => {
+const MarketingPage = async() => {
   return (
   <main className="bg-[#ffffff] text-black">
       <Navbar />
@@ -15,6 +16,7 @@ const MarketingPage = () => {
       <SetupSection />
       <SocialProof />
       <FeaturesSection/>
+      <MarketingPricing/>
       <SocialProof />
       <CTA />
       <Footer />

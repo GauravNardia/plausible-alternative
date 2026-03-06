@@ -44,25 +44,8 @@ export const Navbar = () => {
               SIGN UP
             </Button>
           </Link>
-
-          {/* Hamburger (mobile only) */}
-          {/* <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden ml-2"
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button> */}
         </div>
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {/* {open && (
-        <div className="md:hidden px-4 pb-6 border-t">
-          <nav className="flex flex-col gap-4 text-sm text-neutral-600 pt-4">
-            <Link href="/pricing">Pricing</Link>
-          </nav>
-        </div>
-      )} */}
     </header>
   )
 }

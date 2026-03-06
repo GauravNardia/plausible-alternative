@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         userId: session.user.id,
       },
 
-      return_url: "http://localhost:3000/dashboard",
+      return_url: `${process.env.APP_URL!}/sites`,
     })
 
     return NextResponse.json({

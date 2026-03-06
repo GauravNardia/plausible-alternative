@@ -10,10 +10,11 @@ import { Button } from "../ui/button"
 
 interface InstallBoxProps {
   script: string
+  domain: string
   siteId: string
 }
 
-export default function InstallBox({ script, siteId }: InstallBoxProps) {
+export default function InstallBox({ script, siteId, domain }: InstallBoxProps) {
   const router = useRouter()
   const [copied, setCopied] = useState(false)
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function InstallBox({ script, siteId }: InstallBoxProps) {
 
     if (data.hasEvents) {
       clearInterval(interval)
-      router.push(`/dashboard`)
+      router.push(`/${domain}`)
     }
   }, 3000)
 

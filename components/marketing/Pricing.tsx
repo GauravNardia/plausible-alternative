@@ -1,14 +1,15 @@
-import PricingSlider from "@/components/pricing/PricingSlider"
 import { auth } from "@/auth"
+import PricingSliderMarketing from "./PricingSliderMarketing"
 
-export default async function PricingPage() {
+
+export default async function MarketingPricing() {
   const session = await auth()
   const userEmail = session?.user?.email ?? ""
 
   return (
-    <section className="min-h-screen bg-[#ffffff] text-black py-20">
+    <section className="min-h-screen bg-[#ffffff] text-black pt-20">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-left  mb-16 px-3 sm:px-5">
           <h1 className="text-4xl md:text-4xl font-semibold font-bpmf">
             Transparent traffic-based pricing
           </h1>
@@ -17,8 +18,7 @@ export default async function PricingPage() {
             No feature restrictions.
           </p>
         </div>
-        <div className="dot-bg h-[60px] sm:h-[80px] border-t" />
-        <PricingSlider userEmail={userEmail} />
+        <PricingSliderMarketing userEmail={userEmail} />
       </div>
     </section>
   )

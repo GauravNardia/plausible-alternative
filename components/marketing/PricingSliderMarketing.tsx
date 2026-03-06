@@ -6,7 +6,7 @@ import { Button } from "../ui/button"
 import Image from "next/image"
 import { PLAN_PRODUCT_IDS, TIERS } from "@/constants"
 
-export default function PricingSlider({ userEmail }: { userEmail: string }) {
+export default function PricingSliderMarketing({ userEmail }: { userEmail: string }) {
   const [index, setIndex] = useState(0)
   const tier = TIERS[index]
 
@@ -36,8 +36,6 @@ export default function PricingSlider({ userEmail }: { userEmail: string }) {
         <Plan name="Growth"  price={tier.growth}  sites="Up to 3 sites"  views={tier.views} userEmail={userEmail} highlight />
         <Plan name="Scale"   price={tier.scale}   sites="Up to 10 sites" views={tier.views} userEmail={userEmail} />
       </div>
-
-      <div className="dot-bg h-[60px] sm:h-[80px] border-b" />
     </div>
   )
 }

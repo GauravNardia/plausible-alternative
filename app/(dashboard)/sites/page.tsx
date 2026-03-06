@@ -65,7 +65,7 @@ const Sites = async () => {
                   visitors={metrics?.totalVisits ?? 0}
                   pageviews={metrics?.totalPageviews ?? 0}
                   countries={countrycount.totalCountries ?? 0}
-                  href={`/dashboard/${sitedomain}`}
+                  href={`/${sitedomain}`}
                 />
               )
             })

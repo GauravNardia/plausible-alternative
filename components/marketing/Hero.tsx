@@ -22,7 +22,7 @@ export const Hero = () => {
         </p>
 
         <div className="mt-8 flex items-center gap-4">
-          <Button onClick={() => router.push("/dashboard")} className="primary-border blue rounded-xl text-white px-6 cursor-pointer shadow-md font-semibold">
+          <Button onClick={() => router.push("/sites")} className="primary-border blue rounded-xl text-white px-6 cursor-pointer shadow-md font-semibold">
             START TRACKING
           </Button>
           <Button onClick={() => router.push("/pricing")} className="secondary-border white rounded-xl text-black px-6 cursor-pointer shadow-md font-semibold">

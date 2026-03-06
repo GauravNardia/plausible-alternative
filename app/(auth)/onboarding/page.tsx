@@ -19,7 +19,7 @@ const Onboarding = async () => {
 
   // ✅ If already onboarded → go to dashboard
   if (onboarded) {
-    redirect("/dashboard")
+    redirect("/site")
   }
 
   // ✅ If NOT onboarded → show onboarding page

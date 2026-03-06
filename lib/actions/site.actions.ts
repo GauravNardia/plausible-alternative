@@ -111,3 +111,18 @@ export const deleteSite = async(siteId: string): Promise<{ success: boolean; err
     return { success: false, error: 'Failed to delete site.' }
   }
 }
+
+export const getSiteDomainById = async (siteId: string): Promise<string | null> => {
+  try {
+    const site = await db
+      .select({ domain: sites.domain })
+      .from(sites)
+      .where(eq(sites.id, siteId))
+      .limit(1)
+
+    return site.length ? site[0].domain : null
+  } catch (err) {
+    console.error('[getSiteDomainById]', err)
+    return null
+  }
+}

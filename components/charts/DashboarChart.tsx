@@ -104,7 +104,8 @@ useEffect(() => {
 
             <CartesianGrid stroke="#E2E2E2" vertical={false} />
 
-              <XAxis dataKey="hour" stroke="#94a3b8" interval={isMobile ? 3 : 2} tick={{ fontSize: isMobile ? 10 : 12 }} tickLine={false} axisLine={false}/>            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+              <XAxis dataKey="hour" stroke="#94a3b8" interval={isMobile ? 3 : 2} tick={{ fontSize: isMobile ? 10 : 12 }} tickLine={false} axisLine={false}/>            
+              <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
 
             <Tooltip cursor={false} content={<CustomTooltip />} />
 
