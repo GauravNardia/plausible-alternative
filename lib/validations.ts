@@ -19,6 +19,6 @@ export const loginSchema = z.object({
 })
 
 export const onboardingSchema = z.object({
-  domain: z.string().min(2, "Domain is required"),
+  domain: z.string().transform((val) => val.replace(/^https?:\/\//, "").replace(/\/$/, "")).refine((val) => /^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(val),"Enter a valid domain like example.com"),
   site: z.string().min(2, "Site name is required"),
 })

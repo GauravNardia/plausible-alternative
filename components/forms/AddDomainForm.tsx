@@ -108,13 +108,13 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
 
           <FormField
             control={form.control}
-            name="domain"
+            name="site"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Website domain</FormLabel>
+                <FormLabel>Site name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="example.com"
+                    placeholder="Mysite"
                     className="h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
                     {...field}
                   />
@@ -126,13 +126,13 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
 
           <FormField
             control={form.control}
-            name="site"
+            name="domain"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Site name</FormLabel>
+                <FormLabel>Website domain</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Mysite"
+                    placeholder="example.com"
                     className="h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
                     {...field}
                   />

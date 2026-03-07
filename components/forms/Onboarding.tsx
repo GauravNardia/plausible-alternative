@@ -114,24 +114,6 @@ return (
 
           <FormField
             control={form.control}
-            name="domain"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Website domain</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="example.com"
-                    className="h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-left" />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="site"
             render={({ field }) => (
               <FormItem>
@@ -148,6 +130,23 @@ return (
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="domain"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Website domain</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="example.com"
+                    className="h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-left" />
+              </FormItem>
+            )}
+          />
         </FieldGroup>
 
         <DialogFooter>
