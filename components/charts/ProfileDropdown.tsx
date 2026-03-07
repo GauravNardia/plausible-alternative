@@ -24,14 +24,11 @@ const ProfileDropdown = ({ email, userId }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="white text-black text-sm px-3 md:px-6 rounded-xl secondary-border cursor-pointer">
+        <Button variant="outline" className="white text-black text-sm px-3 md:px-6 rounded-xl secondary-border cursor-pointer shadow-none">
             {shortenEmail(email)}
-            <Image
-            src="/assets/icons/arrow-down-black.svg"
-            width={25}
-            height={25}
-            alt="arrow"
-            />
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
         </Button>
       </DropdownMenuTrigger>
 

@@ -34,9 +34,16 @@ export async function GET(req: Request) {
     )
     .then(res => res[0])
 
-  if (!subscription) {
-    return NextResponse.json({ error: "No active subscription" }, { status: 403 })
-  }
+if (!subscription) {
+  return NextResponse.json({
+    used: 0,
+    limit: 0,
+    maxsites: 0,
+    percentage: 0,
+    planName: null,
+    hasSubscription: false,
+  })
+}
 
   // 3️⃣ Get pricing tier
   const tier = await db
@@ -68,12 +75,12 @@ export async function GET(req: Request) {
   const maxsites = tier.maxSites;
   const planName = tier.name;
 
-  return NextResponse.json({
-    used,
-    limit,
-    maxsites,
-    percentage: Math.round((used / limit) * 100),
-    planName
-
-  })
+return NextResponse.json({
+  used,
+  limit,
+  maxsites,
+  percentage: Math.round((used / limit) * 100),
+  planName,
+  hasSubscription: true,
+})
 }

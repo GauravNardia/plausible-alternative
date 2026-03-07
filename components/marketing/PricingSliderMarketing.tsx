@@ -6,7 +6,7 @@ import { Button } from "../ui/button"
 import Image from "next/image"
 import { PLAN_PRODUCT_IDS, TIERS } from "@/constants"
 
-export default function PricingSliderMarketing({ userEmail }: { userEmail: string }) {
+export default function PricingSliderMarketing({ userEmail, isLoggedIn }: { userEmail: string; isLoggedIn: boolean }) {
   const [index, setIndex] = useState(0)
   const tier = TIERS[index]
 
@@ -32,10 +32,12 @@ export default function PricingSliderMarketing({ userEmail }: { userEmail: strin
       </div>
 
       <div className="grid md:grid-cols-3">
-        <Plan name="Starter" price={tier.starter} sites="1 site" views={tier.views} userEmail={userEmail} />
-        <Plan name="Growth"  price={tier.growth}  sites="Up to 3 sites"  views={tier.views} userEmail={userEmail} highlight />
-        <Plan name="Scale"   price={tier.scale}   sites="Up to 10 sites" views={tier.views} userEmail={userEmail} />
+       <Plan name="Starter" price={tier.starter} sites="1 site" views={tier.views} tierIndex={index} userEmail={userEmail} isLoggedIn={isLoggedIn} />
+       <Plan name="Growth"  price={tier.growth}  sites="Up to 3 sites" views={tier.views} tierIndex={index} userEmail={userEmail} isLoggedIn={isLoggedIn} highlight  />
+       <Plan name="Scale"   price={tier.scale}   sites="Up to 10 sites" views={tier.views} tierIndex={index} userEmail={userEmail} isLoggedIn={isLoggedIn} />
       </div>
+
+      <div className="dot-bg h-[60px] sm:h-[80px] border-b" />
     </div>
   )
 }
@@ -47,6 +49,8 @@ function Plan({
   views,
   highlight,
   userEmail,
+  tierIndex,    
+  isLoggedIn
 }: {
   name: string
   price: number
@@ -54,6 +58,9 @@ function Plan({
   views: string
   highlight?: boolean
   userEmail: string
+  tierIndex: number
+  isLoggedIn: boolean
+
 }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -61,6 +68,22 @@ function Plan({
   async function handleCheckout() {
     setLoading(true)
     setError(null)
+
+        // Redirect to sign-in if not logged in
+    if (!isLoggedIn) {
+      window.location.href = "/sign-in"
+      return
+    }
+
+        // THIS IS THE FIX — use name + tierIndex to get correct product
+    const key = `${name.toLowerCase()}_${tierIndex}`
+    const productId = PLAN_PRODUCT_IDS[key]
+
+    if (!productId) {
+      setError("Plan not available")
+      setLoading(false)
+      return
+    }
 
     try {
       const res = await fetch("/checkout", {
@@ -72,7 +95,7 @@ function Plan({
         body: JSON.stringify({
           product_cart: [
             {
-              product_id: PLAN_PRODUCT_IDS[name.toLowerCase()],
+              product_id: productId,
               quantity: 1,
             },
           ],
@@ -82,6 +105,7 @@ function Plan({
           metadata: {
             userId: userEmail,
             plan: name.toLowerCase(),
+            views: views,
           },
 
           return_url:

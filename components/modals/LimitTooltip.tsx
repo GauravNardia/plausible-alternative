@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import { X } from 'lucide-react';
 
-const LimitTooltip = ({ usage }: any) => {
+const LimitTooltip = ({ usage, hasSubscription }: { usage: number, hasSubscription: boolean }) => {
   const router = useRouter();
   const [dismissed, setDismissed] = useState(false)
 
+  if (!hasSubscription) return null 
   if (usage < 70) return null;
   if (dismissed) return null;
   

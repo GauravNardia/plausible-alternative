@@ -10,7 +10,6 @@ import MarketingPricing from '@/components/marketing/Pricing'
 const MarketingPage = async() => {
   return (
   <main className="bg-[#ffffff] text-black">
-      <Navbar />
       <Hero />
       <SocialProof />
       <SetupSection />

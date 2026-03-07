@@ -110,25 +110,25 @@ const SiteCard = ({ siteId, name, visitors, pageviews, countries, href }: Props)
         <DialogContent className="max-w-sm bg-neutral-100 rounded-2xl p-1">
           <div className='bg-[#ffffff] rounded-xl p-5'>
           <DialogHeader>
-            <DialogTitle className="text-sm font-semibold">Delete "{name}"?</DialogTitle>
+            <DialogTitle className="text-md font-semibold">Delete "{name}"?</DialogTitle>
           </DialogHeader>
-          <p className="text-xs text-neutral-500 mt-1">
+          <p className="text-sm text-neutral-500 mt-1">
             This will permanently delete the site and all its analytics data. This cannot be undone.
           </p>
           </div>
           {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
-          <div className="flex items-center justify-end gap-3 py-3 px-3">
+          <div className="flex items-center justify-end gap-3 pb-2 px-3">
             <Button
               onClick={() => setConfirmOpen(false)}
               disabled={isPending}
-              className="text-xs white secondary-border text-black rounded-xl cursor-pointer uppercase font-semibold transition"
+              className="text-sm white secondary-border text-black rounded-xl cursor-pointer uppercase font-semibold transition"
             >
               Cancel
             </Button>
             <Button
               onClick={handleDelete}
               disabled={isPending}
-              className="text-xs uppercase font-semibold px-4 red red-border cursor-pointer text-white rounded-xl hover:bg-red-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
+              className="text-sm uppercase font-semibold px-4 red red-border cursor-pointer text-white rounded-xl hover:bg-red-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {isPending ? 'Deleting...' : 'Yes, Delete'}
             </Button>

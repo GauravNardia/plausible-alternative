@@ -18,7 +18,7 @@ export default async function MarketingPricing() {
             No feature restrictions.
           </p>
         </div>
-        <PricingSliderMarketing userEmail={userEmail} />
+        <PricingSliderMarketing userEmail={userEmail} isLoggedIn={!!session?.user} />
       </div>
     </section>
   )

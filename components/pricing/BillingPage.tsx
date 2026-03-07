@@ -13,6 +13,38 @@ type Props = {
 
 export default function BillingCard({ usage, sitesUsed }: Props) {
   const router = useRouter()
+    // No subscription yet
+  if (!usage || !usage.used === undefined || !usage.limit) {
+    return (
+      <div className="w-full max-w-5xl mx-auto bg-neutral-100  mt-10">
+        <div className="flex flex-col bg-[#ffffff] justify-center items-center rounded-2xl px-3 py-5">
+          <div>
+            <Image
+            src="/assets/icons/sub-illustration.jpg"
+            width={150}
+            height={150}
+            className="select-none"
+            alt="sub"
+            />
+          </div>
+          <div className="px-3 py-4 text-center">
+            <p className="text-sm uppercase font-semibold text-neutral-400 mb-3">
+              No active subscription
+            </p>
+            <p className="text-neutral-600 text-sm mb-5">
+              You don't have an active plan yet.
+            </p>
+            <Button
+              onClick={() => router.push("/pricing")}
+              className="text-sm uppercase cursor-pointer font-semibold px-5 blue primary-border text-white rounded-xl hover:opacity-90 transition"
+            >
+              View plans
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
   const percentage = Math.min(Math.round((usage.used / usage.limit) * 100), 100)
 
   return (

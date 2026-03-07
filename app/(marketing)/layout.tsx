@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/marketing/Navbar";
 import type { Metadata } from "next";
 
 
@@ -61,6 +62,7 @@ const MarketingLayout = ({
       <div
         className={` antialiased`}
       >
+        <Navbar />
         {children}
       </div>
     </section>

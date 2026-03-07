@@ -18,7 +18,7 @@ export default async function PricingPage() {
           </p>
         </div>
         <div className="dot-bg h-[60px] sm:h-[80px] border-t" />
-        <PricingSlider userEmail={userEmail} />
+        <PricingSlider userEmail={userEmail} isLoggedIn={!!session?.user} />
       </div>
     </section>
   )
