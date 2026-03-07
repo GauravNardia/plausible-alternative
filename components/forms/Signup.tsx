@@ -62,10 +62,10 @@ return (
       {/* Logo */}
       <div className="flex flex-col items-center text-center bg-[#ffffff] rounded-xl py-5">
         <Image
-          src="/assets/images/logo2.png"
+          src="/assets/images/logo2.jpg"
           alt="logo"
-          width={60}
-          height={60}
+          width={45}
+          height={45}
           className="mb-3"
         />
 

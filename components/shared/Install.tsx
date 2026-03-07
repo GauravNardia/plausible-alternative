@@ -45,7 +45,7 @@ return (
       <div className="flex flex-col items-center text-center mb-8 bg-[#ffffff] py-4 rounded-xl ">
         <div className="bg-neutral-100 p-4 rounded-2xl mb-4">
           <Image
-            src="/assets/images/logo2.png"
+            src="/assets/images/logo2.jpg"
             alt="logo"
             width={44}
             height={44}
@@ -112,7 +112,7 @@ return (
       <div className="mb-8 px-5">
         <p className="text-sm  font-semibold text-black mb-2 font-bpmf">
           Step 2 — Paste it before
-          <span className="mx-1 font-mono text-neutral-900 bg-[#addb37] px-2 py-1 rounded-md text-xs">
+          <span className="mx-1 font-mono text-neutral-900 bg-[#5851ed] px-2 py-1 rounded-md text-xs">
             {"</body>"}
           </span>
           in your HTML

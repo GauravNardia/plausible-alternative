@@ -10,23 +10,15 @@ export const Navbar = () => {
       <div className="w-full px-5 sm:px-5 mx-auto py-4 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className=" items-center hidden sm:flex">
+        <Link href="/" className="flex items-center">
           <Image
             src="/assets/images/logo2.jpg"
             alt="Logo"
-            width={170}
-            height={170}
+            width={30}
+            height={30}
             className="mr-2 rounded-full"
           />
-        </Link>
-          <Link href="/" className=" items-center sm:hidden flex">
-          <Image
-            src="/assets/images/logo2.jpeg"
-            alt="Logo"
-            width={35}
-            height={35}
-            className="mr-2 rounded-full"
-          />
+          <p className="text-xl font-semibold font-bpmf hidden sm:flex">Puffin Analytics</p>
         </Link>
 
         {/* Right Side */}

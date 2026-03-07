@@ -85,7 +85,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
     <DialogHeader className="text-center bg-[#ffffff] rounded-xl py-8 px-3">
       <div className="w-12 h-12 mx-auto bg-[#addb37] rounded-full flex items-center justify-center text-black font-bold">
         <Image
-          src="/assets/images/logo2.png"
+          src="/assets/images/logo2.jpg"
           alt="logo"
           width={60}
           height={60}

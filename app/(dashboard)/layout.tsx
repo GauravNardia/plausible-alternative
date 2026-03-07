@@ -24,15 +24,16 @@ const DashboardLayout = async ({
     <section className="w-full max-w-6xl mx-auto flex flex-col justify-center items-center border">
       <div className="w-full flex justify-between px-5 py-4 border-b border-gray-200">
         <div className="w-full flex justify-between items-center select-none gap-5">
-          <Link href="/sites" className="items-center">
-            <Image
-              src="/assets/images/logo.jpg"
-              alt="Logo"
-              width={170}
-              height={170}
-              className="mr-2 rounded-full"
-            />
-          </Link>
+        <Link href="/sites" className="flex items-center">
+          <Image
+            src="/assets/images/logo2.jpg"
+            alt="Logo"
+            width={30}
+            height={30}
+            className="mr-2 rounded-full"
+          />
+          <p className="text-xl font-semibold font-bpmf hidden sm:flex">Puffin Analytics</p>
+        </Link>
           {/* Filter button portal target — only shows on domain pages */}
           <div id="dashboard-filter-slot" className="flex-1 flex justify-end" />
           <ProfileDropdown email={session.user.email} userId={session.user.id} />
