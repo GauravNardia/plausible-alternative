@@ -1,5 +1,26 @@
 import PricingSlider from "@/components/pricing/PricingSlider"
 import { auth } from "@/auth"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Pricing — Puffin Analytics",
+  description: "Simple plans that scale with your traffic. Start at $7/mo. Cancel anytime.",
+  metadataBase: new URL("https://puffinanalytics.com"),
+  openGraph: {
+    title: "Pay for what you use. Nothing more.",
+    description: "Simple plans that scale with your traffic. Start at $7/mo. Cancel anytime.",
+    url: "https://puffinanalytics.com/pricing",
+    siteName: "Puffin Analytics",
+    images: [{ url: "/assets/og/pricingpage-og.png", width: 1200, height: 630, alt: "Puffin Analytics Pricing" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pay for what you use. Nothing more.",
+    description: "Simple plans that scale with your traffic. Start at $7/mo. Cancel anytime.",
+    images: ["/assets/og/pricingpage-og.png"],
+  },
+}
 
 export default async function PricingPage() {
   const session = await auth()

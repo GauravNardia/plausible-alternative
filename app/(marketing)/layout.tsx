@@ -3,54 +3,24 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-  title: "Puffin Analytics — Privacy-First Web Analytics for Modern Builders",
-  description:
-    "Simple, privacy-first web analytics built for developers and founders. No cookies. No tracking creepiness. Just fast, reliable insights.",
-
-  keywords: [
-    "privacy analytics",
-    "simple analytics",
-    "plausible alternative",
-    "google analytics alternative",
-    "web analytics for developers",
-    "cookie-less analytics",
-  ],
-
-  authors: [{ name: "Puffin Analytics" }],
-
-  creator: "Puffin Analytics",
+  title: "Puffin Analytics — Know exactly who's visiting your site",
+  description: "Traffic insights — no cookies, no GDPR headaches, no bloat. Built for indie hackers & serious teams alike.",
   metadataBase: new URL("https://puffinanalytics.com"),
-
   openGraph: {
-    title: "Puffin Analytics — Simple. Privacy-First. Fast.",
-    description:
-      "Understand your traffic without spying on your users. No cookies. No personal data. Just clean analytics.",
+    title: "Puffin Analytics — Know exactly who's visiting your site",
+    description: "Traffic insights — no cookies, no GDPR headaches, no bloat.",
     url: "https://puffinanalytics.com",
     siteName: "Puffin Analytics",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Puffin Analytics Dashboard Preview",
-      },
-    ],
-    locale: "en_US",
+    images: [{ url: "/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Puffin Analytics" }],
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
-    title: "Puffin Analytics — Privacy-First Web Analytics",
-    description:
-      "No cookies. No tracking. Just fast, simple analytics for modern builders.",
-    images: ["/og-image.png"],
+    title: "Puffin Analytics — Know exactly who's visiting your site",
+    description: "Real-time traffic insights — no cookies, no GDPR headaches, no bloat.",
+    images: ["/assets/og/homepage-og.png"],
   },
-
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
+}
 
 const MarketingLayout = ({
   children,

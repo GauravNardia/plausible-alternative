@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Puffin Analytics",
     images: [
       {
-        url: "/og-image.png",
+        url: "/assets/og/homepage-og.png",
         width: 1200,
         height: 630,
         alt: "Puffin Analytics Dashboard Preview",
@@ -57,11 +57,11 @@ export const metadata: Metadata = {
     title: "Puffin Analytics — Privacy-First Web Analytics",
     description:
       "No cookies. No tracking. Just fast, simple analytics for modern builders.",
-    images: ["/og-image.png"],
+    images: ["/assets/og/homepage-og.png"],
   },
 
   icons: {
-    icon: "/favicon.ico",
+    icon: "/assets/images/logo.png",
   },
 };
 

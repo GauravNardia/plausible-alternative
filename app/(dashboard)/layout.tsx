@@ -7,9 +7,23 @@ import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
-  title: "Dashboard — Puffin Analytics",
-  description: "View real-time insights, traffic sources, countries, devices, and page performance with Puffin Analytics.",
-  robots: { index: false, follow: false },
+  title: "Puffin Analytics — Know exactly who's visiting your site",
+  description: "Traffic insights — no cookies, no GDPR headaches, no bloat. Built for indie hackers & serious teams alike.",
+  metadataBase: new URL("https://puffinanalytics.com"),
+  openGraph: {
+    title: "Puffin Analytics — Know exactly who's visiting your site",
+    description: "Traffic insights — no cookies, no GDPR headaches, no bloat.",
+    url: "https://puffinanalytics.com",
+    siteName: "Puffin Analytics",
+    images: [{ url: "/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Puffin Analytics" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Puffin Analytics — Know exactly who's visiting your site",
+    description: "Real-time traffic insights — no cookies, no GDPR headaches, no bloat.",
+    images: ["/assets/og/homepage-og.png"],
+  },
 }
 
 const DashboardLayout = async ({

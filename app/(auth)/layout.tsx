@@ -2,9 +2,21 @@ import { Navbar } from "@/components/marketing/Navbar"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Puffin Analytics — Privacy-First Web Analytics for Modern Builders",
-  description:
-    "Simple, privacy-first web analytics built for developers and founders. No cookies. No tracking creepiness. Just fast, reliable insights.",
+  title: "Auth — Puffin Analytics",
+  description: "Set up in 1 minutes. One script tag. No cookies. No lawyers required.",
+  metadataBase: new URL("https://puffinanalytics.com"),
+  openGraph: {
+    title: "Set up in 1 minutes. Know your traffic forever.",
+    description: "One script tag. No cookies. No lawyers required.",
+    images: [{ url: "/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Sign Up for Puffin Analytics" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Set up in 5 minutes. Know your traffic forever.",
+    description: "One script tag. No cookies. No lawyers required.",
+    images: ["/assets/og/homepage-og.png"],
+  },
 }
 
 const AuthLayout = ({
