@@ -16,7 +16,6 @@ const MarketingPage = async() => {
       <SocialProof />
       <FeaturesSection/>
       <MarketingPricing/>
-      <SocialProof />
       <CTA />
       <Footer />
     </main>

@@ -87,7 +87,7 @@ export const LandingAnalyticsDemo = () => {
   }, [])
 
   return (
-    <div className="w-full overflow-hidden bg-white">
+    <div className="w-full overflow-hidden bg-white border-b">
 
       {/* Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4">
