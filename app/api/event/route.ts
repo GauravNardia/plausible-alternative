@@ -1,4 +1,4 @@
-import { and, eq, sql } from "drizzle-orm"
+import { and, eq, gt, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 import { generateVisitorHash } from "@/lib/hash"
 import { parseUA } from "@/lib/ua"
@@ -68,7 +68,8 @@ try {
         .where(
           and(
             eq(monthlyUsage.userId, userId),
-            eq(monthlyUsage.month, month)
+            eq(monthlyUsage.month, month),
+            gt(subscriptions.currentPeriodEnd, new Date())
           )
         )
         .limit(1)
