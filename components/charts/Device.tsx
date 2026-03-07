@@ -15,7 +15,7 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
 
   return (
     <div className="mt-4">
-      <div className="flex justify-between text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold">
+      <div className="text-sm flex justify-between text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold">
         <span>{label}</span>
         <span>Visitors</span>
       </div>
@@ -24,9 +24,8 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
           const percent = max ? (item.count / max) * 100 : 0
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
-              <div className="absolute inset-y-0 left-0 bg-gray-200 rounded-sm" style={{ width: `${percent}%` }} />
-              <span className="relative z-10 text-[12px] text-gray-800">{item.name}</span>
-              <span className="relative z-10 text-[12px] font-medium text-gray-700">{item.count}</span>
+              <span className="relative text-sm z-10 text-[12px] text-gray-800">{item.name}</span>
+              <span className="relative text-sm z-10 text-[12px] font-medium text-gray-700">{item.count}</span>
             </div>
           )
         })}
@@ -35,7 +34,7 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
   )
 }
 
-const triggerClass = "text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:shadow-none data-[state=active]:border-black rounded-none"
+const triggerClass = "text-[12px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:shadow-none data-[state=active]:border-black rounded-none"
 
 export default function DeviceClient({ data }: Props) {
   const [activeTab, setActiveTab] = useState("browsers")

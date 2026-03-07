@@ -23,8 +23,8 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
               <div className="absolute inset-y-0 left-0 bg-gray-100 rounded-xl" style={{ width: `${percent}%` }} />
-              <span className="relative z-10 text-[12px] text-gray-800">{item.name || "Unknown"}</span>
-              <span className="relative z-10 text-[12px] font-medium text-gray-700">{item.visitors}</span>
+              <span className="relative z-10 text-sm text-gray-800">{item.name || "Unknown"}</span>
+              <span className="relative z-10 text-sm font-medium text-gray-700">{item.visitors}</span>
             </div>
           )
         })}
@@ -33,7 +33,7 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
   )
 }
 
-const triggerClass = "text-[10px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:shadow-none data-[state=active]:border-black rounded-none"
+const triggerClass = "text-[12px] text-neutral-500 data-[state=active]:bg-neutral-100 data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-t-0 data-[state=active]:border-x-0 data-[state=active]:shadow-none data-[state=active]:border-black rounded-none"
 
 export default function GeoClient({ data }: Props) {
   const [open, setOpen] = useState(false)
@@ -42,7 +42,7 @@ export default function GeoClient({ data }: Props) {
     <>
       <div className="bg-neutral-100 p-4 h-[280px] flex flex-col">
         <Tabs defaultValue="countries" className="w-full">
-          <TabsList className="bg-neutral-100 text-[12px] w-full justify-between rounded-none px-2">
+          <TabsList className="bg-neutral-100 text-sm w-full justify-between rounded-none px-2">
             <div className="flex">
               <TabsTrigger value="countries" className={triggerClass}>COUNTRIES</TabsTrigger>
               <TabsTrigger value="regions" className={triggerClass}>REGIONS</TabsTrigger>

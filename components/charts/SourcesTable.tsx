@@ -22,7 +22,7 @@ function formatSource(name?: string) {
 
 function SourceRow({ source }: { source: Source }) {
   return (
-    <div className="flex justify-between text-[12px] text-neutral-700">
+    <div className="flex justify-between text-sm text-neutral-700">
       <span>{formatSource(source.name)}</span>
       <span className="font-medium">{source.visitors}</span>
     </div>
@@ -42,8 +42,8 @@ export default function SourcesTable({ sources }: { sources: Source[] }) {
           </button>
         </div>
         <div className="flex justify-between items-center py-2">
-          <h2 className="text-xs font-semibold text-neutral-500">Sources</h2>
-          <h2 className="text-xs font-semibold text-neutral-500">Visitors</h2>
+          <h2 className="text-sm font-semibold text-neutral-500">Sources</h2>
+          <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
         </div>
         <div className="flex flex-col gap-3">
           {sources.slice(0, 6).map((source, index) => (

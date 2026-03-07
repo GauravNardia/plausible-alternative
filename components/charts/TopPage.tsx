@@ -10,7 +10,7 @@ interface Page {
 
 function PageRow({ page }: { page: Page }) {
   return (
-    <div className="flex justify-between text-[12px] text-neutral-700">
+    <div className="flex justify-between text-sm text-neutral-700">
       <span>{page.path}</span>
       <span className="font-medium">{page.visitors}</span>
     </div>
@@ -47,7 +47,7 @@ export default function TopPagesTable({ pages }: { pages: Page[] }) {
           </DialogHeader>
           <div className="flex justify-between items-center py-2 border-b border-gray-200">
             <h2 className="text-xs font-semibold text-neutral-500">Pages</h2>
-            <h2 className="text-xs font-semibold text-neutral-500">Visitors</h2>
+            <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
           </div>
           <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto">
             {pages.map((page, index) => (
