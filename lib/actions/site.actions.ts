@@ -51,8 +51,7 @@ export const getMetrics = async (siteId: string) => {
     `${process.env.APP_URL!}/api/sites/metrics?siteId=${siteId}`,
     { cache: "no-store" }
   )
-  const json = await res.json()
-  return json.data
+  return res.json()
 }
 
 export const getSources = async (siteId: string) => {
