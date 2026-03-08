@@ -225,3 +225,9 @@ svg:focus {
   background: #5851ed;
   color: #ffffff;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+

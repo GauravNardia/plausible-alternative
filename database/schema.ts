@@ -10,6 +10,14 @@ import {
   boolean
 } from "drizzle-orm/pg-core"
 
+/* ================= WAITLIST ================= */
+
+export const waitlist = pgTable("waitlist", {
+  id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow(),
+})
+
 /* ================= USERS ================= */
 
 export const users = pgTable("users", {
