@@ -140,3 +140,32 @@ export const getSiteByDomain = async (sitedomain: string) => {
     return null
   }
 }
+
+export const getSiteAndCountByUserId = async (userId: string) => {
+  try {
+    const allSites = await db
+      .select()
+      .from(sites)
+      .where(eq(sites.userId, userId))
+
+    return {
+      site: allSites[0] ?? null,
+      count: allSites.length,
+    }
+  } catch (err) {
+    console.error('[getSiteAndCountByUserId]', err)
+    return { site: null, count: 0 }
+  }
+}
+// export const getSitesCountByUserId = async (userId: string) => {
+//   try {
+//     const allSites = await db
+//       .select()
+//       .from(sites)
+//       .where(eq(sites.userId, userId))
+//     return allSites.length
+//   } catch (err) {
+//     console.error('[getSitesCountByUserId]', err)
+//     return 0
+//   }
+// }

@@ -1,60 +1,45 @@
 import BillingCard from "@/components/pricing/BillingPage"
-import { db } from "@/database/drizzle"
-import { sites } from "@/database/schema"
-import { eq } from "drizzle-orm"
-
+import { getSiteAndCountByUserId } from "@/lib/actions/site.actions"
 
 const Page = async ({ params }: Params) => {
-  const userid = (await params).userid
+  const userId = (await params).userid
 
-  const site = await db
-    .select()
-    .from(sites)
-    .where(eq(sites.userId, userid))
-    .limit(1)
+  const { site, count: sitesUsed } = await getSiteAndCountByUserId(userId)
 
-  if (!site.length) {
+  if (!site) {
     return <div>No site found</div>
   }
 
-  const siteId = site[0].id
-  const userId = site[0].userId
-
-  // Count ALL sites for this user
-const allSites = await db     
-  .select()
-  .from(sites)
-  .where(eq(sites.userId, userId))
-
-const sitesUsed = allSites.length
-
   const usage = await fetch(
-    `${process.env.APP_URL}/api/usage?siteId=${siteId}`,
+    `${process.env.APP_URL}/api/usage?siteId=${site.id}`,
     { cache: "no-store" }
-  ).then((res) => res.json())
+  ).then((r) => r.json())
 
   return (
     <section className="min-h-screen bg-[#ffffff] text-black py-20">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-3xl md:text-4xl font-semibold font-bpmf">
-           Billing & Subscription
+            Billing & Subscription
           </h1>
+
           <p className="text-neutral-600 mt-4 px-3">
             View your current plan, track usage, and upgrade anytime as your traffic grows.
             Simple pricing with no hidden fees.
           </p>
         </div>
+
         <div className="dot-bg h-[60px] sm:h-[80px] border-y" />
+
         <div className="px-3 sm:px-0">
           <BillingCard
-           usage={usage}
-           sitesUsed={sitesUsed}
-         />
+            usage={usage}
+            sitesUsed={sitesUsed}
+          />
         </div>
       </div>
     </section>
   )
 }
 
-export default Page;
+export default Page
