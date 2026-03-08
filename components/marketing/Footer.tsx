@@ -30,7 +30,7 @@ export const Footer = () => {
         {/* Right */}
         <div className="flex md:justify-end gap-16">
 
-          <div>
+          {/* <div>
             <p className="font-semibold text-black mb-4">Quick Links</p>
 
             <ul className="space-y-2 text-sm text-neutral-600">
@@ -47,7 +47,7 @@ export const Footer = () => {
               </li>
             </ul>
 
-          </div>
+          </div> */}
 
           <div>
             <p className="font-semibold text-black mb-4">Legal</p>
