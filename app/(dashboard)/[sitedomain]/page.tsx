@@ -1,30 +1,22 @@
 import DashboardShell from '@/components/charts/DashboardShell'
-import { db } from '@/database/drizzle'
-import { sites } from '@/database/schema'
-import { getData, getPages, getSources, getGeo } from '@/lib/actions/site.actions'
-import { eq } from 'drizzle-orm'
+import { getData, getPages, getSources, getGeo, getSiteByDomain } from '@/lib/actions/site.actions'
 
 const page = async ({ params }: Params) => {
   const sitedomain = (await params).sitedomain
+  const site = await getSiteByDomain(sitedomain)
 
-  const site = await db.select().from(sites)
-    .where(eq(sites.domain, sitedomain)).limit(1)
+  if (!site) return <div>No site found</div>
 
-  if (!site.length) return <div>No site found</div>
+  const siteId = site.id
 
-  const siteId = site[0].id
-
-  const usage = await fetch(
-    `${process.env.APP_URL!}/api/usage?siteId=${siteId}`,
-    { cache: "no-store" }
-  ).then(res => res.json())
-
-  const [sources, pages, devices, geo] = await Promise.all([
+  const [usage, sources, pages, devices, geo] = await Promise.all([
+    fetch(`${process.env.APP_URL!}/api/usage?siteId=${siteId}`, { cache: "no-store" }).then(r => r.json()),
     getSources(siteId),
     getPages(siteId),
     getData(siteId),
     getGeo(siteId),
   ])
+
 
   return (
     <section className="w-full flex flex-col justify-center max-w-6xl mx-auto mb-20">

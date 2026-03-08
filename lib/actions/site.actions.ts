@@ -125,3 +125,18 @@ export const getSiteDomainById = async (siteId: string): Promise<string | null> 
     return null
   }
 }
+
+export const getSiteByDomain = async (sitedomain: string) => {
+  try {
+    const site = await db
+      .select()
+      .from(sites)
+      .where(eq(sites.domain, sitedomain))
+      .limit(1)
+
+    return site.length ? site[0] : null
+  } catch (err) {
+    console.error('[getSiteByDomain]', err)
+    return null
+  }
+}
