@@ -105,7 +105,6 @@ const Sites = async () => {
                 const metrics = await getMetrics(site.id)
                 const countrycount = await getCountryCount(site.id)
                 const sitedomain = normalizeDomain(site.domain)
-                console.log("sitesss", metrics)
                 return (
                   <SiteCard
                     key={site.id}

@@ -38,8 +38,24 @@ export async function GET(req: Request) {
       case "30d":  whereClause = `created_at >= NOW() - INTERVAL '30 days'`;  break
       case "180d": whereClause = `created_at >= NOW() - INTERVAL '180 days'`; break
       case "365d": whereClause = `created_at >= NOW() - INTERVAL '365 days'`; break
-      default:     whereClause = `1=1`
+case "all":
+default:
+  whereClause = `1=1`
+  break
     }
+
+    const debugResult = await db.execute(sql`
+  SELECT
+    MIN(created_at) as earliest,
+    MAX(created_at) as latest,
+    COUNT(*) as total,
+    (NOW() AT TIME ZONE ${sql.raw(`'${tz}'`)})::date as today_in_tz,
+    DATE_TRUNC('day', NOW() AT TIME ZONE ${sql.raw(`'${tz}'`)}) AT TIME ZONE ${sql.raw(`'${tz}'`)} as day_start_utc,
+    DATE_TRUNC('day', NOW() AT TIME ZONE ${sql.raw(`'${tz}'`)}) AT TIME ZONE ${sql.raw(`'${tz}'`)} + INTERVAL '1 day' as day_end_utc
+  FROM events
+  WHERE site_id = ${siteId}
+`)
+console.log("DEBUG:", JSON.stringify(debugResult.rows[0]))
 
     const result = await db.execute(sql`
       SELECT

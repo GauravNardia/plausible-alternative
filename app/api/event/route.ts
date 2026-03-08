@@ -47,7 +47,8 @@ try {
         .where(
           and(
             eq(subscriptions.userId, userId),
-            eq(subscriptions.status, "active")
+            eq(subscriptions.status, "active"),
+            gt(subscriptions.currentPeriodEnd, new Date())
           )
         )
         .limit(1)
@@ -62,17 +63,16 @@ try {
   
       const month = new Date().toISOString().slice(0, 7)
   
-      const usage = await db
-        .select()
-        .from(monthlyUsage)
-        .where(
-          and(
-            eq(monthlyUsage.userId, userId),
-            eq(monthlyUsage.month, month),
-            gt(subscriptions.currentPeriodEnd, new Date())
-          )
-        )
-        .limit(1)
+const usage = await db
+  .select()
+  .from(monthlyUsage)
+  .where(
+    and(
+      eq(monthlyUsage.userId, userId),
+      eq(monthlyUsage.month, month)
+    )
+  )
+  .limit(1)
   
       const eventsCount = usage[0]?.eventsCount ?? 0
   

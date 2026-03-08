@@ -65,7 +65,10 @@ export async function GET(req: Request) {
         case "30d":  whereClause = `created_at >= NOW() - INTERVAL '30 days'`;  break
         case "180d": whereClause = `created_at >= NOW() - INTERVAL '180 days'`; break
         case "365d": whereClause = `created_at >= NOW() - INTERVAL '365 days'`; break
-        default:     whereClause = `1=1`
+case "all":
+default:
+  whereClause = `1=1`
+  break
       }
 
       const result = await db.execute(sql`
