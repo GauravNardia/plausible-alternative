@@ -2,40 +2,17 @@ import { auth } from "@/auth"
 import SiteCard from "@/components/cards/SiteCard"
 import AddDomainForm from "@/components/forms/AddDomainForm"
 import { Button } from "@/components/ui/button"
-import { db } from "@/database/drizzle"
-import { sites, subscriptions } from "@/database/schema"
 import { getCountryCount } from "@/lib/actions/country.action"
-import { getMetrics } from "@/lib/actions/site.actions"
+import { getMetrics, getUserSitesWithData } from "@/lib/actions/site.actions"
 import { normalizeDomain } from "@/lib/utils"
-import { and, desc, eq } from "drizzle-orm"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
 const Sites = async () => {
   const session = await auth()
+  if (!session?.user?.id) redirect("/sign-in")
 
-  if (!session?.user?.id) {
-    redirect("/sign-in")
-  }
-
-  const userSites = await db
-    .select()
-    .from(sites)
-    .where(eq(sites.userId, session.user.id))
-    .orderBy(desc(sites.createdAt))
-
-  // Check for active subscription
-  const subscription = await db
-    .select()
-    .from(subscriptions)
-    .where(
-      and(
-        eq(subscriptions.userId, session.user.id),
-        eq(subscriptions.status, "active")
-      )
-    )
-    .limit(1)
-    .then(res => res[0])
+  const { userSites, subscription } = await getUserSitesWithData(session.user.id)
 
   return (
     <section className="min-h-screen w-full bg-[#ffffff]">
@@ -61,7 +38,6 @@ const Sites = async () => {
         <div className="dot-bg h-[60px] sm:h-[80px] border-y" />
 
         {!subscription ? (
-          // No subscription empty state
           <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
             <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center mb-5">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-neutral-400">
@@ -69,12 +45,8 @@ const Sites = async () => {
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
-              No active subscription
-            </h2>
-            <p className="text-sm text-gray-500 max-w-sm mb-6">
-              You need an active plan to add and track websites.
-            </p>
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">No active subscription</h2>
+            <p className="text-sm text-gray-500 max-w-sm mb-6">You need an active plan to add and track websites.</p>
             <Link href="/pricing">
               <Button className="blue primary-border text-white rounded-xl px-5 py-2 text-sm font-semibold uppercase cursor-pointer">
                 View plans
@@ -82,7 +54,6 @@ const Sites = async () => {
             </Link>
           </div>
         ) : !userSites.length ? (
-          // Has subscription but no sites
           <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
             <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center mb-5">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-neutral-400">
@@ -90,21 +61,17 @@ const Sites = async () => {
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
-              No sites yet
-            </h2>
-            <p className="text-sm text-gray-500 max-w-sm">
-              Add your first domain above to start tracking traffic and visitor insights.
-            </p>
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">No sites yet</h2>
+            <p className="text-sm text-gray-500 max-w-sm">Add your first domain above to start tracking traffic and visitor insights.</p>
           </div>
         ) : (
-          // Sites grid
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-5">
             {await Promise.all(
               userSites.map(async (site) => {
-                const metrics = await getMetrics(site.id)
-                const countrycount = await getCountryCount(site.id)
-                const sitedomain = normalizeDomain(site.domain)
+                const [metrics, countrycount] = await Promise.all([
+                  getMetrics(site.id),
+                  getCountryCount(site.id),
+                ])
                 return (
                   <SiteCard
                     key={site.id}
@@ -113,7 +80,7 @@ const Sites = async () => {
                     visitors={metrics?.totalVisits ?? 0}
                     pageviews={metrics?.totalPageviews ?? 0}
                     countries={countrycount.totalCountries ?? 0}
-                    href={`/${sitedomain}`}
+                    href={`/${normalizeDomain(site.domain)}`}
                   />
                 )
               })

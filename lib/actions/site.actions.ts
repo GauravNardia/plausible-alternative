@@ -2,8 +2,8 @@
 
 import { auth } from "@/auth"
 import { db } from "@/database/drizzle"
-import { sites } from "@/database/schema"
-import { eq } from "drizzle-orm"
+import { sites, subscriptions } from "@/database/schema"
+import { and, desc, eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const getApiKey = async (userId: string) => {
@@ -169,3 +169,18 @@ export const getSiteAndCountByUserId = async (userId: string) => {
 //     return 0
 //   }
 // }
+
+export const getUserSitesWithData = async (userId: string) => {
+  try {
+    const [userSites, subscription] = await Promise.all([
+      db.select().from(sites).where(eq(sites.userId, userId)).orderBy(desc(sites.createdAt)),
+      db.select().from(subscriptions).where(
+        and(eq(subscriptions.userId, userId), eq(subscriptions.status, "active"))
+      ).limit(1).then(res => res[0] ?? null),
+    ])
+    return { userSites, subscription }
+  } catch (err) {
+    console.error('[getUserSitesWithData]', err)
+    return { userSites: [], subscription: null }
+  }
+}
