@@ -10,19 +10,15 @@ const Onboarding = async () => {
   if (!userId) {
     redirect("/sign-in")
   }
-
   const { success, onboarded } = await isUserOnboarded(userId)
 
   if (!success) {
     redirect("/sign-in")
   }
-
-  // ✅ If already onboarded → go to dashboard
   if (onboarded) {
     redirect("/site")
   }
 
-  // ✅ If NOT onboarded → show onboarding page
   return (
     <main className="w-full bg-[#ffffff] flex flex-col items-center justify-center sm:px-4 sm:py-16">
       <OnboardingPage />
