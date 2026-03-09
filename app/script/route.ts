@@ -1,5 +1,6 @@
 export async function GET(req: Request) {
   const origin = new URL(req.url).origin;
+  
 
   const script = `
 (function(){
