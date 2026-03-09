@@ -3,7 +3,6 @@ import DodoPayments from "dodopayments";
 import { NextRequest, NextResponse } from "next/server";
 
 const dodopayments = new DodoPayments({
-  environment: "test_mode",
   bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
 })
 

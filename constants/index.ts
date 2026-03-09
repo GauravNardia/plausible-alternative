@@ -7,6 +7,7 @@ export const TIERS = [
   { label: "1M",   views: "1M",   starter: 59,  growth: 119, scale: 199 },
 ]
 
+//  DEVELOPMENT IDS
 export const PLAN_PRODUCT_IDS: Record<string, string> = {
   starter_0: "pdt_0NZk2m2ihnDFGSAkvCHMu",
   starter_1: "pdt_0NZtsMpg24yJG2HM8MNZE",
@@ -27,6 +28,29 @@ export const PLAN_PRODUCT_IDS: Record<string, string> = {
   scale_4:   "pdt_0NZtxnkakgnUokrbD0kAA",
   scale_5:   "pdt_0NZtxvfezz85mFB3Nq7fH",
 }
+
+// PRODUCTION IDS
+// export const PLAN_PRODUCT_IDS: Record<string, string> = {
+//   starter_0: "pdt_0Na7nPKMZyPD5ZAC9Vlb4",
+//   starter_1: "pdt_0Na7nfjanQC1T0er5T1BH",
+//   starter_2: "pdt_0Na7np49I3aEVKKH1XPCP",
+//   starter_3: "pdt_0Na7o2qV8waxmrgHwOVcz",
+//   starter_4: "pdt_0Na7oEc0PCQCraapehSIc",
+//   starter_5: "pdt_0Na7oShcfEmRqv5nnd2Xk",
+//   growth_0:  "pdt_0Na7ofR1qWcHOqtakrZ6h",
+//   growth_1:  "pdt_0Na7oquAdhFJJYqq9qPFn",
+//   growth_2:  "pdt_0Na7p2kqCbQkjFaJ0tiLz",
+//   growth_3:  "pdt_0Na7pDIGKdZPkoNa09GAR",
+//   growth_4:  "pdt_0Na7pQzxZZSNQJgnMPlXs",
+//   growth_5:  "pdt_0Na7pb9KQqXOnlZCSInsF",
+//   scale_0:   "pdt_0Na7ppzZ4DxlOQTjEjNeR",
+//   scale_1:   "pdt_0Na7q7Cn14jLyqLgd1VVR",
+//   scale_2:   "pdt_0Na7qJjq7RbY8oz0GUXr3",
+//   scale_3:   "pdt_0Na7qTz4K2Nqcq2GvCAbz",
+//   scale_4:   "pdt_0Na7qfiDoTmJtwMJ1SEuq",
+//   scale_5:   "pdt_0Na7qnkTmFCcFWes2UxNr",
+// }
+
 
 // ADD THIS BELOW — reverse lookup used by webhook
 export const PRODUCT_ID_TO_TIER: Record<string, {
