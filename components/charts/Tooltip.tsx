@@ -1,8 +1,10 @@
 "use client"
 
 import { TooltipProps } from "recharts"
+import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent"
 
-export function CustomTooltip({ active, payload, label }: TooltipProps<number, string>) {
+
+export function CustomTooltip({ active, payload, label }: TooltipProps<ValueType, NameType> & { payload?: { value: number }[], label?: string }) {
   if (!active || !payload || !payload.length) return null
 
   return (
