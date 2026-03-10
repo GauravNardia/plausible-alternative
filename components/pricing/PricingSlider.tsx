@@ -27,7 +27,7 @@ export default function PricingSlider({ userEmail, isLoggedIn }: { userEmail: st
           max={TIERS.length - 1}
           value={index}
           onChange={(e) => setIndex(Number(e.target.value))}
-          className="w-full bg-[#5851ed] shadow-none cursor-grab"
+          className="w-full accent-[#5851ed] hover:accent-[#3830cc] shadow-none cursor-grab"
         />
       </div>
 

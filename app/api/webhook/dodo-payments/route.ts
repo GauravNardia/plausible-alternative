@@ -1,5 +1,5 @@
 import { db } from "@/database/drizzle"
-import { pricingTiers, subscriptions } from "@/database/schema"
+import { pricingTiers, subscriptions, users } from "@/database/schema"
 import { PRODUCT_ID_TO_TIER } from "@/constants"
 import { eq, and } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
       case "subscription.active": {
         const productId = data.product_id ?? data.product_cart?.[0]?.product_id
         const metadataUserId = data.metadata?.userId
+        const customerEmail = data.customer?.email
 
         if (!metadataUserId) { console.log("Missing userId in metadata"); break }
         if (!productId) { console.log("Missing productId"); break }
@@ -55,6 +56,20 @@ export async function POST(req: NextRequest) {
           )).limit(1)
 
         if (!tier) { console.log("Tier not found in DB:", tierInfo); break }
+
+          const [user] = await db.select().from(users)
+    .where(eq(users.id, metadataUserId))
+    .limit(1)
+
+  if (!user) {
+    console.error("❌ User not found in prod DB:", metadataUserId, customerEmail)
+    // Return 200 so DodoPayments doesn't keep retrying
+    // The user just needs to sign in to prod first
+    return NextResponse.json({ 
+      received: true, 
+      warning: "User not found - they must sign in to prod first" 
+    }, { status: 200 })
+  }
 
         // Skip if already saved
         const [existing] = await db.select().from(subscriptions)

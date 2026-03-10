@@ -8,9 +8,8 @@ export function getGeo(req: Request) {
     req.headers.get("x-vercel-ip-country-region") ??
     "Unknown"
 
-  const city =
-    req.headers.get("x-vercel-ip-city") ??
-    "Unknown"
+  const rawCity = req.headers.get("x-vercel-ip-city") ?? "Unknown"
+  const city = rawCity === "Unknown" ? "Unknown" : decodeURIComponent(rawCity)
 
   return { country, region, city }
 }

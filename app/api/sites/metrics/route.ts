@@ -55,7 +55,7 @@ default:
   FROM events
   WHERE site_id = ${siteId}
 `)
-console.log("DEBUG:", JSON.stringify(debugResult.rows[0]))
+// console.log("DEBUG:", JSON.stringify(debugResult.rows[0]))
 
     const result = await db.execute(sql`
       SELECT

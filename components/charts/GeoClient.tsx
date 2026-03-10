@@ -7,9 +7,27 @@ import Image from "next/image"
 type Item = { name: string; visitors: number }
 type Props = { data: { countries: Item[]; regions: Item[]; cities: Item[] } }
 
+const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
+
+const getCountryName = (code: string) => {
+  try { return regionNames.of(code) ?? code } catch { return code }
+}
+
+const safeDecodeCity = (name: string) => {
+  try { return decodeURIComponent(name) } catch { return name }
+}
+
+
 function List({ items, label, limit }: { items: Item[]; label: string; limit?: number }) {
   const displayed = limit ? items.slice(0, limit) : items
   const max = Math.max(...items.map(i => i.visitors))
+
+    const displayName = (name: string) => {
+    if (!name) return "Unknown"
+    if (label === "Country") return getCountryName(name)
+    if (label === "City") return safeDecodeCity(name)
+    return name
+  }
 
   return (
     <div className="mt-4">
@@ -23,7 +41,7 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
               <div className="absolute inset-y-0 left-0 bg-gray-100 rounded-xl" style={{ width: `${percent}%` }} />
-              <span className="relative z-10 text-sm text-gray-800">{item.name || "Unknown"}</span>
+              <span className="relative z-10 text-sm text-gray-800">{displayName(item.name)}</span>
               <span className="relative z-10 text-sm font-medium text-gray-700">{item.visitors}</span>
             </div>
           )
