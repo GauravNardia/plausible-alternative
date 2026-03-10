@@ -29,73 +29,41 @@ export const joinWaitlist = async (email: string) => {
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: "Puffin Analytics <onboarding@resend.dev>", // use this until you have domain
-      to: "hey.gauravnardia@gmail.com",
+      from: "Puffin Analytics <gaurav@puffinanalytics.com>",  
+      to: email,
       subject: "You're on the waitlist!",
       html: `
-      <div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial,sans-serif;background:#ffffff;padding:40px">
-        <div style="max-width:600px;margin:0 auto;border:1px solid #e5e5e5;border-radius:12px;padding:32px">
+      <h1 style="font-size:28px;margin-bottom:16px">
+You're officially on the Puffin waitlist 🎉
+</h1>
 
-          <img 
-            src={"${process.env.APP_URL!}/assets/og/banner.png" }
-            style="width:100%;border-radius:8px;border:1px solid #eee;margin-bottom:24px"
-          />
+<p style="color:#444;margin-bottom:16px">
+Thanks for signing up — I really appreciate it.
+</p>
 
-          <h1 style="font-size:24px;margin-bottom:12px">
-            You're officially on the Puffin waitlist 🎉
-          </h1>
+<p style="color:#444;margin-bottom:16px">
+Puffin is a simple, privacy-first analytics tool built for developers, founders, and indie hackers who just want to understand their traffic without dealing with cookies, bloated dashboards, or complicated setups.
+</p>
 
-          <p style="color:#444;margin-bottom:20px">
-            Thanks for signing up for early access.
-          </p>
+<p style="margin-top:20px;color:#444">
+I'm gradually inviting people from the waitlist and you'll be among the first to try Puffin.
+</p>
 
-          <p style="color:#444;margin-bottom:16px">
-            Puffin is a privacy-first analytics tool built for developers and indie hackers.
-          </p>
+<p style="margin-top:16px;color:#444">
+Thanks again for the support — it genuinely means a lot.
+</p>
 
-          <h3 style="margin-top:24px">Why Puffin?</h3>
-
-          <ul style="color:#444">
-            <li>No cookies</li>
-            <li>Lightweight script</li>
-            <li>No bloated dashboards</li>
-            
-          </ul>
-
-          <p style="margin-top:20px">
-            We'll send your invite soon 👀
-          </p>
-
-          <div style="margin-top:28px;text-align:left">
-            <a 
-              href="https://puffinanalytics.com"
-              style="
-                background:#5851ed;
-                color:#ffffff;
-                padding:12px 24px;
-                border-radius:10px;
-                text-decoration:none;
-                font-weight:600;
-                display:inline-block;
-              "
-            >
-              Visit Puffin Analytics
-            </a>
-          </div>
-
-          <p style="margin-top:32px;font-size:13px;color:#888;text-align:center">
-            You're receiving this because you signed up at puffinanalytics.com
-          </p>
-
-        </div>
-      </div>
+<p style="margin-top:20px;color:#444">
+Gaurav<br>
+Founder, Puffin Analytics
+</p>
       `,
     })
 
     // Notify yourself
     await resend.emails.send({
-      from: "Puffin Analytics <onboarding@resend.dev>",
-      to: "your@email.com", // ← your personal email
+      from: "Puffin Analytics <gaurav@puffinanalytics.com>",
+      to: "hey.gauravnardia@gmail.com",
       subject: `New waitlist signup: ${email}`,
       html: `<p><strong>${email}</strong> just joined the waitlist.</p>`,
     })

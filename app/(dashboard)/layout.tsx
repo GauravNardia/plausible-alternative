@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Puffin Analytics — Know exactly who's visiting your site",
-    description: "Real-time traffic insights — no cookies, no GDPR headaches, no bloat.",
+    description: "Traffic insights — no cookies, no GDPR headaches, no bloat.",
     images: ["https://www.puffinanalytics.com/assets/og/homepage-og.png"],
   },
 }
