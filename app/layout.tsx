@@ -80,6 +80,7 @@ export default function RootLayout({
           <ProgressBar />
         </Suspense>
         {children}
+        <script defer src="https://puffinanalytics.com/script" data-api-key="pk_live_d439011ce675f7fbb47c0d1e80f7d82ce22aba7faa73208feda79e4597316bf8"></script>
         <Toaster />
       </body>
     </html>
