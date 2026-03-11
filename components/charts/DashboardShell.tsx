@@ -96,7 +96,7 @@ export default function DashboardShell({
           <TopPagesTable pages={pages} />
         </div>
         <div className="dot-bg h-[60px] sm:h-[80px] border-t" />
-        <div className="grid grid-cols-1 md:grid-cols-2 items-start border-y gap-4 md:gap-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-start border-t gap-4 md:gap-0">
           <DeviceClient data={devices} />
           <GeoClient data={geo} />
         </div>

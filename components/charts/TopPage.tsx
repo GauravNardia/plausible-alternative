@@ -10,7 +10,7 @@ interface Page {
 
 function PageRow({ page }: { page: Page }) {
   return (
-    <div className="flex justify-between text-sm text-neutral-700">
+    <div className="flex justify-between p-2 text-sm text-neutral-700">
       <span>{page.path}</span>
       <span className="font-medium">{page.visitors}</span>
     </div>
@@ -22,19 +22,19 @@ export default function TopPagesTable({ pages }: { pages: Page[] }) {
 
   return (
     <>
-      <div className="bg-neutral-100 p-3 border-l h-[280px]">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+      <div className="bg-neutral-100 p-3 border-l h-[350px]">
+        <div className="flex items-center justify-between pb-3">
           <h2 className="text-sm font-semibold">Top Pages</h2>
           <button onClick={() => setOpen(true)} className="hover:opacity-70 transition mb-4">
             <Image src="/assets/icons/full.svg" alt="Expand" width={20} height={20} />
           </button>
         </div>
-        <div className="flex justify-between items-center py-2">
-          <h2 className="text-xs font-semibold text-neutral-500">Pages</h2>
-          <h2 className="text-xs font-semibold text-neutral-500">Visitors</h2>
+        <div className="flex justify-between items-center py-2 border-b border-gray-200">
+          <h2 className="text-sm font-semibold text-neutral-500">Pages</h2>
+          <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
         </div>
         <div className="flex flex-col gap-3">
-          {pages.slice(0, 6).map((page, index) => (
+          {pages.slice(0, 5).map((page, index) => (
             <PageRow key={index} page={page} />
           ))}
         </div>
@@ -46,7 +46,7 @@ export default function TopPagesTable({ pages }: { pages: Page[] }) {
             <DialogTitle className="text-sm font-semibold">Top Pages</DialogTitle>
           </DialogHeader>
           <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <h2 className="text-xs font-semibold text-neutral-500">Pages</h2>
+            <h2 className="text-sm font-semibold text-neutral-500">Pages</h2>
             <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
           </div>
           <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto">

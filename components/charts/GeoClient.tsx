@@ -32,15 +32,14 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
   return (
     <div className="mt-4">
       <div className="flex justify-between text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold">
-        <span>{label}</span>
-        <span>Visitors</span>
+          <h2 className="text-sm font-semibold text-neutral-500">{label}</h2>
+          <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
       </div>
       <div className="mt-4 space-y-2">
         {displayed.map((item) => {
           const percent = max ? (item.visitors / max) * 100 : 0
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
-              <div className="absolute inset-y-0 left-0 bg-gray-100 rounded-xl" style={{ width: `${percent}%` }} />
               <span className="relative z-10 text-sm text-gray-800">{displayName(item.name)}</span>
               <span className="relative z-10 text-sm font-medium text-gray-700">{item.visitors}</span>
             </div>
@@ -58,7 +57,7 @@ export default function GeoClient({ data }: Props) {
 
   return (
     <>
-      <div className="bg-neutral-100 p-4 h-[280px] flex flex-col">
+      <div className="bg-neutral-100 p-4 h-[350px] flex flex-col">
         <Tabs defaultValue="countries" className="w-full">
           <TabsList className="bg-neutral-100 text-sm w-full justify-between rounded-none px-2">
             <div className="flex">
@@ -70,7 +69,9 @@ export default function GeoClient({ data }: Props) {
               <Image src="/assets/icons/full.svg" alt="Expand" width={20} height={20} />
             </button>
           </TabsList>
-          <TabsContent value="countries"><List items={data.countries} label="Country" limit={5} /></TabsContent>
+          <TabsContent value="countries">
+            <List items={data.countries} label="Country" limit={5} />
+          </TabsContent>
           <TabsContent value="regions"><List items={data.regions} label="Region" limit={5} /></TabsContent>
           <TabsContent value="cities"><List items={data.cities} label="City" limit={5} /></TabsContent>
         </Tabs>

@@ -16,16 +16,16 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
   return (
     <div className="mt-4">
       <div className="text-sm flex justify-between text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold">
-        <span>{label}</span>
-        <span>Visitors</span>
+          <h2 className="text-sm font-semibold text-neutral-500">{label}</h2>
+          <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
       </div>
       <div className="mt-4 space-y-2">
         {displayed.map((item) => {
           const percent = max ? (item.count / max) * 100 : 0
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
-              <span className="relative text-sm z-10 text-[12px] text-gray-800">{item.name}</span>
-              <span className="relative text-sm z-10 text-[12px] font-medium text-gray-700">{item.count}</span>
+              <span className="relative text-sm z-10  text-gray-800">{item.name}</span>
+              <span className="relative text-sm z-10 font-medium text-gray-700">{item.count}</span>
             </div>
           )
         })}
@@ -42,7 +42,7 @@ export default function DeviceClient({ data }: Props) {
 
   return (
     <>
-      <div className="bg-neutral-100 p-4 h-[280px] flex flex-col border-r">
+      <div className="bg-neutral-100 p-4 h-[350px] flex flex-col border-r">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="bg-neutral-100 text-[12px] w-full justify-between rounded-none px-2">
             <div className="flex">

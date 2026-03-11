@@ -22,7 +22,7 @@ function formatSource(name?: string) {
 
 function SourceRow({ source }: { source: Source }) {
   return (
-    <div className="flex justify-between text-sm text-neutral-700">
+    <div className="flex justify-between text-sm p-2 text-neutral-700">
       <span>{formatSource(source.name)}</span>
       <span className="font-medium">{source.visitors}</span>
     </div>
@@ -34,19 +34,19 @@ export default function SourcesTable({ sources }: { sources: Source[] }) {
 
   return (
     <>
-      <div className="bg-neutral-100 p-4 h-[280px] flex flex-col">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+      <div className="bg-neutral-100 p-4 h-[350px] flex flex-col">
+        <div className="flex items-center justify-between pb-">
           <h2 className="text-sm font-semibold">Top Sources</h2>
           <button onClick={() => setOpen(true)} className="hover:opacity-70 transition mb-4">
             <Image src="/assets/icons/full.svg" alt="Expand" width={20} height={20} />
           </button>
         </div>
-        <div className="flex justify-between items-center py-2">
+        <div className="flex justify-between items-center px-2 py-2 border-b border-gray-200">
           <h2 className="text-sm font-semibold text-neutral-500">Sources</h2>
           <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
         </div>
         <div className="flex flex-col gap-3">
-          {sources.slice(0, 6).map((source, index) => (
+          {sources.slice(0, 5).map((source, index) => (
             <SourceRow key={index} source={source} />
           ))}
         </div>
