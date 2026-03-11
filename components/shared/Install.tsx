@@ -17,19 +17,19 @@ interface InstallBoxProps {
 export default function InstallBox({ script, siteId, domain }: InstallBoxProps) {
   const router = useRouter()
   const [copied, setCopied] = useState(false)
-//   useEffect(() => {
-//   const interval = setInterval(async () => {
-//     const res = await fetch(`/api/sites/status?siteId=${siteId}`)
-//     const data = await res.json()
+  useEffect(() => {
+  const interval = setInterval(async () => {
+    const res = await fetch(`/api/sites/status?siteId=${siteId}`)
+    const data = await res.json()
 
-//     if (data.hasEvents) {
-//       clearInterval(interval)
-//       router.push(`/${domain}`)
-//     }
-//   }, 3000)
+    if (data.hasEvents) {
+      clearInterval(interval)
+      router.push(`/${domain}`)
+    }
+  }, 3000)
 
-//   return () => clearInterval(interval)
-// }, [siteId])
+  return () => clearInterval(interval)
+}, [siteId])
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(script)
