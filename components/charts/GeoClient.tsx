@@ -1,8 +1,9 @@
 "use client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useState } from "react"
 import Image from "next/image"
+import { Button } from "../ui/button"
 
 type Item = { name: string; visitors: number }
 type Props = { data: { countries: Item[]; regions: Item[]; cities: Item[] } }
@@ -66,7 +67,7 @@ export default function GeoClient({ data }: Props) {
               <TabsTrigger value="cities" className={triggerClass}>CITIES</TabsTrigger>
             </div>
             <button onClick={() => setOpen(true)} className="hover:opacity-70 transition">
-              <Image src="/assets/icons/full.svg" alt="Expand" width={20} height={20} />
+              <Image src="/assets/icons/full.svg" alt="Expand" className="cursor-pointer" width={20} height={20} />
             </button>
           </TabsList>
           <TabsContent value="countries">
@@ -78,10 +79,15 @@ export default function GeoClient({ data }: Props) {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-lg bg-neutral-100">
-          <DialogHeader>
-            <DialogTitle className="text-sm font-semibold">Countries / Regions / Cities</DialogTitle>
-          </DialogHeader>
+        <DialogContent className="max-w-2xl rounded-2xl bg-neutral-100" showCloseButton={false}>
+  <DialogHeader className="flex flex-row items-center justify-between">
+    <DialogTitle className="text-sm font-semibold">Top Pages</DialogTitle>
+    <DialogClose asChild>
+      <Button variant="outline" className="text-sm text-neutral-400 hover:text-neutral-800 border border-neutral-200  p-2 rounded-xl focus:ring-0 cursor-pointer transition-all">
+        <Image src="/assets/icons/close.svg" width={20} height={20} alt="close" />
+      </Button>
+    </DialogClose>
+  </DialogHeader>
           <Tabs defaultValue="countries" className="w-full">
             <TabsList className="bg-neutral-100 w-full justify-start rounded-none px-0">
               <TabsTrigger value="countries" className={triggerClass}>COUNTRIES</TabsTrigger>
