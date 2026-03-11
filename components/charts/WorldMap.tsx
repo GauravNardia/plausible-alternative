@@ -51,6 +51,11 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
     })
   }, [countries])
 
+  const maxValue = useMemo(
+    () => Math.max(...countries.map((c) => c.visitors), 1),
+    [countries]
+  )
+
   const option = {
     tooltip: {
       trigger: "item",
@@ -62,6 +67,12 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
         return `<strong>${params.name}</strong><br/>${value} visitors`
       }
     },
+    visualMap: {
+      min: 0,
+      max: maxValue,
+      show: false,
+      inRange: { color: ["#c7d2fe", "#4f46e5"] },
+    },
 
     series: [
       {
@@ -70,8 +81,9 @@ export default function WorldMap({ countries }: { countries: Item[] }) {
         roam: false,
 
         itemStyle: {
-          areaColor: "#ffffff",
-          borderColor: "#888888"
+          areaColor: "#f3f4f6",
+          borderColor: "#d1d5db",
+          borderWidth: 0.5
         },
 
         emphasis: {
