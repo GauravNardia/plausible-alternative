@@ -17,19 +17,19 @@ interface InstallBoxProps {
 export default function InstallBox({ script, siteId, domain }: InstallBoxProps) {
   const router = useRouter()
   const [copied, setCopied] = useState(false)
-  useEffect(() => {
-  const interval = setInterval(async () => {
-    const res = await fetch(`/api/sites/status?siteId=${siteId}`)
-    const data = await res.json()
+//   useEffect(() => {
+//   const interval = setInterval(async () => {
+//     const res = await fetch(`/api/sites/status?siteId=${siteId}`)
+//     const data = await res.json()
 
-    if (data.hasEvents) {
-      clearInterval(interval)
-      router.push(`/${domain}`)
-    }
-  }, 3000)
+//     if (data.hasEvents) {
+//       clearInterval(interval)
+//       router.push(`/${domain}`)
+//     }
+//   }, 3000)
 
-  return () => clearInterval(interval)
-}, [siteId])
+//   return () => clearInterval(interval)
+// }, [siteId])
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(script)
@@ -38,12 +38,12 @@ export default function InstallBox({ script, siteId, domain }: InstallBoxProps) 
   }
 
 return (
-  <div className="min-h-screen flex items-center justify-center px-0 sm:px-6">
-    <div className="w-full bg-neutral-100 rounded-2xl p-1">
+  <div className="min-h-screen flex items-start justify-center">
+    <div className="w-full border-b border-gray-200">
 
       {/* Header */}
-      <div className="flex flex-col items-center text-center mb-8 bg-[#ffffff] py-4 rounded-xl ">
-        <div className="p-4 rounded-full mb-4">
+      <div className="flex flex-col items-center text-center bg-[#ffffff] py-4">
+        <div className="py-2 rounded-full mb-4">
           <Image
             src="/assets/images/logo2.jpg"
             alt="logo"
@@ -62,7 +62,7 @@ return (
       </div>
 
       {/* Step 1 */}
-      <div className="mb-6 px-5">
+      <div className="py-10 px-5 border-t">
         <p className="text-sm font-semibold text-black mb-3 font-bpmf">
           Step 1 — Copy this script
         </p>
@@ -74,7 +74,7 @@ return (
         showLineNumbers={false}
         wrapLongLines
         customStyle={{
-          borderRadius: "20px",
+          borderRadius: "10px",
           padding: "28px",
           fontSize: "13px",
           margin: 0,
@@ -108,8 +108,11 @@ return (
         </div>
       </div>
 
+      <div className="h-[60px] dot-bg border-y" />
+
+
       {/* Step 2 */}
-      <div className="mb-8 px-5">
+      <div className="py-10 px-5">
         <p className="text-sm  font-semibold text-black mb-2 font-bpmf">
           Step 2 — Paste it before
           <span className="mx-1 font-mono text-white bg-[#5851ed] px-2 py-1 rounded-md text-xs">

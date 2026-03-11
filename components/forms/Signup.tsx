@@ -3,7 +3,7 @@
 import * as z from "zod"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -46,7 +46,7 @@ export const SignupForm = () => {
         redirect: false,
       })
 
-      router.push("/onboarding")
+      router.push("/sites")
     } catch (error) {
       toast.error("Something went wrong")
     } finally {

@@ -19,7 +19,9 @@ const Install = async ({ params }: Params) => {
 
   return(
     <section className="w-full">
-      <InstallBox script={script} siteId={siteId} domain={domain} />
+      <div className="h-[120px] dot-bg border-b" />
+        <InstallBox script={script} siteId={siteId} domain={domain} />
+      <div className="dot-bg border-b" />    
     </section>
   )
 }

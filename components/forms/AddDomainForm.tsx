@@ -56,7 +56,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
 
     if (result.success) {
       toast.success("Website added successfully!")
-      router.push(`/onboarding/install/${result.siteId}`)
+      router.push(`/install/${result.siteId}`)
     } else {
       toast.error(result.error)
     }
