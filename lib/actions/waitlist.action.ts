@@ -54,8 +54,8 @@ Thanks again for the support — it genuinely means a lot.
 </p>
 
 <p style="margin-top:20px;color:#444">
-Gaurav<br>
-Founder, Puffin Analytics
+Best<br/>
+Gaurav
 </p>
       `,
     })
