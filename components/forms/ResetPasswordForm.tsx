@@ -4,8 +4,6 @@ import * as z from "zod"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import Link from "next/link"
-import { signIn } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
 import Image from "next/image"
@@ -16,7 +14,6 @@ import { resetPassword } from "@/lib/actions/auth.action"
 
 export const ResetPasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [serverError, setServerError] = useState<string | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()  
   const token = searchParams.get("token") ?? "" 
