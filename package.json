@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db": "npx drizzle-kit generate && npx drizzle-kit migrate"
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:dev": "NODE_ENV=development drizzle-kit migrate",
+    "db:migrate:prod": "NODE_ENV=production drizzle-kit migrate"
+
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
