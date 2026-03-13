@@ -52,6 +52,7 @@
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/topojson-client": "^3.1.5",
+    "@types/uuid": "^10.0.0",
     "drizzle-kit": "^0.31.9",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",

@@ -27,6 +27,8 @@ export const users = pgTable("users", {
   password: text("password"),
   onboarded: boolean("onboarded").default(false),
   createdAt: timestamp("created_at").defaultNow(),
+  passwordResetToken: text("password_reset_token"),
+  passwordResetExpires: timestamp("password_reset_expires"),
 })
 
 /* ================= SITES ================= */

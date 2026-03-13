@@ -6,47 +6,39 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { loginSchema } from "@/lib/validations"
-import { loginUser } from "@/lib/actions/auth.action"
+import { resetPasswordSchema } from "@/lib/validations"
+import { resetPassword } from "@/lib/actions/auth.action"
 
-export const SigninForm = () => {
+export const ResetPasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()  
+  const token = searchParams.get("token") ?? "" 
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof resetPasswordSchema>>({
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: "",
       password: "",
     },
   })
 
-  async function onSubmit(data: z.infer<typeof loginSchema>) {
+  async function onSubmit(data: z.infer<typeof resetPasswordSchema>) {
     try {
       setIsLoading(true)
 
-      const result = await loginUser(data.email, data.password)
+    const result = await resetPassword(token, data.password);
+    if (result.success) alert("Password reset! Please login.");
+    if (result.error) alert(result.error);
 
-      if (!result?.success) {
-      setServerError(result?.error || "Invalid email or password")
-      return
-    }
+    router.push("/sign-in")
 
-      toast.success("Signed in successfully 🎉")
 
-      await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      })
-
-      router.push("/sites")
     } catch (error) {
       toast.error("Something went wrong")
     } finally {
@@ -70,44 +62,23 @@ return (
         />
 
         <h2 className="text-[12-px] font-semibold text-black">
-          Signin to Puffin
+          Reset your password
         </h2>
 
         <p className="text-sm text-black mt-1">
-          Don't have an account?{" "}
-          <Link
-            href="/sign-up"
-            className="text-[#1f1f1f] font-medium hover:underline"
-          >
-            Signup
-          </Link>
+          Enter your new password below
         </p>
       </div>
 
       {/* Form */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4 px-4">
 
-        {/* Email */}
-        <div>
-          <label className="text-[12px] text-black">
-            Email
-          </label>
-          <Input
-            {...form.register("email")}
-            type="email"
-            className="mt-1 h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
-          />
-        </div>
-
         {/* Password */}
           <div>
         <div className="flex justify-between">
           <label className="text-[12px] text-black">
-            Password
+            New password
           </label>
-          <div>
-            <Link className="text-xs text-neutral-500 hover:underline" href="/forgot-password">Forget password?</Link>
-          </div>
           </div>
           <Input
             {...form.register("password")}
@@ -122,7 +93,7 @@ return (
           disabled={isLoading}
           className="w-full px-6 mt-2 blue primary-border text-white font-semibold rounded-xl cursor-pointer"
         >
-          {isLoading ? "Loading..." : "SIGN IN"}
+          {isLoading ? "Loading..." : "CHANGE PASSWORD"}
         </Button>
 
       </form>

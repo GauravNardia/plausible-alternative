@@ -8,6 +8,8 @@ import { auth, signIn, signOut } from "@/auth"
 import  AuthError  from "next-auth"
 import { generatePublicApiKey } from "../api-key"
 import { normalizeDomain } from "../utils"
+import { v4 as uuidv4 } from "uuid"
+import { resend } from "../config/resend"
 
 
 export const registerUser = async(email: string, password: string, name: string) => {
@@ -187,3 +189,79 @@ export const isUserOnboarded = async(userId: string) => {
   }
 }
 
+export const forgetPassword = async(email: string) => {
+try {
+    const user = await db.select().from(users)
+      .where(eq(users.email, email)).limit(1);
+  
+    if (user.length === 0) return { success: true };
+  
+    const token = uuidv4();
+    const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour
+  
+    await db.update(users)
+      .set({
+         passwordResetToken: token,
+         passwordResetExpires: expires
+      })
+      .where(eq(users.email, email));
+  
+    await resend.emails.send({
+      from: "Puffin Analytics <noreply@puffinanalytics.com>",
+      to: email,
+      subject: "Reset your password",
+      html: `
+        <p>Click the link below to reset your password. Expires in 1 hour.</p>
+        <a href="${process.env.APP_URL!}/reset-password?token=${token}">
+          Reset Password
+        </a>
+      `,
+    });
+  
+    return { success: true };
+} catch (error) {
+  console.error("FORGET PASSWORD ERROR:", error)
+    return {
+      success: false,
+      error: "Something went wrong",
+    }
+  
+}
+}
+
+export const resetPassword = async(token: string, password: string) => {
+  try {
+
+    const user = await db.select().from(users)
+    .where(eq(users.passwordResetToken, token)).limit(1);
+
+  if (user.length === 0) {
+    return { error: "Invalid or expired token" };
+  }
+
+  // Token expired
+  if (!user[0].passwordResetExpires || user[0].passwordResetExpires < new Date()) {
+    return { error: "Token has expired. Please request a new one." };
+  }
+
+  const hashed = await bcrypt.hash(password, 10);
+
+  await db.update(users)
+    .set({
+      password: hashed,
+      passwordResetToken: null,
+      passwordResetExpires: null,
+    })
+    .where(eq(users.passwordResetToken, token));
+
+  return { success: true };
+    
+  } catch (error) {
+    console.error("RESET PASSWORD ERROR:", error)
+    return {
+      success: false,
+      error: "Something went wrong",
+    }
+    
+  }
+}
