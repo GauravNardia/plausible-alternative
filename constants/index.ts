@@ -9,48 +9,27 @@ export const TIERS = [
 
 //  DEVELOPMENT IDS
 export const PLAN_PRODUCT_IDS: Record<string, string> = {
-  starter_0: "pdt_0NZk2m2ihnDFGSAkvCHMu",
-  starter_1: "pdt_0NZtsMpg24yJG2HM8MNZE",
-  starter_2: "pdt_0NZtua3CkjxbmEDQXan8N",
-  starter_3: "pdt_0NZtumEXc4LoOoHmCRP64",
-  starter_4: "pdt_0NZtuyaxzGuP07gaLdnDl",
-  starter_5: "pdt_0NZtv7ObByToEWePk7vDD",
-  growth_0:  "pdt_0NZk32m4w1T3vZG91zrzJ",
-  growth_1:  "pdt_0NZtvtGf5fjBo12VCtraT",
-  growth_2:  "pdt_0NZtw65bDPh8HxAgy9orD",
-  growth_3:  "pdt_0NZtwFHeOlvHdRWr4J6SG",
-  growth_4:  "pdt_0NZtwRXjBGdXK0TK5BPIc",
-  growth_5:  "pdt_0NZtwX2jmkgEo5Z67GX1A",
-  scale_0:   "pdt_0NZtx9S9TPWFQSdNasbrs",
-  scale_1:   "pdt_0NZtxIST9UwTmW7f6JON5",
-  scale_2:   "pdt_0NZtxV2hSP77DGDfnBG0e",
-  scale_3:   "pdt_0NZtxe85QN8QsOm8Q2i4B",
-  scale_4:   "pdt_0NZtxnkakgnUokrbD0kAA",
-  scale_5:   "pdt_0NZtxvfezz85mFB3Nq7fH",
+  starter_0: process.env.NEXT_PUBLIC_STARTER_0!,
+  starter_1: process.env.NEXT_PUBLIC_STARTER_1!,
+  starter_2: process.env.NEXT_PUBLIC_STARTER_2!,
+  starter_3: process.env.NEXT_PUBLIC_STARTER_3!,
+  starter_4: process.env.NEXT_PUBLIC_STARTER_4!,
+  starter_5: process.env.NEXT_PUBLIC_STARTER_5!,
+
+  growth_0:  process.env.NEXT_PUBLIC_GROWTH_0!,
+  growth_1:  process.env.NEXT_PUBLIC_GROWTH_1!,
+  growth_2:  process.env.NEXT_PUBLIC_GROWTH_2!,
+  growth_3:  process.env.NEXT_PUBLIC_GROWTH_3!,
+  growth_4:  process.env.NEXT_PUBLIC_GROWTH_4!,
+  growth_5:  process.env.NEXT_PUBLIC_GROWTH_5!,
+
+  scale_0:   process.env.NEXT_PUBLIC_SCALE_0!,
+  scale_1:   process.env.NEXT_PUBLIC_SCALE_1!,
+  scale_2:   process.env.NEXT_PUBLIC_SCALE_2!,
+  scale_3:   process.env.NEXT_PUBLIC_SCALE_3!,
+  scale_4:   process.env.NEXT_PUBLIC_SCALE_4!,
+  scale_5:   process.env.NEXT_PUBLIC_SCALE_5!,
 }
-
-// PRODUCTION IDS
-// export const PLAN_PRODUCT_IDS: Record<string, string> = {
-//   starter_0: "pdt_0Na7nPKMZyPD5ZAC9Vlb4",
-//   starter_1: "pdt_0Na7nfjanQC1T0er5T1BH",
-//   starter_2: "pdt_0Na7np49I3aEVKKH1XPCP",
-//   starter_3: "pdt_0Na7o2qV8waxmrgHwOVcz",
-//   starter_4: "pdt_0Na7oEc0PCQCraapehSIc",
-//   starter_5: "pdt_0Na7oShcfEmRqv5nnd2Xk",
-//   growth_0:  "pdt_0Na7ofR1qWcHOqtakrZ6h",
-//   growth_1:  "pdt_0Na7oquAdhFJJYqq9qPFn",
-//   growth_2:  "pdt_0Na7p2kqCbQkjFaJ0tiLz",
-//   growth_3:  "pdt_0Na7pDIGKdZPkoNa09GAR",
-//   growth_4:  "pdt_0Na7pQzxZZSNQJgnMPlXs",
-//   growth_5:  "pdt_0Na7pb9KQqXOnlZCSInsF",
-//   scale_0:   "pdt_0Na7ppzZ4DxlOQTjEjNeR",
-//   scale_1:   "pdt_0Na7q7Cn14jLyqLgd1VVR",
-//   scale_2:   "pdt_0Na7qJjq7RbY8oz0GUXr3",
-//   scale_3:   "pdt_0Na7qTz4K2Nqcq2GvCAbz",
-//   scale_4:   "pdt_0Na7qfiDoTmJtwMJ1SEuq",
-//   scale_5:   "pdt_0Na7qnkTmFCcFWes2UxNr",
-// }
-
 
 // ADD THIS BELOW — reverse lookup used by webhook
 export const PRODUCT_ID_TO_TIER: Record<string, {
