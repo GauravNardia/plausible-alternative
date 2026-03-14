@@ -33,17 +33,17 @@ export const metadata: Metadata = {
   authors: [{ name: "Puffin Analytics" }],
 
   creator: "Puffin Analytics",
-  metadataBase: new URL("https://www.puffinanalytics.com"),
+  metadataBase: new URL("https://puffinanalytics.com"),
 
   openGraph: {
     title: "Puffin Analytics — Simple. Privacy-First. Fast.",
     description:
       "Understand your traffic without spying on your users. No cookies. No personal data. Just clean analytics.",
-    url: "https://www.puffinanalytics.com",
+    url: "https://puffinanalytics.com",
     siteName: "Puffin Analytics",
     images: [
       {
-        url: "https://www.puffinanalytics.com/assets/og/homepage-og.png",
+        url: "https://puffinanalytics.com/assets/og/homepage-og.png",
         width: 1200,
         height: 630,
         alt: "Puffin Analytics Dashboard Preview",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Puffin Analytics — Privacy-First Web Analytics",
     description:
       "No cookies. No tracking. Just fast, simple analytics for modern builders.",
-    images: ["https://www.puffinanalytics.com/assets/og/homepage-og.png"],
+    images: ["https://puffinanalytics.com/assets/og/homepage-og.png"],
   },
 
   icons: {

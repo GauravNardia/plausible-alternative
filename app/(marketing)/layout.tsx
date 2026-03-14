@@ -5,20 +5,20 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Puffin Analytics — Know exactly who's visiting your site",
   description: "Traffic insights — no cookies, no GDPR headaches, no bloat. Built for indie hackers & serious teams alike.",
-  metadataBase: new URL("https://www.puffinanalytics.com"),
+  metadataBase: new URL("https://puffinanalytics.com"),
   openGraph: {
     title: "Puffin Analytics — Know exactly who's visiting your site",
     description: "Traffic insights — no cookies, no GDPR headaches, no bloat.",
-    url: "https://www.puffinanalytics.com",
+    url: "https://puffinanalytics.com",
     siteName: "Puffin Analytics",
-    images: [{ url: "https://www.puffinanalytics.com/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Puffin Analytics" }],
+    images: [{ url: "https://puffinanalytics.com/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Puffin Analytics" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Puffin Analytics — Know exactly who's visiting your site",
     description: "Real-time traffic insights — no cookies, no GDPR headaches, no bloat.",
-    images: ["https://www.puffinanalytics.com/assets/og/homepage-og.png"],
+    images: ["https://puffinanalytics.com/assets/og/homepage-og.png"],
   },
 }
 

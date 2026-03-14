@@ -4,18 +4,18 @@ import { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Auth — Puffin Analytics",
   description: "Set up in 1 minutes. One script tag. No cookies. No lawyers required.",
-  metadataBase: new URL("https://www.puffinanalytics.com"),
+  metadataBase: new URL("https://puffinanalytics.com"),
   openGraph: {
     title: "Set up in 1 minutes. Know your traffic forever.",
     description: "One script tag. No cookies. No lawyers required.",
-    images: [{ url: "https://www.puffinanalytics.com/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Sign Up for Puffin Analytics" }],
+    images: [{ url: "https://puffinanalytics.com/assets/og/homepage-og.png", width: 1200, height: 630, alt: "Sign Up for Puffin Analytics" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Set up in 5 minutes. Know your traffic forever.",
     description: "One script tag. No cookies. No lawyers required.",
-    images: ["https://www.puffinanalytics.com/assets/og/homepage-og.png"],
+    images: ["https://puffinanalytics.com/assets/og/homepage-og.png"],
   },
 }
 
