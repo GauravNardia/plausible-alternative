@@ -33,17 +33,17 @@ export const metadata: Metadata = {
   authors: [{ name: "Puffin Analytics" }],
 
   creator: "Puffin Analytics",
-  metadataBase: new URL("https://www.puffinanalytics.com"),
+  metadataBase: new URL("https://dev.puffinanalytics.com"),
 
   openGraph: {
     title: "Puffin Analytics — Simple. Privacy-First. Fast.",
     description:
       "Understand your traffic without spying on your users. No cookies. No personal data. Just clean analytics.",
-    url: "https://www.puffinanalytics.com",
+    url: "https://dev.puffinanalytics.com",
     siteName: "Puffin Analytics",
     images: [
       {
-        url: "https://www.puffinanalytics.com/assets/og/homepage-og.png",
+        url: "https://dev.puffinanalytics.com/assets/og/homepage-og.png",
         width: 1200,
         height: 630,
         alt: "Puffin Analytics Dashboard Preview",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Puffin Analytics — Privacy-First Web Analytics",
     description:
       "No cookies. No tracking. Just fast, simple analytics for modern builders.",
-    images: ["https://www.puffinanalytics.com/assets/og/homepage-og.png"],
+    images: ["https://dev.puffinanalytics.com/assets/og/homepage-og.png"],
   },
 
   icons: {
@@ -80,7 +80,7 @@ export default function RootLayout({
           <ProgressBar />
         </Suspense>
         {children}
-        <script defer src="https://puffinanalytics.com/script" data-api-key="pk_live_a9cc4e14ff7dd3739fa6c4da57a970bfbd800059f57c4e61e782e565dd1a4810"></script>
+        <script defer src="https://dev.puffinanalytics.com/script" data-api-key="pk_live_a9cc4e14ff7dd3739fa6c4da57a970bfbd800059f57c4e61e782e565dd1a4810"></script>
         <Toaster />
       </body>
     </html>

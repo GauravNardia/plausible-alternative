@@ -14,7 +14,7 @@ const Install = async ({ params }: Params) => {
   const publicKey = await getApiKey(siteId)
   const key = publicKey.success ? publicKey.data : "Error fetching key"
 
-  const script = `<script defer src="https://puffinanalytics.com/script" data-api-key="${key}"></script>`
+  const script = `<script defer src="https://dev.puffinanalytics.com/script" data-api-key="${key}"></script>`
 
   return(
     <section className="w-full">
