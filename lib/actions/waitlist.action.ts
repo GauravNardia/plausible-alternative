@@ -29,7 +29,7 @@ export const joinWaitlist = async (email: string) => {
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: "Puffin Analytics <gaurav@dev.puffinanalytics.com>",  
+      from: "Puffin Analytics <gaurav@puffinanalytics.com>",  
       to: email,
       subject: "You're on the waitlist!",
       html: `
@@ -62,7 +62,7 @@ Gaurav
 
     // Notify yourself
     await resend.emails.send({
-      from: "Puffin Analytics <gaurav@dev.puffinanalytics.com>",
+      from: "Puffin Analytics <gaurav@puffinanalytics.com>",
       to: "hey.gauravnardia@gmail.com",
       subject: `New waitlist signup: ${email}`,
       html: `<p><strong>${email}</strong> just joined the waitlist.</p>`,

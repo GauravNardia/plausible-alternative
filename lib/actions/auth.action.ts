@@ -207,7 +207,7 @@ try {
       .where(eq(users.email, email));
   
     await resend.emails.send({
-      from: "Puffin Analytics <noreply@dev.puffinanalytics.com>",
+      from: "Puffin Analytics <noreply@puffinanalytics.com>",
       to: email,
       subject: "Reset your password",
       html: `

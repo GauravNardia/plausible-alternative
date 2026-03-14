@@ -5,11 +5,11 @@ import { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Pricing — Puffin Analytics",
   description: "Simple plans that scale with your traffic. Start at $7/mo. Cancel anytime.",
-  metadataBase: new URL("https://dev.puffinanalytics.com"),
+  metadataBase: new URL("https://puffinanalytics.com"),
   openGraph: {
     title: "Pay for what you use. Nothing more.",
     description: "Simple plans that scale with your traffic. Start at $7/mo. Cancel anytime.",
-    url: "https://dev.puffinanalytics.com/pricing",
+    url: "https://puffinanalytics.com/pricing",
     siteName: "Puffin Analytics",
     images: [{ url: "/assets/og/pricingpage-og.png", width: 1200, height: 630, alt: "Puffin Analytics Pricing" }],
     type: "website",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Pay for what you use. Nothing more.",
     description: "Simple plans that scale with your traffic. Start at $7/mo. Cancel anytime.",
-    images: ["https://dev.puffinanalytics.com/assets/og/pricingpage-og.png"],
+    images: ["https://puffinanalytics.com/assets/og/pricingpage-og.png"],
   },
 }
 
