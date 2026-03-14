@@ -35,7 +35,7 @@ export const getApiKey = async (siteId: string) => {
 
 export const getGeo = async (siteId: string) => {
   const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/geo?siteId=${siteId}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/sites/geo?siteId=${siteId}`,
     { cache: "no-store" }
   )
 
@@ -44,7 +44,7 @@ export const getGeo = async (siteId: string) => {
 
 export const getMetrics = async (siteId: string) => {
   const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/metrics?siteId=${siteId}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/sites/metrics?siteId=${siteId}`,
     { cache: "no-store" }
   )
   return res.json()
@@ -52,7 +52,7 @@ export const getMetrics = async (siteId: string) => {
 
 export const getSources = async (siteId: string) => {
   const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/sources?siteId=${siteId}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/sites/sources?siteId=${siteId}`,
     { cache: "no-store" }
   )
   const json = await res.json()
@@ -61,7 +61,7 @@ export const getSources = async (siteId: string) => {
 
 export const getPages = async (siteId: string) => {
   const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/pages?siteId=${siteId}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/sites/pages?siteId=${siteId}`,
     { cache: "no-store" }
   )
   const json = await res.json()
@@ -70,7 +70,7 @@ export const getPages = async (siteId: string) => {
 
 export const getData = async (siteId: string) => {
   const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/devices?siteId=${siteId}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/sites/devices?siteId=${siteId}`,
     { cache: "no-store" }
   )
 

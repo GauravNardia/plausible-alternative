@@ -10,7 +10,7 @@ const page = async ({ params }: Params) => {
   const siteId = site.id
 
   const [usage, sources, pages, devices, geo] = await Promise.all([
-    fetch(`${process.env.APP_URL!}/api/usage?siteId=${siteId}`, { cache: "no-store" }).then(r => r.json()),
+    fetch(`${process.env.NEXT_PUBLIC_APP_URL!}/api/usage?siteId=${siteId}`, { cache: "no-store" }).then(r => r.json()),
     getSources(siteId),
     getPages(siteId),
     getData(siteId),
