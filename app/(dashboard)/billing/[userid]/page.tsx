@@ -48,7 +48,7 @@ const Page = async ({ params }: Params) => {
     )
   }
   const usage = await fetch(
-    `${process.env.APP_URL}/api/usage?siteId=${site.id}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/usage?siteId=${site.id}`,
     { cache: "no-store" }
   ).then((r) => r.json())
 

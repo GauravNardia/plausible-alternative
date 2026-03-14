@@ -1,7 +1,7 @@
 "use server"
 export const getCountryCount = async (siteId: string) => {
   const res = await fetch(
-    `${process.env.APP_URL!}/api/sites/geo/country?siteId=${siteId}`,
+    `${process.env.NEXT_PUBLIC_APP_URL!}/api/sites/geo/country?siteId=${siteId}`,
     { cache: "no-store" }
   )
 

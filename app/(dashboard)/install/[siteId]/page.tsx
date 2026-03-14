@@ -11,8 +11,7 @@ const Install = async ({ params }: Params) => {
   const domain = await getSiteDomainById(siteId)
    if(!domain) return null
 
-  const userId = session.user?.id!
-  const publicKey = await getApiKey(userId)
+  const publicKey = await getApiKey(siteId)
   const key = publicKey.success ? publicKey.data : "Error fetching key"
 
   const script = `<script defer src="https://puffinanalytics.com/script" data-api-key="${key}"></script>`

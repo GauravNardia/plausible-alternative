@@ -111,7 +111,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
             name="site"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Site name</FormLabel>
+                <FormLabel>Website name</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Mysite"

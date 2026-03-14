@@ -212,7 +212,7 @@ try {
       subject: "Reset your password",
       html: `
         <p>Click the link below to reset your password. Expires in 1 hour.</p>
-        <a href="${process.env.APP_URL!}/reset-password?token=${token}">
+        <a href="${process.env.NEXT_PUBLIC_APP_URL!}/reset-password?token=${token}">
           Reset Password
         </a>
       `,
