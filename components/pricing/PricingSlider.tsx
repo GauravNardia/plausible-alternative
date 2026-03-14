@@ -88,6 +88,7 @@ function Plan({
     try {
       const res = await fetch("/checkout", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
