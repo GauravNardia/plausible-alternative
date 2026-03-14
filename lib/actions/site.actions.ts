@@ -6,16 +6,16 @@ import { sites, subscriptions } from "@/database/schema"
 import { and, desc, eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
-export const getApiKey = async (userId: string) => {
+export const getApiKey = async (siteId: string) => {
   try {
-    if (!userId) {
-      return { success: false, error: "User ID is required" }
+    if (!siteId) {
+      return { success: false, error: "Site ID is required" }
     }
 
     const result = await db
       .select({ publicApiKey: sites.publicApiKey })
       .from(sites)
-      .where(eq(sites.userId, userId))
+      .where(eq(sites.id, siteId))  // ← was eq(sites.userId, userId)
       .limit(1)
 
     if (!result.length) {
@@ -29,11 +29,7 @@ export const getApiKey = async (userId: string) => {
 
   } catch (error) {
     console.error("GET API KEY ERROR:", error)
-
-    return {
-      success: false,
-      error: "Something went wrong",
-    }
+    return { success: false, error: "Something went wrong" }
   }
 }
 
