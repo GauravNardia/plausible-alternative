@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const dodopayments = new DodoPayments({
   bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
-  environment: "test_mode",
+  environment: process.env.DODO_PAYMENTS_ENVIRONMENT as "live_mode" | "test_mode" | undefined,
 })
 
 export async function POST(req: NextRequest) {
