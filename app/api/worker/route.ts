@@ -7,11 +7,12 @@ import { and, eq, gt, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
-    const auth = req.headers.get("authorization")
-
-    if(auth !== `Bearer ${process.env.WORKER_SECRET!}`){
-        return new NextResponse("Unauthorized", { status: 401 })
-    }
+  const { searchParams } = new URL(req.url)
+  const secret = searchParams.get("secret")
+  
+  if (secret !== process.env.WORKER_SECRET) {
+    return new NextResponse("Unauthorized", { status: 401 })
+  }
 
     // pull upto 500 event from redis
     const QUEUE = process.env.REDIS_QUEUE_NAME!
