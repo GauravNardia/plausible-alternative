@@ -1,19 +1,20 @@
-const requests = new Map<string, number[]>()
+import { redis } from "./config/redis"
 
-export function rateLimit(ip: string) {
-  const now = Date.now()
-  const windowMs = 60000
+export async function rateLimit(ip: string) {
+  const key = `rate:${ip}`
+  const maxRequests = 300
+  const windowSeconds = 60
 
-  const timestamps = requests.get(ip) || []
+  // increment count for this IP
+  const counter = await redis.incr(key);
 
-  const filtered = timestamps.filter((t) => now - t < windowMs)
-console.log("rate limit",filtered.length)
-  if (filtered.length > 1000) {
-    return false
+  // with 1st req set expiry
+  if( counter == 1 ) {
+    await redis.expire(key, windowSeconds)
   }
 
-  filtered.push(now)
-  requests.set(ip, filtered)
+  // over limit
+  if (counter > maxRequests) return true
 
-  return true
+  return false
 }
