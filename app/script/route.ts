@@ -6,6 +6,23 @@ export async function GET(req: Request) {
 (function(){
   console.log("script loaded");
 
+  // Client side bot detection
+  
+  // Check 1 — headless browser (most common bot)
+  if (navigator.webdriver) return;
+
+  // Check 2 — no real screen
+  if (!window.screen || window.screen.width === 0) return;
+
+  // Check 3 — no language set (bots often skip this)
+  if (!navigator.language) return;
+
+  // Check 4 — window must have real dimensions
+  if (window.innerWidth === 0 || window.innerHeight === 0) return;
+
+  // Check 5 — must support basic APIs
+  if (typeof window.localStorage === "undefined") return;
+
   const script = document.currentScript;
   const apiKey = script.getAttribute("data-api-key");
 
