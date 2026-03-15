@@ -3,19 +3,25 @@ import { isBot } from "@/lib/boat"
 import { eventSchema } from "@/lib/validations"
 import { getGeo } from "@/lib/geo"
 import { redis } from "@/lib/config/redis"
+import { rateLimit } from "@/lib/rate-limit"
 
 export async function POST(req: Request) {
   try {
     const body = eventSchema.parse(await req.json())
 
-    const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0] ?? "0.0.0.0"
-
-    const { country, region, city } = getGeo(req)
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "0.0.0.0"
 
     if (isBot(body.ua)) {
       return new NextResponse(null, { status: 204 })
     }
+
+    // Rate limit check
+    if(await rateLimit(ip)) {
+      return new NextResponse(null, { status: 429 })
+    }
+
+    const { country, region, city } = getGeo(req)
+
 
     // Push to redis queue
     const QUEUE = process.env.REDIS_QUEUE_NAME!
