@@ -10,7 +10,6 @@ import GeoClient from "./GeoClient"
 import WorldMap from "./WorldMap"
 import LimitTooltip from "../modals/LimitTooltip"
 
-
 export const FILTERS = [
   { key: "today",     label: "Today" },
   { key: "yesterday", label: "Yesterday" },
@@ -21,7 +20,7 @@ export const FILTERS = [
 ]
 
 export default function DashboardShell({
-  siteId, usage, sources, pages, devices, geo,
+  siteId, usage, sources: initialSources, pages: initialPages, devices: initialDevices, geo: initialGeo,
 }: {
   siteId: string
   usage: any
@@ -31,20 +30,49 @@ export default function DashboardShell({
   geo: any
 }) {
   const [filter, setFilter] = useState("today")
-  const [open, setOpen]     = useState(false)
+  const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  // Detect user's local timezone once on mount
-  // e.g. "Asia/Kolkata", "America/New_York", "Europe/London"
+  // Data states
+  const [sources, setSources] = useState(initialSources)
+  const [pages, setPages] = useState(initialPages)
+  const [devices, setDevices] = useState(initialDevices)
+  const [geo, setGeo] = useState(initialGeo)
+  const [loading, setLoading] = useState(false)
+
   const [timezone] = useState(() =>
     Intl.DateTimeFormat().resolvedOptions().timeZone
   )
 
   useEffect(() => { setMounted(true) }, [])
 
+  // Refetch all data when filter changes
+  useEffect(() => {
+    const fetchAll = async () => {
+      setLoading(true)
+      try {
+        const [sourcesRes, pagesRes, devicesRes, geoRes] = await Promise.all([
+          fetch(`/api/sites/sources?siteId=${siteId}&filter=${filter}`).then(r => r.json()),
+          fetch(`/api/sites/pages?siteId=${siteId}&filter=${filter}`).then(r => r.json()),
+          fetch(`/api/sites/devices?siteId=${siteId}&filter=${filter}`).then(r => r.json()),
+          fetch(`/api/sites/geo?siteId=${siteId}&filter=${filter}`).then(r => r.json()),
+        ])
+        setSources(sourcesRes.data ?? sourcesRes)
+        setPages(pagesRes.data ?? pagesRes)
+        setDevices(devicesRes.data ?? devicesRes)
+        setGeo(geoRes)
+      } catch (err) {
+        console.error("Filter fetch error:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAll()
+  }, [filter, siteId])
+
   const selectedLabel = FILTERS.find(f => f.key === filter)?.label ?? "Today"
 
-  // This dropdown is portalled INTO the navbar slot in layout.tsx
   const filterDropdown = (
     <div className="relative">
       <button
@@ -86,10 +114,9 @@ export default function DashboardShell({
       <LimitTooltip usage={usage.percentage} hasSubscription={usage.hasSubscription} />
       <div className="dot-bg h-[60px] sm:h-[80px]" />
 
-      {/* Pass filter + timezone down to chart */}
       <DashboardChart siteId={siteId} filter={filter} timezone={timezone} />
 
-      <div className="w-full flex flex-col">
+      <div className={`w-full flex flex-col transition-opacity ${loading ? "opacity-50" : "opacity-100"}`}>
         <div className="dot-bg h-[60px] sm:h-[80px] border-b" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0">
           <SourcesTable sources={sources} />
@@ -102,7 +129,7 @@ export default function DashboardShell({
         </div>
         <div className="dot-bg h-[60px] sm:h-[80px] border-y" />
         <div className="w-full overflow-hidden">
-          <WorldMap countries={geo.countries} />
+          <WorldMap countries={geo?.countries ?? []} />
         </div>
       </div>
     </>
