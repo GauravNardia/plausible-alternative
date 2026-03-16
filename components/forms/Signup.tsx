@@ -58,7 +58,7 @@ export const SignupForm = () => {
         redirect: false,
       })
 
-      router.push("/sites")
+      router.push("/pricing")
     } catch (error) {
       toast.error("Something went wrong")
     } finally {
