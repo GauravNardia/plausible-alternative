@@ -32,8 +32,9 @@ import UpgradeModal from "../modals/UpgradeModal"
 
 const AddDomainForm = () => {
         const router = useRouter()
+        const [isLoading, setIsLoading] = useState(false)
         const [showUpgrade, setShowUpgrade] = useState(false)
-const [dialogOpen, setDialogOpen] = useState(false)
+        const [dialogOpen, setDialogOpen] = useState(false)
 
       const form = useForm<z.infer<typeof onboardingSchema>>({
         resolver: zodResolver(onboardingSchema),
@@ -98,7 +99,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
       </DialogTitle>
 
       <DialogDescription className="text-center text-sm text-black">
-        Add your website to start tracking visitors instantly.
+        Puffin will start watching the moment you install the script.
       </DialogDescription>
     </DialogHeader>
 
@@ -114,7 +115,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
                 <FormLabel>Website name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Mysite"
+                    placeholder="My awesome site"
                     className="h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
                     {...field}
                   />
@@ -132,7 +133,7 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
                 <FormLabel>Website domain</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="example.com"
+                    placeholder="yoursite.com"
                     className="h-[35px] bg-white border border-neutral-200 rounded-[10px] text-black shadow-none"
                     {...field}
                   />
@@ -147,9 +148,17 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
         <DialogFooter className="px-3 py-4">
           <Button
             type="submit"
+            disabled={isLoading}
             className="px-6 mt-5 blue border-primary text-white font-medium rounded-xl cursor-pointer"
           >
-            Create Site
+          {isLoading ? (
+             <span className="flex items-center gap-2">
+               <Image src="/assets/icons/spinner.svg" width={20} height={20} className="animate-spin" alt="loading" />
+               Hatching...
+             </span>
+           ) : (
+             "Hatch it"
+           )}
           </Button>
         </DialogFooter>
       </form>

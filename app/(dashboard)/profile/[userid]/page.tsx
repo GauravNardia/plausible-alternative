@@ -17,10 +17,10 @@ const Profile = async() => {
       <div className='max-w-6xl mx-auto'>
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-4xl font-semibold font-bpmf">
-           Profile
+           Your Profile 
           </h1>
           <p className="text-neutral-600 mt-4">
-          Manage your account details.
+           Keep your nest tidy.
           </p>
         </div>
         <div className="dot-bg h-[60px] sm:h-[80px] border-y" />

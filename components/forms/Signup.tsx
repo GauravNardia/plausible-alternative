@@ -36,11 +36,21 @@ export const SignupForm = () => {
       const result = await registerUser(data.email, data.password, data.name)
 
       if (!result.success) {
-        toast.error(result.error || "Signup failed")
+        toast.error(result.error || "Signup failed", {
+          style: {
+            background: "#5851ed",
+            color: "#ffffff"
+          }
+        })
         return
       }
 
-      toast.success("Account created successfully 🎉")
+      toast.success("Welcome to the flock!🎉", {
+        style: {
+          background: "#5851ed",
+          color: "#ffffff",
+        }
+      })
 
       await signIn("credentials", {
         email: data.email,
@@ -153,9 +163,16 @@ export const SignupForm = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full px-6 mt-2 blue primary-border text-white font-semibold rounded-xl cursor-pointer"
+            className="w-full px-6 mt-2 blue primary-border text-white font-semibold rounded-xl cursor-pointer uppercase"
           >
-            {isLoading ? "Loading..." : "SIGN UP"}
+          {isLoading ? (
+             <span className="flex items-center gap-2">
+               <Image src="/assets/icons/spinner.svg" width={20} height={20} className="animate-spin" alt="loading" />
+               Setting up your nest...
+             </span>
+           ) : (
+             "Create account"
+           )}
           </Button>
         </form>
       </div>

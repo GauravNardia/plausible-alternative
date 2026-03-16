@@ -129,7 +129,7 @@ export default function BillingCard({ usage, sitesUsed }: Props) {
         {/* Stats Grid */}
         <div className="w-full flex justify-between items-center gap-6 py-5 px-5 font-semibold text-neutral-400">
           <p className="text-sm font-semibold text-neutral-600">
-            Usage resets at the beginning of each billing cycle
+            Resets every billing cycle
           </p>
 
           <Button

@@ -11,7 +11,7 @@ interface Props {
 
 const ProfileCard = ({ email, userId }: Props) => {
   const [inputEmail, setInputEmail] = useState(email)
-  const [savedEmail, setSavedEmail] = useState(email) // 👈 tracks what's actually in DB
+  const [savedEmail, setSavedEmail] = useState(email)
   const [isPending, startTransition] = useTransition()
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
@@ -23,7 +23,7 @@ const ProfileCard = ({ email, userId }: Props) => {
       const result = await updateEmail({ userId, newEmail: inputEmail.trim() })
       if (result.success) {
         setSavedEmail(inputEmail.trim()) // 👈 sync baseline so button disables again
-        setMessage({ type: 'success', text: 'Email updated successfully.' })
+        setMessage({ type: 'success', text: 'Email updated' })
       } else {
         setMessage({ type: 'error', text: result.error ?? 'Something went wrong.' })
       }
@@ -56,7 +56,7 @@ const ProfileCard = ({ email, userId }: Props) => {
           disabled={isUnchanged || isPending}
           className="text-sm uppercase cursor-pointer font-semibold px-5 blue primary-border text-white rounded-xl hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {isPending ? 'Updating...' : 'Update Email'}
+          {isPending ? 'Saving....' : 'Update Email'}
         </Button>
       </div>
     </div>

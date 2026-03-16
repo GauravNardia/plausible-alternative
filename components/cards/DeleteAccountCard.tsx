@@ -35,7 +35,7 @@ const DeleteAccountCard = ({ userId }: Props) => {
         <div className="w-full flex flex-col items-start justify-start mt-3 px-3">
           <p className="text-sm text-neutral-600">Delete Account</p>
           <p className="text-xs text-neutral-400 mt-1">
-            Permanently removes your account and all data. This cannot be undone.
+            This will delete everything. The puffin won't be able to recover it.
           </p>
           {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
         </div>
@@ -48,7 +48,7 @@ const DeleteAccountCard = ({ userId }: Props) => {
             onClick={() => setConfirmed(true)}
             className="text-sm uppercase cursor-pointer font-semibold px-5 bg-red-500 border border-red-800 hover:bg-red-400 text-white rounded-xl hover:opacity-90 transition"
           >
-            Delete Account
+            Delete my account
           </Button>
         ) : (
           <div className="flex items-center gap-3">
