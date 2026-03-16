@@ -34,7 +34,7 @@ yarn-error.log*
 .env*
 .env.local
 .env.production
-scripts/seed-pricing.ts
+scripts/*
 
 # vercel
 .vercel

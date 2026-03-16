@@ -19,16 +19,16 @@ const Sites = async () => {
       <div className="py-10">
         <div className="px-6 py-10 flex flex-col justify-center items-center text-center">
           <h1 className="text-2xl sm:text-4xl font-semibold font-bpmf tracking-tight text-gray-900">
-            All your sites.
+            Your sites.
           </h1>
           <p className="mt-1 text-md text-gray-500 max-w-2xl">
-            Monitor traffic, performance, and insights across every domain you track.
+            Add a site and let puffin start watching.
           </p>
           <div className="mt-6">
             {subscription ? <AddDomainForm /> : (
               <Link href="/pricing">
-                <Button className="blue primary-border text-white rounded-xl px-5 py-2 text-sm font-semibold uppercase">
-                  Get a plan to add sites
+                <Button className="blue primary-border text-white rounded-xl px-5 py-2 text-sm font-semibold uppercase cursor-pointer">
+                  Get a plan
                 </Button>
               </Link>
             )}
@@ -45,11 +45,11 @@ const Sites = async () => {
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">No active subscription</h2>
-            <p className="text-sm text-gray-500 max-w-sm mb-6">You need an active plan to add and track websites.</p>
+            <h2 className="text-xl font-bpmf font-semibold text-gray-900 mb-2">Puffin is ready. Are you?</h2>
+            <p className="text-sm text-gray-500 max-w-sm mb-6">Pick a plan to start tracking your visitors.</p>
             <Link href="/pricing">
               <Button className="blue primary-border text-white rounded-xl px-5 py-2 text-sm font-semibold uppercase cursor-pointer">
-                View plans
+                See plans
               </Button>
             </Link>
           </div>

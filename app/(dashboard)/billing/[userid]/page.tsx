@@ -14,11 +14,10 @@ const Page = async ({ params }: Params) => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-3xl md:text-4xl font-semibold font-bpmf">
-              Billing & Subscription
+              Your Plan 
             </h1>
             <p className="text-neutral-600 mt-4 px-3">
-              View your current plan, track usage, and upgrade anytime as your traffic grows.
-              Simple pricing with no hidden fees.
+               No hidden fees. Upgrade anytime.
             </p>
           </div>
 
@@ -57,12 +56,11 @@ const Page = async ({ params }: Params) => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-3xl md:text-4xl font-semibold font-bpmf">
-            Billing & Subscription
+            Your Plan
           </h1>
 
           <p className="text-neutral-600 mt-4 px-3">
-            View your current plan, track usage, and upgrade anytime as your traffic grows.
-            Simple pricing with no hidden fees.
+            No hidden fees. Upgrade anytime.
           </p>
         </div>
 

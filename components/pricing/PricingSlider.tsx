@@ -14,7 +14,7 @@ export default function PricingSlider({ userEmail, isLoggedIn }: { userEmail: st
     <div className="bg-neutral-100 overflow-hidden">
       <div className="bg-[#ffffff] px-6 py-8 border-b border-gray-200 border-t">
         <p className="text-center text-semibold text-neutral-600 mb-6">
-          How many pageviews do you track per month?
+          How much traffic do you get?
         </p>
         <div className="flex justify-between text-xs text-neutral-600 mb-2">
           {TIERS.map((t, i) => (

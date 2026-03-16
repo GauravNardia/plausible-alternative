@@ -31,11 +31,10 @@ export default async function PricingPage() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-4xl font-semibold font-bpmf">
-            Transparent traffic-based pricing
+            Simple pricing. No surprises. 
           </h1>
           <p className="text-neutral-600 mt-4 px-3 sm:px-0">
-            You only pay for the traffic you track.
-            No feature restrictions.
+            Pay for pageviews. Every feature included.
           </p>
         </div>
         <div className="dot-bg h-[60px] sm:h-[80px] border-t" />

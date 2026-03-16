@@ -39,7 +39,12 @@ export const SigninForm = () => {
         return
       }
 
-      toast.success("Signed in successfully 🎉")
+      toast.success("Welcome to the flock!🎉", {
+        style: {
+          background: "#5851ed",
+          color: "#ffffff",
+        }
+      })
 
       await signIn("credentials", {
         email: data.email,
@@ -49,7 +54,7 @@ export const SigninForm = () => {
 
       router.push("/sites")
     } catch (error) {
-      toast.error("Something went wrong")
+      toast.error("Oops, the puffin tripped! Try again?")
     } finally {
       setIsLoading(false)
     }
@@ -153,9 +158,16 @@ export const SigninForm = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full px-6 mt-2 blue primary-border text-white font-semibold rounded-xl cursor-pointer"
+            className="w-full px-6 mt-2 blue primary-border text-white font-semibold rounded-xl cursor-pointer uppercase"
           >
-            {isLoading ? "Loading..." : "SIGN IN"}
+          {isLoading ? (
+             <span className="flex items-center gap-2">
+               <Image src="/assets/icons/spinner.svg" width={20} height={20} className="animate-spin" alt="loading" />
+               Letting you in...
+             </span>
+           ) : (
+             "Sign in"
+           )}
           </Button>
         </form>
       </div>
