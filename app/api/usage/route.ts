@@ -5,21 +5,25 @@ import { eq, and } from "drizzle-orm"
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
+  let userId = searchParams.get("userId")
   const siteId = searchParams.get("siteId")
 
-  if (!siteId) {
-    return NextResponse.json({ error: "Missing siteId" }, { status: 400 })
+    // If siteId provided, get userId from it
+  if (siteId && !userId) {
+    const site = await db
+      .select({ userId: sites.userId })
+      .from(sites)
+      .where(eq(sites.id, siteId))
+      .then(res => res[0])
+
+    if (!site) {
+      return NextResponse.json({ error: "Site not found" }, { status: 404 })
+    }
+    userId = site.userId
   }
 
-  // 1️⃣ Get site
-  const site = await db
-    .select()
-    .from(sites)
-    .where(eq(sites.id, siteId))
-    .then(res => res[0])
-
-  if (!site) {
-    return NextResponse.json({ error: "Site not found" }, { status: 404 })
+  if (!userId) {
+    return NextResponse.json({ error: "Missing userId or siteId" }, { status: 400 })
   }
 
   // 2️⃣ Get active subscription
@@ -28,7 +32,7 @@ export async function GET(req: Request) {
     .from(subscriptions)
     .where(
       and(
-        eq(subscriptions.userId, site.userId),
+        eq(subscriptions.userId, userId),
         eq(subscriptions.status, "active")
       )
     )
@@ -64,7 +68,7 @@ if (!subscription) {
     .from(monthlyUsage)
     .where(
       and(
-        eq(monthlyUsage.userId, site.userId),
+        eq(monthlyUsage.userId, userId),
         eq(monthlyUsage.month, month)
       )
     )

@@ -21,9 +21,11 @@ export default function InstallBox({ script, siteId, domain }: InstallBoxProps) 
   const interval = setInterval(async () => {
     const res = await fetch(`/api/sites/status?siteId=${siteId}`)
     const data = await res.json()
+    console.log("STATUS:", data)
 
     if (data.hasEvents) {
       clearInterval(interval)
+           console.log("REDIRECTING TO:", `/${domain}`) 
       router.push(`/${domain}`)
     }
   }, 3000)

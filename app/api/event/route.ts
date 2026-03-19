@@ -34,6 +34,9 @@ export async function POST(req: Request) {
       timestamp: Date.now(),
     }))
 
+    // Set first event flag instantly
+   await redis.set(`first_event:${body.apiKey}`, "1", { ex: 3600 })
+
     return new NextResponse(null, { status: 204 })
 
   } catch (error) {
