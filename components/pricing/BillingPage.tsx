@@ -13,6 +13,12 @@ type Props = {
 
 export default function BillingCard({ usage, sitesUsed }: Props) {
   const router = useRouter()
+
+    const isTrialing = usage?.status === "trialing"
+  const daysLeft = isTrialing && usage?.trialEndsAt
+    ? Math.ceil((new Date(usage.trialEndsAt).getTime() - Date.now()) / 86400000)
+    : 0
+    
     // No subscription yet
   if (!usage || usage.hasSubscription === false) {
     return (
@@ -66,6 +72,11 @@ export default function BillingCard({ usage, sitesUsed }: Props) {
                 </p>
                 <p className="text-sm font-semibold text-black mt-1">
                   {usage.planName}
+                  {isTrialing && (
+                  <span className="ml-2 text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">
+                    Trial
+                  </span>
+                )}
                 </p>
               </div>
 
