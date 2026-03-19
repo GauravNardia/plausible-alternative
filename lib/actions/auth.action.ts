@@ -3,7 +3,7 @@
 import { db } from "@/database/drizzle"
 import { pricingTiers, sites, subscriptions, users } from "@/database/schema"
 import bcrypt from "bcryptjs"
-import { and, eq } from "drizzle-orm"
+import { and, eq, gt, inArray } from "drizzle-orm"
 import { auth, signIn, signOut } from "@/auth"
 import  AuthError  from "next-auth"
 import { generatePublicApiKey } from "../api-key"
@@ -30,11 +30,29 @@ export const registerUser = async(email: string, password: string, name: string)
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    await db.insert(users).values({
+    const newUser = await db.insert(users).values({
       name,
       email,
       password: hashedPassword,
-    })
+    }).returning()
+
+    const userId = newUser[0].id
+
+    const starterTier = await db
+      .select()
+      .from(pricingTiers)
+      .where(eq(pricingTiers.name, "Starter"))
+      .limit(1)
+
+
+    // Activate 7 days trial
+    await db.insert(subscriptions).values({
+    userId,
+    pricingTierId: starterTier[0].id,
+    status: "trialing",
+    currentPeriodStart: new Date(),
+    currentPeriodEnd: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  })
 
     return { success: true }
   } catch (error) {
@@ -97,7 +115,8 @@ export const onboardinguser = async (
       .where(
         and(
           eq(subscriptions.userId, userId),
-          eq(subscriptions.status, "active")
+          inArray(subscriptions.status, ["active", "trialing"]),
+          gt(subscriptions.currentPeriodEnd, new Date())
         )
       )
       .then(res => res[0])

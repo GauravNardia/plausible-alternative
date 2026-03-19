@@ -3,7 +3,7 @@ import { events, monthlyUsage, pricingTiers, sites, subscriptions } from "@/data
 import { redis } from "@/lib/config/redis"
 import { generateVisitorHash } from "@/lib/hash"
 import { parseUA } from "@/lib/ua"
-import { and, eq, gt, sql } from "drizzle-orm"
+import { and, eq, gt, inArray, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
         .where(
           and(
             eq(subscriptions.userId, userId),
-            eq(subscriptions.status, "active"),
+            inArray(subscriptions.status, ["active", "trialing"]),
             gt(subscriptions.currentPeriodEnd, new Date())
           )
         )
