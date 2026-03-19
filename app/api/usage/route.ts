@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/database/drizzle"
 import { subscriptions, pricingTiers, monthlyUsage, sites } from "@/database/schema"
-import { eq, and } from "drizzle-orm"
+import { eq, and, gt, inArray } from "drizzle-orm"
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -33,7 +33,8 @@ export async function GET(req: Request) {
     .where(
       and(
         eq(subscriptions.userId, userId),
-        eq(subscriptions.status, "active")
+        inArray(subscriptions.status, ["active", "trialing"]),
+        gt(subscriptions.currentPeriodEnd, new Date())
       )
     )
     .then(res => res[0])
@@ -86,5 +87,7 @@ return NextResponse.json({
   percentage: Math.round((used / limit) * 100),
   planName,
   hasSubscription: true,
+  status: subscription.status,                
+  trialEndsAt: subscription.currentPeriodEnd, 
 })
 }

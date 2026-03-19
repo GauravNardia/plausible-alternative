@@ -3,7 +3,7 @@
 import { auth } from "@/auth"
 import { db } from "@/database/drizzle"
 import { sites, subscriptions } from "@/database/schema"
-import { and, desc, eq } from "drizzle-orm"
+import { and, desc, eq, gt, inArray } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export const getApiKey = async (siteId: string) => {
@@ -171,7 +171,10 @@ export const getUserSitesWithData = async (userId: string) => {
     const [userSites, subscription] = await Promise.all([
       db.select().from(sites).where(eq(sites.userId, userId)).orderBy(desc(sites.createdAt)),
       db.select().from(subscriptions).where(
-        and(eq(subscriptions.userId, userId), eq(subscriptions.status, "active"))
+        and(eq(subscriptions.userId, userId), 
+        inArray(subscriptions.status, ["active", "trialing"]),
+        gt(subscriptions.currentPeriodEnd, new Date())
+      )
       ).limit(1).then(res => res[0] ?? null),
     ])
     return { userSites, subscription }

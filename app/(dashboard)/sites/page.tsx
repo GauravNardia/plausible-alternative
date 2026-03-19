@@ -1,6 +1,7 @@
 import { auth } from "@/auth"
 import SiteCard from "@/components/cards/SiteCard"
 import AddDomainForm from "@/components/forms/AddDomainForm"
+import TrialBanner from "@/components/shared/TrialBanner"
 import { Button } from "@/components/ui/button"
 import { getCountryCount } from "@/lib/actions/country.action"
 import { getMetrics, getUserSitesWithData } from "@/lib/actions/site.actions"
@@ -16,6 +17,10 @@ const Sites = async () => {
 
   return (
     <section className="min-h-screen w-full bg-[#ffffff]">
+      <TrialBanner
+  status={subscription?.status ?? ""}
+  trialEndsAt={subscription?.currentPeriodEnd?.toString() ?? null}
+/>
       <div className="py-10">
         <div className="px-6 py-10 flex flex-col justify-center items-center text-center">
           <h1 className="text-2xl sm:text-4xl font-semibold font-bpmf tracking-tight text-gray-900">

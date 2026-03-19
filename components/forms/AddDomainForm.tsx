@@ -63,12 +63,15 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
     }
   } catch (error) {
     toast.error("Something went wrong")
+  } finally {
+    setIsLoading(false)
   }
 }
 
   return (
     <>
-<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>  <DialogTrigger asChild>
+<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>  
+  <DialogTrigger asChild>
     <Button
       className="flex w-full mt-2 blue border-primary text-white font-semibold rounded-xl  cursor-pointer shadow-md"
     >

@@ -52,6 +52,26 @@ export const SigninForm = () => {
         redirect: false,
       })
 
+      // ✅ Check subscription status after login
+    const session = await fetch("/api/auth/session").then(r => r.json())
+    const userId = session?.user?.id
+
+    if (userId) {
+      const usage = await fetch(`/api/usage?userId=${userId}`).then(r => r.json())
+      
+      if (!usage.hasSubscription) {
+        toast.error("Your trial ended. Pick a plan to continue")
+        router.push("/pricing")
+        return
+      }
+    }
+
+      toast.success("Welcome back", {
+        style: {
+          background: "#5851ed",
+          color: "#ffffff",
+        }
+      })
       router.push("/sites")
     } catch (error) {
       toast.error("Oops, the puffin tripped! Try again?")
