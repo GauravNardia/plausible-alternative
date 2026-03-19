@@ -11,7 +11,8 @@
     "db:migrate:dev": "NODE_ENV=development drizzle-kit migrate",
     "db:migrate:prod": "NODE_ENV=production drizzle-kit migrate",
     "db:seed:dev": "NODE_ENV=development tsx scripts/seed-pricing.ts",
-    "invite:email": "NODE_ENV=development tsx scripts/send-invites.ts"
+    "invite:email": "NODE_ENV=development tsx scripts/send-invites.ts",
+    "trial:email": "NODE_ENV=development tsx scripts/free-trial.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",

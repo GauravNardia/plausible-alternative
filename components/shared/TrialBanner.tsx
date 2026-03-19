@@ -67,7 +67,7 @@ const TrialBanner = ({ status, trialEndsAt }: Props) => {
   }
 
   return (
-    <div className={`mx-4 md:mx-0 border p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${config.wrapper}`}>
+    <div className={`mx-0 border p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${config.wrapper}`}>
       <div>
         <div className='flex items-center gap-1'>
           <Image
