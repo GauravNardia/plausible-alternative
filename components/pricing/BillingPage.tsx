@@ -14,7 +14,7 @@ type Props = {
 export default function BillingCard({ usage, sitesUsed }: Props) {
   const router = useRouter()
     // No subscription yet
-  if (!usage || !usage.used === undefined || !usage.limit) {
+  if (!usage || usage.hasSubscription === false) {
     return (
       <div className="w-full max-w-5xl mx-auto bg-neutral-100  mt-10">
         <div className="flex flex-col bg-[#ffffff] justify-center items-center rounded-2xl px-3 py-5">

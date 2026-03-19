@@ -8,7 +8,7 @@ export async function rateLimit(ip: string) {
   // increment count for this IP
   const counter = await redis.incr(key);
 
-  // with 1st req set expiry
+  // set expiry
   if( counter == 1 ) {
     await redis.expire(key, windowSeconds)
   }
