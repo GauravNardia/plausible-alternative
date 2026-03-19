@@ -65,13 +65,6 @@ export const SigninForm = () => {
         return
       }
     }
-
-      toast.success("Welcome back", {
-        style: {
-          background: "#5851ed",
-          color: "#ffffff",
-        }
-      })
       router.push("/sites")
     } catch (error) {
       toast.error("Oops, the puffin tripped! Try again?")
