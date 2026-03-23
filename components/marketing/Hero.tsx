@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
 import { LandingAnalyticsDemo } from "./LandingAnalyticsDemo"
-import WaitlistForm from "../forms/WaitlistForm"
 
 export const Hero = () => {
   const router = useRouter()
@@ -23,14 +22,17 @@ export const Hero = () => {
         </p>
 
         <div className="mt-8 flex items-center gap-4">
-          <WaitlistForm />
-          {/* <Button onClick={() => router.push("/sites")} className="primary-border blue rounded-xl text-white px-6 cursor-pointer shadow-md font-semibold">
+          {/* <WaitlistForm /> */}
+          <Button onClick={() => router.push("/sites")} className="primary-border blue rounded-xl text-white px-6 cursor-pointer shadow-md font-semibold">
             START TRACKING
           </Button>
           <Button onClick={() => router.push("/pricing")} className="secondary-border white rounded-xl text-black px-6 cursor-pointer shadow-md font-semibold">
             VIEW PRICING
-          </Button> */}
+          </Button>
         </div>
+        <p className="text-sm text-neutral-500 mt-3">
+         ✅ 7 day free trial · No credit card required
+        </p>
       </div>
 
       <div className="w-full sm:mt-16">

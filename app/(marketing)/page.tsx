@@ -21,7 +21,7 @@ const MarketingPage = async() => {
       <SetupSection />
       <SocialProof />
       <FeaturesSection/>
-      {/* <MarketingPricing/> */}
+      <MarketingPricing/>
       <CTA />
       <Footer />
     </main>
