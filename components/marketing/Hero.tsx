@@ -31,7 +31,7 @@ export const Hero = () => {
           </Button>
         </div>
         <p className="text-sm text-neutral-500 mt-3">
-         ✅ 7 day free trial · No credit card required
+          7 day free trial · No credit card required
         </p>
       </div>
 
