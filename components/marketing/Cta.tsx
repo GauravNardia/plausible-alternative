@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
-import WaitlistForm from "../forms/WaitlistForm"
 
 export const CTA = () => {
   return (
@@ -12,15 +11,15 @@ export const CTA = () => {
         Start Understanding Traffic.
       </h2>
 
-      <div className="mt-8 w-full max-w-md">
+      {/* <div className="mt-8 w-full max-w-md">
         <WaitlistForm />
-      </div>
+      </div> */}
 
-      {/* <Link href="/sites">
-        <Button className="mt-8 text-sm text-white px-8 py-3 rounded-xl blue primary-border cursor-pointer">
+      <Link href="/sites">
+        <Button className="mt-8 text-sm uppercase text-white px-8 py-3 rounded-xl blue primary-border cursor-pointer">
           Start Tracking Now
         </Button>
-      </Link> */}
+      </Link>
 
     </section>
   )

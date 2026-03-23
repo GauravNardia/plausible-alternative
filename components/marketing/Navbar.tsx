@@ -25,15 +25,15 @@ export const Navbar = () => {
         <div className="flex items-center gap-3">
 
           {/* Buttons always visible (like screenshot) */}
-          {/* <Link href="/sign-in">
+          <Link href="/sign-in">
             <Button className="white text-black text-sm px-3 md:px-6 rounded-xl secondary-border cursor-pointer shadow-md">
               LOG IN
             </Button>
-          </Link> */}
+          </Link>
 
-          <Link href="#early-access">
+          <Link href="/sign-up">
             <Button className="blue text-white text-sm px-4 md:px-6 rounded-xl primary-border cursor-pointer shadow-md uppercase">
-              get early access
+              Start free trial 
             </Button>
           </Link>
         </div>
