@@ -5,6 +5,7 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import Image from "next/image"
 import { PLAN_PRODUCT_IDS, TIERS } from "@/constants"
+import NumberFlow from "@number-flow/react"
 
 export default function PricingSliderMarketing({ userEmail, isLoggedIn }: { userEmail: string; isLoggedIn: boolean }) {
   const [index, setIndex] = useState(0)
@@ -143,7 +144,12 @@ function Plan({
         ${highlight ? "bg-[#6d5efc] text-white" : "bg-[#ffffff] text-black"}`}
     >
       <div className="font-regular flex justify-start items-center bg-neutral-100 h-[200px] px-5 border-b">
-        <span className="text-5xl text-black">${price}</span>
+          <NumberFlow
+            value={price}
+            format={{ style: "currency", currency: "USD", currencyDisplay: "narrowSymbol", trailingZeroDisplay: 'stripIfInteger' }}
+            className="text-5xl text-black"
+          />
+        {/* <span className="text-5xl text-black">${price}</span> */}
         <div className="flex flex-col justify-start items-start text-left">
           <span className="text-sm ml-2 text-black font-semibold uppercase">{name}</span>
           <span className="text-sm ml-2 text-black">{views} views/month</span>
