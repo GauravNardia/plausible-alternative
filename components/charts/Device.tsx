@@ -34,9 +34,28 @@ function formatLabel(str: string) {
   return lower.charAt(0).toUpperCase() + lower.slice(1);
 }
 
+function normalizeAndMerge(items: Item[]): Item[] {
+  const map = new Map<string, number>();
+
+  for (const item of items) {
+    const key = formatLabel(item.name);
+    map.set(key, (map.get(key) || 0) + item.count);
+  }
+
+  return Array.from(map.entries()).map(([name, count]) => ({
+    name,
+    count,
+  }));
+}
+
 function List({ items, label, limit }: { items: Item[]; label: string; limit?: number }) {
-  const displayed = limit ? items.slice(0, limit) : items
-  const max = Math.max(...items.map(i => i.count))
+  const normalizedItems = normalizeAndMerge(items)
+
+  const displayed = limit
+    ? normalizedItems.slice(0, limit)
+    : normalizedItems
+
+  const max = Math.max(...normalizedItems.map(i => i.count))
 
   return (
     <div className="mt-4">
@@ -50,7 +69,7 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
               <span className="relative text-sm z-10  text-gray-800"> {formatLabel(item.name)}</span>
-              <span className="relative text-sm z-10 font-medium text-gray-700">{item.count}</span>
+              <span className="relative text-sm z-10 font-medium text-gray-700">{Number(item.count)}</span>
             </div>
           )
         })}
