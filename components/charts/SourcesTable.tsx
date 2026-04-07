@@ -50,7 +50,7 @@ function SourceRow({
   const share = shareRaw * 100
 
   return (
-    <div className="group flex items-center gap-3 px-2 rounded-md hover:bg-neutral-200/20 transition">
+    <div className="group flex items-center gap-3 px-2 rounded-md  transition">
       
       {/* LEFT BAR */}
       <div className="w-full py-2 relative flex overflow-hidden rounded-md">
