@@ -10,6 +10,30 @@ type Props = {
   data: { browsers: Item[]; os: Item[]; devices: Item[] }
 }
 
+function formatLabel(str: string) {
+  if (!str) return "Other";
+
+  const lower = str.toLowerCase();
+
+  // OS fixes
+  if (lower.includes("mac")) return "MacOS";
+  if (lower === "ios") return "iOS";
+  if (lower === "windows") return "Windows";
+  if (lower === "android") return "Android";
+
+  // Browser fixes
+  if (lower === "chrome") return "Chrome";
+  if (lower === "safari") return "Safari";
+
+  // Device fixes
+  if (lower === "mobile") return "Mobile";
+  if (lower === "desktop") return "Desktop";
+  if (lower === "tablet") return "Tablet";
+
+  // fallback
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
 function List({ items, label, limit }: { items: Item[]; label: string; limit?: number }) {
   const displayed = limit ? items.slice(0, limit) : items
   const max = Math.max(...items.map(i => i.count))
@@ -25,7 +49,7 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
           const percent = max ? (item.count / max) * 100 : 0
           return (
             <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
-              <span className="relative text-sm z-10  text-gray-800">{item.name}</span>
+              <span className="relative text-sm z-10  text-gray-800"> {formatLabel(item.name)}</span>
               <span className="relative text-sm z-10 font-medium text-gray-700">{item.count}</span>
             </div>
           )
