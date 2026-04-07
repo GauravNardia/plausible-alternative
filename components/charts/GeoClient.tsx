@@ -21,9 +21,12 @@ const safeDecodeCity = (name: string) => {
 
 function List({ items, label, limit }: { items: Item[]; label: string; limit?: number }) {
   const displayed = limit ? items.slice(0, limit) : items
-  const max = Math.max(...items.map(i => i.visitors))
 
-    const displayName = (name: string) => {
+  // SAME LOGIC AS DEVICE
+  const max = Math.max(...displayed.map(i => i.visitors), 1)
+  const total = items.reduce((sum, i) => sum + Number(i.visitors), 0)
+
+  const displayName = (name: string) => {
     if (!name) return "Unknown"
     if (label === "Country") return getCountryName(name)
     if (label === "City") return safeDecodeCity(name)
@@ -32,17 +35,51 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
 
   return (
     <div className="mt-4">
+      {/* Header */}
       <div className="flex justify-between text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold">
-          <h2 className="text-sm font-semibold text-neutral-500">{label}</h2>
-          <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
+        <h2 className="text-sm font-semibold text-neutral-500">{label}</h2>
+        <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
       </div>
-      <div className="mt-4 space-y-2">
+
+      {/* List */}
+      <div className="mt-4 space-y-3">
         {displayed.map((item) => {
-          const percent = max ? (item.visitors / max) * 100 : 0
+          const percent = (item.visitors / max) * 100
+         const share = total ? (item.visitors / total) * 100 : 0
+
           return (
-            <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
-              <span className="relative z-10 text-sm text-gray-800">{displayName(item.name)}</span>
-              <span className="relative z-10 text-sm font-medium text-gray-700">{item.visitors}</span>
+            <div
+              key={item.name}
+              className="group grid grid-cols-[1fr_80px] items-center rounded-md transition"
+            >
+              {/* LEFT: BAR AREA */}
+              <div className="w-full py-2 relative flex">
+                
+                {/* EXACT SAME BAR AS DEVICE */}
+                <div
+                  className="absolute left-0 top-0 h-full bg-neutral-200/60 rounded-md transition-all duration-700 ease-out"
+                  style={{ width: `${percent}%` }}
+                />
+
+                <span className="relative z-10 text-sm text-gray-800 pl-2">
+                  {displayName(item.name)}
+                </span>
+              </div>
+
+              {/* RIGHT */}
+              <div className="flex justify-end items-center gap-2 tabular-nums">
+                <span className="text-sm font-medium text-gray-700 text-right">
+                  {item.visitors}
+                </span>
+
+                <span className="text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  {
+                    share < 1 && share > 0
+                      ? `${share.toFixed(1)}%`
+                      : `${Math.round(share)}%`
+                  }
+                </span>
+              </div>
             </div>
           )
         })}
@@ -73,8 +110,8 @@ export default function GeoClient({ data }: Props) {
           <TabsContent value="countries">
             <List items={data.countries} label="Country" limit={5} />
           </TabsContent>
-          <TabsContent value="regions"><List items={data.regions} label="Region" limit={5} /></TabsContent>
-          <TabsContent value="cities"><List items={data.cities} label="City" limit={5} /></TabsContent>
+          <TabsContent value="regions"><List items={data.regions} label="Region" limit={4} /></TabsContent>
+          <TabsContent value="cities"><List items={data.cities} label="City" limit={4} /></TabsContent>
         </Tabs>
       </div>
 

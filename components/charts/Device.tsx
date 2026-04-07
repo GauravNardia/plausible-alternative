@@ -55,21 +55,54 @@ function List({ items, label, limit }: { items: Item[]; label: string; limit?: n
     ? normalizedItems.slice(0, limit)
     : normalizedItems
 
-  const max = Math.max(...normalizedItems.map(i => i.count))
+  const max = Math.max(...normalizedItems.map(i => i.count), 1)
+
+  const total = normalizedItems.reduce((sum, i) => sum + Number(i.count), 0)
 
   return (
     <div className="mt-4">
+      {/* Header */}
       <div className="text-sm flex justify-between text-gray-500 pb-4 border-b border-gray-200 text-[12px] px-2 font-semibold">
-          <h2 className="text-sm font-semibold text-neutral-500">{label}</h2>
-          <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
+        <h2 className="text-sm font-semibold text-neutral-500">{label}</h2>
+        <h2 className="text-sm font-semibold text-neutral-500">Visitors</h2>
       </div>
-      <div className="mt-4 space-y-2">
+
+      {/* List */}
+      <div className="mt-4 space-y-3">
         {displayed.map((item) => {
-          const percent = max ? (item.count / max) * 100 : 0
+          const percent = (item.count / max) * 100
+          const share = total ? (Number(item.count) / total) * 100 : 0
+
           return (
-            <div key={item.name} className="relative flex items-center justify-between px-2 py-2 rounded-md overflow-hidden">
-              <span className="relative text-sm z-10  text-gray-800"> {formatLabel(item.name)}</span>
-              <span className="relative text-sm z-10 font-medium text-gray-700">{Number(item.count)}</span>
+              <div
+              key={item.name}
+              className="group flex items-center gap-3 px-2 rounded-md transition "
+            >
+              {/* LEFT: BAR AREA */}
+              <div className="w-full py-2 relative flex">
+                
+                {/* Background bar */}
+                <div
+                  className="absolute left-0 top-0 h-full bg-neutral-200/60 rounded-md transition-all duration-700 ease-out"
+                  style={{ width: `${percent}%` }}
+                />
+
+                {/* Label */}
+                <span className="relative z-10 text-sm text-gray-800 pl-2">
+                  {formatLabel(item.name)}
+                </span>
+              </div>
+
+              {/* RIGHT: FIXED VALUE COLUMN */}
+              <div className="flex items-center gap-2 min-w-[72px] justify-end tabular-nums">
+                <span className="text-sm text-center flex items-center justify-center font-medium text-gray-700">
+                  {Number(item.count)}
+                </span>
+
+                <span className="text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  {Math.round(share)}%
+                </span>
+              </div>
             </div>
           )
         })}
@@ -98,9 +131,9 @@ export default function DeviceClient({ data }: Props) {
               <Image src="/assets/icons/full.svg" alt="Expand" className="cursor-pointer" width={20} height={20} />
             </button>
           </TabsList>
-          <TabsContent value="browsers"><List items={data.browsers} label="Browsers" limit={6} /></TabsContent>
-          <TabsContent value="os"><List items={data.os} label="Operating Systems" limit={6} /></TabsContent>
-          <TabsContent value="devices"><List items={data.devices} label="Devices" limit={6} /></TabsContent>
+          <TabsContent value="browsers"><List items={data.browsers} label="Browsers" limit={4} /></TabsContent>
+          <TabsContent value="os"><List items={data.os} label="Operating Systems" limit={4} /></TabsContent>
+          <TabsContent value="devices"><List items={data.devices} label="Devices" limit={4} /></TabsContent>
         </Tabs>
       </div>
 
