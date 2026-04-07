@@ -43,7 +43,15 @@ export async function GET(req: Request) {
       apiKey,
       path: location.pathname,
       referrer: finalReferrer,
-      ua: navigator.userAgent
+      ua: navigator.userAgent,
+      lang: navigator.language,
+      screen: {
+        w: window.innerWidth,
+        h: window.innerHeight
+      },
+      utm_source: params.get("utm_source"),
+      utm_medium: params.get("utm_medium"),
+      utm_campaign: params.get("utm_campaign"),
     };
 
     navigator.sendBeacon(

@@ -3,6 +3,7 @@ import { events, monthlyUsage, pricingTiers, sites, subscriptions } from "@/data
 import { redis } from "@/lib/config/redis"
 import { generateVisitorHash } from "@/lib/hash"
 import { parseUA } from "@/lib/ua"
+import { getDeviceFromScreen, normalizePath } from "@/lib/utils"
 import { and, eq, gt, inArray, sql } from "drizzle-orm"
 import { NextResponse } from "next/server"
 
@@ -68,7 +69,14 @@ export async function POST(req: Request) {
 
       // Process event
       const visitorHash = generateVisitorHash(body.ip, body.ua)
-      const { browser, os, device } = parseUA(body.ua)
+      // const { browser, os, device } = parseUA(body.ua)
+      const parsed = parseUA(body.ua);
+
+      const browser = parsed.browser;
+      const os = parsed.os;
+
+      const device = parsed.device !== "desktop" ? parsed.device : getDeviceFromScreen(body.screen?.w);
+
 
       await db.transaction(async (tx) => {
         const insertVisitor = await tx.execute(sql`
@@ -82,15 +90,21 @@ export async function POST(req: Request) {
 
         await tx.insert(events).values({
           siteId,
-          path: body.path,
+          path: normalizePath(body.path),
           referrer: body.referrer,
           browser,
           os,
           device,
           visitorHash,
+          
           country: body.country ?? null,
           region: body.region ?? null,
           city: body.city ?? null,
+
+          utmSource: body.utm_source ?? null,
+          utmMedium: body.utm_medium ?? null,
+          utmCampaign: body.utm_campaign ?? null,
+          language: body.lang ?? null,
         })
 
         await tx.execute(sql`

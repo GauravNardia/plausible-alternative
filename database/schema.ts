@@ -10,13 +10,6 @@ import {
   boolean
 } from "drizzle-orm/pg-core"
 
-/* ================= WAITLIST ================= */
-
-export const waitlist = pgTable("waitlist", {
-  id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
-  email: text("email").notNull().unique(),
-  createdAt: timestamp("created_at").defaultNow(),
-})
 
 /* ================= USERS ================= */
 
@@ -66,6 +59,11 @@ export const events = pgTable("events", {
   os: text("os"),
 
   visitorHash: text("visitor_hash").notNull(),
+
+  utmSource: text("utm_source"),
+  utmMedium: text("utm_medium"),
+  utmCampaign: text("utm_campaign"),
+  language: text("language"),
 
   createdAt: timestamp("created_at").defaultNow(),
 })

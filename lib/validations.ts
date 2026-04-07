@@ -5,6 +5,18 @@ export const eventSchema = z.object({
   path: z.string(),
   referrer: z.string().optional(),
   ua: z.string(),
+    lang: z.string().optional(),
+
+  screen: z
+    .object({
+      w: z.number(),
+      h: z.number(),
+    })
+    .optional(),
+
+  utm_source: z.string().nullable().optional(),
+  utm_medium: z.string().nullable().optional(),
+  utm_campaign: z.string().nullable().optional(),
 })
 
 export const signUpSchema = z.object({

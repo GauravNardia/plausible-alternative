@@ -31,3 +31,16 @@ export function formatNumber(num: number) {
 
   return num.toString()
 }
+
+export function getDeviceFromScreen(width?: number) {
+  if (!width) return "desktop";
+  if (width < 768) return "mobile";
+  if (width < 1024) return "tablet";
+  return "desktop";
+}
+
+export function normalizePath(path: string) {
+  return path
+    .replace(/\/[0-9a-fA-F-]{36}/g, "/:id")
+    .replace(/\/\d+/g, "/:id");
+}
