@@ -30,7 +30,7 @@ function formatSource(name?: string) {
  * Clean % formatter (no 1.0%, no fake 0.1)
  */
 function formatPercent(value: number) {
-  if (value > 0 && value < 1) return "<1"
+  if (value > 0 && value < 1) return "<1%"
   return `${Math.round(value)}%`
 }
 
