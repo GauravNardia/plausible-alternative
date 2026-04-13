@@ -59,7 +59,15 @@ async function onSubmit(data: z.infer<typeof onboardingSchema>) {
       toast.success("Website added successfully!")
       router.push(`/install/${result.siteId}`)
     } else {
-      toast.error(result.error)
+      // HANDLE DUPLICATE DOMAIN NICELY
+      if (result.error === "You already added this domain") {
+        form.setError("domain", {
+          type: "manual",
+          message: result.error,
+        })
+      } else {
+        toast.error(result.error)
+      }
     }
   } catch (error) {
     toast.error("Something went wrong")

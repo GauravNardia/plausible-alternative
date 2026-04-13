@@ -176,8 +176,16 @@ export const onboardinguser = async (
       success: true,
     }
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("ONBOARDING ERROR:", error)
+
+  // ✅ FIX: check inside `cause`
+  if (error?.cause?.code === "23505") {
+    return {
+      success: false,
+      error: "You already added this domain",
+    }
+  }
 
     return {
       success: false,
