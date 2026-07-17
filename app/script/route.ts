@@ -1,7 +1,6 @@
 export async function GET(req: Request) {
   const origin = new URL(req.url).origin;
   
-
   const script = `
 (function(){
   console.log("script loaded");
@@ -63,9 +62,9 @@ export async function GET(req: Request) {
   function checkPathChange() {
     if (location.pathname !== lastPath) {
       lastPath = location.pathname;
-      track();
+      t;
     }
-  }
+  }rack()
 
   track();
 

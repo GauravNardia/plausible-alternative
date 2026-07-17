@@ -25,6 +25,8 @@ export async function POST(req: Request) {
 
     // parse
     const parsed = raw.map(e => typeof e === "string" ? JSON.parse(e) : e)
+    console.log("Queue size:", raw.length)
+console.log("First event:", parsed[0])
     let processed = 0
 
       for (const body of parsed) {
@@ -35,6 +37,9 @@ export async function POST(req: Request) {
         .from(sites)
         .where(eq(sites.publicApiKey, body.apiKey))
         .limit(1)
+
+        console.log("API Key:", body.apiKey)
+        console.log("Site:", site)        
 
       if (!site.length) continue
 
@@ -54,6 +59,8 @@ export async function POST(req: Request) {
           )
         )
         .limit(1)
+
+        console.log("Subscription:", subResult)
 
       if (!subResult.length) continue
 
@@ -87,6 +94,7 @@ export async function POST(req: Request) {
         `)
 
         const isNew = insertVisitor.rowCount !== null && insertVisitor.rowCount > 0
+        console.log("About to insert event")
 
         await tx.insert(events).values({
           siteId,
@@ -132,10 +140,15 @@ export async function POST(req: Request) {
           })
       })
 
+      console.log("Event inserted")
+
       processed++
     } catch (err) {
-      console.error("Worker error:", err)
-      continue
+console.error("================================")
+console.error("WORKER ERROR")
+console.error(err)
+console.error("================================") 
+continue
     }
   }
 

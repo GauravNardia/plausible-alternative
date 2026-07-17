@@ -14,6 +14,8 @@ const Sites = async () => {
   if (!session?.user?.id) redirect("/sign-in")
 
   const { userSites, subscription } = await getUserSitesWithData(session.user.id)
+  console.log("subsc", subscription)
+  console.log("userSite", userSites)
 
   return (
     <section className="min-h-screen w-full bg-[#ffffff]">
