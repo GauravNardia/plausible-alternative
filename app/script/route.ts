@@ -59,17 +59,17 @@ export async function GET(req: Request) {
     );
   }
 
-  function checkPathChange() {
-    if (location.pathname !== lastPath) {
-      lastPath = location.pathname;
-      t;
-    }
-  }rack()
+function checkPathChange() {
+  if (location.pathname !== lastPath) {
+    lastPath = location.pathname;
+    track();
+  }
+}
 
-  track();
+track();
 
-  setInterval(checkPathChange, 500);
-  window.addEventListener("popstate", checkPathChange);
+setInterval(checkPathChange, 500);
+window.addEventListener("popstate", checkPathChange);
 
 })();
   `;
